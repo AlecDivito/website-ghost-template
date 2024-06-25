@@ -1,6 +1,6 @@
 {
-    "name": "ghost-starter-theme",
-    "description": "A starter theme for Ghost theme development",
+    "name": "alecdivito-website-ghost-theme",
+    "description": "A custom theme for Alec Di Vito",
     "demo": "https://starter.ghost.io",
     "version": "1.0.0",
     "engines": {
@@ -19,8 +19,8 @@
     },
     "author": {
         "name": "Ghost Foundation",
-        "email": "hello@ghost.org",
-        "url": "https://ghost.org"
+        "email": "divito.alec@gmail.com",
+        "url": "https://blog.alecdivito.com"
     },
     "gpm": {
         "type": "theme",
@@ -36,7 +36,7 @@
     ],
     "repository": {
         "type": "git",
-        "url": "https://github.com/TryGhost/Starter.git"
+        "url": "https://github.com/alecdivito/website-ghost-template.git"
     },
     "bugs": "https://github.com/TryGhost/Starter/issues",
     "contributors": "https://github.com/TryGhost/Starter/graphs/contributors",
