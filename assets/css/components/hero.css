@@ -1,0 +1,133 @@
+/* 
+$header-block-height: 200px;
+$header-curve-height: 100px;
+$height: $header-block-height + $header-curve-height;
+
+$offset-height: 60px; */
+
+
+.hero {
+    min-height: 300px;
+    display: flex;
+    align-items: center;
+    position: relative;
+    color: var(--text-color-header);
+    background-color: var(--primary-color);
+    box-sizing: border-box;
+    padding: 1rem 0rem;
+    padding-left: 3rem;
+}
+
+.hero--container {
+    margin-top: 60px;
+    width: 100%;
+    display: flex;
+    align-items: center;
+}
+.hero--flex {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    position: relative;
+}
+.hero--z-index {
+    z-index: 100;
+}
+.hero--content {
+    padding-left: 2rem;
+    padding-bottom: 60px;
+    width: 100%;
+}
+.hero--p0 {
+    padding: 0px;
+}
+.hero__title {
+    font-size: 3em;
+    color: var(--text-color-header);
+}
+.hero__description {
+    font-size: 1.5em;
+    color: var(--text-color-header);
+    margin-bottom: 2rem;
+    margin-top: 0rem;
+}
+.hero__date {
+    margin: 0px;
+    padding: 0px;
+    color: var(--text-color-header);
+    position: absolute;
+    right: 30px;
+}
+.hero__link {
+    padding-left: 2rem;
+    font-size: 1.2em;
+    color: var(--text-color-header);
+}
+.hero__list {
+    display: flex;
+    flex-direction: row;
+    list-style-type: none;
+    flex-wrap: wrap;
+}
+.hero__list__item {
+    padding: 0px 0.25rem;
+    margin-bottom: 1rem;
+}
+.hero__list__item:first-child {
+    padding-left: 0rem;
+}
+.hero__curve {
+    /* position: absolute;
+    left: -1px;
+    right: 0;
+    bottom: -103px; */
+}
+.hero__curve svg {
+    width: 100%;
+    height: 100px;
+}
+@media (max-width: 900px) {
+    .hero--flex {
+        flex-direction: column;
+   }
+    .hero__link {
+        padding-left: 0rem;
+   }
+    .hero__date {
+        position: relative;
+        right: 0px;
+   }
+}
+@media (max-width: 768px) {
+    .hero {
+        padding-top: 0rem;
+        padding-left: 0rem;
+   }
+    .hero--children {
+        display: none;
+        visibility: hidden;
+   }
+    .hero__curve {
+        bottom: -53px;
+   }
+    .hero__curve svg {
+        height: 50px;
+   }
+    .hero--p0 {
+        padding-left: 2rem;
+   }
+}
+@media (max-width: 480px) {
+    .hero--p0 {
+        padding: unset;
+   }
+    .hero--content {
+        padding: 0rem 1rem;
+   }
+    .hero__curve {
+        bottom: -23px;
+   }
+    .hero__curve svg {
+        height: 20px;
+   }
+}

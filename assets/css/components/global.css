@@ -16,13 +16,13 @@ body {
     min-height: 100vh;
     margin: 0;
     padding: 0;
-    color: #464646;
+    color: var(--text-color-base);
     font-family: var(--font-sans-serif);
     font-size: 1.5rem;
     line-height: 1.6em;
     font-weight: 400;
     font-style: normal;
-    background: #fff;
+    background: var(--background-color-base);
     scroll-behavior: smooth;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;

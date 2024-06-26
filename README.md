@@ -70,6 +70,8 @@ ln -s $GHOST_THEME_LOCATION $GHOST_LOCATION/content/themes/starter
 # After linking, restart ghost
 ghost stop
 ghost start
+# May need to do ghost start --no-setup-linux-user
+# Context https://github.com/TryGhost/Ghost-CLI/issues/711
 # Open ghost http://localhost:2368/ghost/
 # Visit: http://localhost:2368/ghost/#/settings/design/change-theme
 # Select: alecdivito-website-ghost-theme
