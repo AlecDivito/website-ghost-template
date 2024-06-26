@@ -56,6 +56,25 @@ One neat trick is that you can also create custom one-off templates just by addi
 
 &nbsp;
 
+## Setting up environment
+
+```bash
+nvm install
+GHOST_THEME_LOCATION=$(pwd)
+# cd to directory
+cd ../ghost # This is an example
+ghost install local
+GHOST_LOCATION=$(pwd)
+# Link the directory
+ln -s $GHOST_THEME_LOCATION $GHOST_LOCATION/content/themes/starter
+# After linking, restart ghost
+ghost stop
+ghost start
+# Open ghost http://localhost:2368/ghost/
+# Visit: http://localhost:2368/ghost/#/settings/design/change-theme
+# Select: alecdivito-website-ghost-theme
+```
+
 ## Development guide
 
 The Starter theme provides a first-class development experience out of the box. 
