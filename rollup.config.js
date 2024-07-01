@@ -29,6 +29,7 @@ export default defineConfig({
         format: 'iife',
         plugins: [terser()]
     },
+    external: ['prism'],
     plugins: [
         commonjs(), 
         nodeResolve(), 
