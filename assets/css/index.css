@@ -7,6 +7,7 @@ production stylesheet in assets/built/screen.css using: npm run dev
 
 /* Lib - Local component imports
 /* ---------------------------------------------------------- */
+@import "prism.css";
 
 /* Base components */
 @import "vars.css";
