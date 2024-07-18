@@ -1,11 +1,15 @@
 <!-- Hero -->
-<section >
-    <div class="hero">
+<section class="hero">
+    <div class="gh-container">
         <div class="hero--container common--max-width">
             <div class="hero--z-index hero--content">
                 <h1 class="hero__title">
                     {{#is "home"}}
-                        <span style="font-size: 2.5em">✌️</span> Hi There, Cloud Lover
+                        <span style="font-size: 2.5em; vertical-align: middle;">👋</span> Hi there, let's talk about
+                        <div id="hero-word-rotation">
+                            <div>Kubernetes👌</div>
+                            <div></div>
+                        </div>
                     {{/is}}
 
                     {{#is "post"}}
@@ -16,7 +20,6 @@
 
                 <p class="hero__description">
                     {{#is "home"}}
-
                     {{/is}}
                     {{#is "post"}}
                         <span class="gh-post-meta"><time datetime="{{date format="YYYY-MM-DD"}}">{{date format="D MMM YYYY"}}</time> <span class="bull">&bull;</span> {{reading_time}}</span>
@@ -37,7 +40,7 @@
 
         </div>
     </div>
-    <svg xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none" viewBox="0 0 1200 120">
-        <path d="M321.39,56.44c58-10.79,114.16-30.13,172-41.86,82.39-16.72,168.19-17.73,250.45-.39C823.78,31,906.67,72,985.66,92.83c70.05,18.48,146.53,26.09,214.34,3V0H0V27.35A600.21,600.21,0,0,0,321.39,56.44Z" fill="#475de6" />
-    </svg>
 </section>
+<svg xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none" viewBox="0 0 1200 120">
+    <path d="M321.39,56.44c58-10.79,114.16-30.13,172-41.86,82.39-16.72,168.19-17.73,250.45-.39C823.78,31,906.67,72,985.66,92.83c70.05,18.48,146.53,26.09,214.34,3V0H0V27.35A600.21,600.21,0,0,0,321.39,56.44Z" fill="#475de6" />
+</svg>

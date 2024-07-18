@@ -22,3 +22,26 @@
         </noscript>
     </div>
 </div>
+
+<script>
+    let index = 0;
+    const words = ["Kubernetes👌", "networks🛜", "Azure🌩️", "Devops👷‍♂️", "CI/CD♾️", "VLANS🫷", "Rust💕", "Javascript🗡️"]
+    const heroRotationItem = document.getElementById('hero-word-rotation')
+    if (heroRotationItem.children[0] && heroRotationItem.children[1]) {
+        setInterval(() => {
+            const toHide = heroRotationItem.children[index % 2]
+            const toShow = heroRotationItem.children[(index + 1) % 2]
+            index += 1;
+            const nextItem = words[index % words.length]
+            console.log(index, nextItem)
+
+            toShow.innerHTML = nextItem;
+
+            toHide.classList.add('fadeOutUp')
+            toShow.classList.remove('fadeOutUp')
+
+            toHide.classList.remove('fadeInUp')
+            toShow.classList.add('fadeInUp')
+        }, 3000)
+    }
+</script>
