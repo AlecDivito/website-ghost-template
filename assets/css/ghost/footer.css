@@ -8,7 +8,7 @@
 }
 
 .footer--svg {
-    transform: rotate(180deg);
+    transform: rotate(180deg) translate(0px,-2px);
 }
 
 .footer {
