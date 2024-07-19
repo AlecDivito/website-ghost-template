@@ -25,7 +25,7 @@
 
 <script>
     let index = 0;
-    const words = ["Kubernetes👌", "networks🛜", "Azure🌩️", "Devops👷‍♂️", "CI/CD♾️", "VLANS🫷", "Rust💕", "Javascript🗡️"]
+    const words = ["Kubernetes👌", "networks🧙🏻‍♂️", "Azure🌩️", "Devops👷‍♂️", "CI/CD∞", "VLANS🫡", "Rust💕", "Javascript🗡️", "Python🐍"]
     const heroRotationItem = document.getElementById('hero-word-rotation')
     if (heroRotationItem.children[0] && heroRotationItem.children[1]) {
         setInterval(() => {
@@ -33,7 +33,6 @@
             const toShow = heroRotationItem.children[(index + 1) % 2]
             index += 1;
             const nextItem = words[index % words.length]
-            console.log(index, nextItem)
 
             toShow.innerHTML = nextItem;
 

@@ -171,6 +171,9 @@ $offset-height: 60px; */
    }
 }
 @media (max-width: 480px) {
+    #hero-word-rotation {
+        text-align: center;
+    }
     .hero--p0 {
         padding: unset;
    }

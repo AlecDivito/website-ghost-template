@@ -77,6 +77,9 @@ ghost start --no-setup-linux-user
 # Select: alecdivito-website-ghost-theme
 ```
 
+Images don't render correctly. Use the following to fix the issue
+- https://forum.ghost.org/t/error-ghost-gallery/5909/4
+
 ## Development guide
 
 The Starter theme provides a first-class development experience out of the box. 
