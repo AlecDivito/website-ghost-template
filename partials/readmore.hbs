@@ -1,0 +1,27 @@
+<aside class="gh-readmore">
+    <div class="gh-readmore-next">
+        {{#next_post}}
+            <h4>Read the next post</h4>
+            {{> "card" }}
+            {{!-- <a href="{{url}}">{{> "icons/arrow-left"}} <h4>{{title}}</h4></a> --}}
+        {{/next_post}}
+    </div>
+
+    <div>
+        {{#get "posts" include="authors,tags" filter="primary_tag:{{primary_tag.slug}}+posts.id:-{{id}}" limit="1"}}
+            {{#foreach posts}}
+                <h4>If you liked this one</h4>
+                {{> "card" }}
+                {{!-- <li><a href="{{url}}">{{title}}</a></li> --}}
+            {{/foreach}}
+        {{/get}}
+    </div>
+
+    <div class="gh-readmore-prev">
+        {{#prev_post}}
+            <h4>Read the last post</h4>
+            {{> "card" }}
+            {{!-- <a href="{{url}}"><h4>{{title}}</h4> {{> "icons/arrow-right"}}</a> --}}
+        {{/prev_post}}
+    </div>
+</aside>

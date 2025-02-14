@@ -1,35 +1,29 @@
 {{!< default}}
 
-<div class="gh-page">
-    <div class="gh-container">
+<div class="page tags">
+    {{#tag}}
+    {{> "hero" }}
+    {{/tag}}
 
-        {{#tag}}
-        <header class="gh-page-head">
+    <div class="gh-postfeed">
+    {{#foreach posts}}
 
-            <h1>{{name}}</h1>
+        {{> "card"}} {{!-- partials/card.hbs --}}
 
-            <p>
-                {{#if description}}
-                    {{description}}
-                {{else}}
-                    A collection of {{plural ../pagination.total empty='posts' singular='% post' plural='% posts'}}
-                {{/if}}
-            </p>
+    {{/foreach}}
 
-            {{#if feature_image}}
-                <img class="gh-page-image" src="{{feature_image}}" alt="{{name}}" />
-            {{/if}}
-
-        </header>
-        {{/tag}}
-
-        <div class="gh-postfeed">
-        {{#foreach posts}}
-
-            {{> "card"}} {{!-- partials/card.hbs --}}
-
-        {{/foreach}}
-        </div>
 
     </div>
+
+    <section>
+        <h2 class="m-b section__title">Check out other popular categories</h2>
+
+        <div class="grid tag-grid">
+            {{#get "tags" limit="4" include="count.posts" order="count.posts DESC"}}
+                {{#foreach tags}}
+                    {{> "tag-section-card" }}
+                {{/foreach}}
+            {{/get}}
+        </div>
+    </section>
 </div>

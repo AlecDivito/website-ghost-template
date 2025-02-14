@@ -1,0 +1,72 @@
+.tag-card {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  border-radius: 12px 12px 0 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
+  color: white;
+  position: relative;
+  border-radius: 12px;
+  overflow: hidden;
+  transition: transform 0.3s ease-in-out;
+  min-height: 175px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.25);
+}
+
+.tag-card:hover {
+  transform: scale(1.05);
+}
+
+.tag__image {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+}
+
+.tag__image--img {
+  object-fit: cover;
+  filter: brightness(30%);
+}
+
+.tag__image--color {
+  display: block;
+  background-color: #000;
+  opacity: 0.9;
+}
+
+.tag-overlay {
+  width: 100%;
+  padding: 15px;
+  text-align: center;
+  color: white;
+  z-index: 1;
+}
+
+.tag-title {
+  font-size: 2.2em;
+  margin: 0;
+}
+
+.tag-count {
+  font-size: 1.2em;
+  margin-top: 5px;
+  opacity: 0.8;
+}
+
+/* Lock icon for restricted tags */
+.tag-card .widget__access {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  color: white;
+  padding: 5px 10px;
+  border-radius: 5px;
+  font-size: 12px;
+}

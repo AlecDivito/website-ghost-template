@@ -60,6 +60,7 @@ One neat trick is that you can also create custom one-off templates just by addi
 
 ```bash
 nvm install
+npm install -g ghost-cli@latest
 GHOST_THEME_LOCATION=$(pwd)
 # cd to directory
 cd ../ghost # This is an example
@@ -76,6 +77,17 @@ ghost start --no-setup-linux-user
 # Visit: http://localhost:2368/ghost/#/settings/design/change-theme
 # Select: alecdivito-website-ghost-theme
 ```
+
+After setting up, create the site with example values. Then
+
+0. Visit the site thats now been started http://localhost:2368/ghost
+1. Go to settings
+2. Click the gear icon next to your user icon
+3. Go to `site` > `theme`
+4. Change theme
+5. Go to `installed theme` tab
+6. Select `alec-*` theme
+
 
 Images don't render correctly. Use the following to fix the issue
 - https://forum.ghost.org/t/error-ghost-gallery/5909/4

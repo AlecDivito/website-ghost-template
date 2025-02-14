@@ -1,6 +1,22 @@
+.gh-pagination {
+  width: 100%;
+
+  display: flex;
+  justify-content: center;
+  margin: 6rem 0rem 4rem;
+}
 
 .gh-pagination .pagination {
-    display: flex;
-    justify-content: space-between;
-    margin-block: 4vmin;
+  display: flex;
+  justify-content: space-between;
+
+  border: 1px solid black;
+  border-radius: 36px;
+  padding: 2rem;
+  font-weight: 700;
+}
+
+.pagination .page-number {
+  margin: 0 2rem;
+  color: var(--color-text-acc);
 }

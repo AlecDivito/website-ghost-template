@@ -1,0 +1,60 @@
+<aside class="social-share--container">
+    <h5>SHARE</h5>
+    <div class="social-share">
+        <a
+            class="social-share__item twitter js-share"
+            target="_blank"
+            href="https://twitter.com/share?text={{encode title}}&amp;url={{url absolute='true'}}"
+            title="Share on Twitter"
+            aria-label="Share on Twitter"
+        >
+            <i class="icon icon-twitter-x">
+                {{> "icons/twitter" }}
+            </i>
+        </a>
+        <a
+            class="social-share__item facebook js-share"
+            target="_blank"
+            href="https://www.facebook.com/sharer.php?u={{url absolute='true'}}"
+            title="Share on Facebook"
+            aria-label="Share on Facebook"
+        >
+            <i class="icon icon-facebook">
+                {{> "icons/facebook" }}
+            </i>
+        </a>
+        <a
+            class="social-share__item linkedin js-share"
+            target="_blank"
+            href="https://www.linkedin.com/shareArticle?mini=true&amp;url={{url absolute='true'}}&amp;title={{encode title}}&amp;summary={{encode title}}"
+            title="Share on Linkedin"
+            aria-label="Share on Linkedin"
+        >
+            <i class="icon icon-linkedin">
+                {{> "icons/linkedin" }}
+            </i>
+        </a>
+        <a
+            class="social-share__item mail"
+            href="mailto:?subject={{encode title}}&amp;body={{url absolute='true'}}&nbsp;{{encode title}}"
+            title="Share by email"
+            aria-label="Share by email"
+        >
+            <i class="icon icon-mail">
+                {{> "icons/mail" }}
+            </i>
+        </a>
+        <button
+            class="social-share__item copy-link copy js-copy-link"
+            data-url="{{url absolute='true'}}"
+            title="Copy to clipboard"
+            data-label="Copied!"
+            aria-label="Copy to clipboard"
+        >
+            <i class="icon icon-copy">
+                {{> "icons/copy" }}
+            </i>
+            <div class="tooltip js-tooltip" style="display:none;">Copied!</div>
+        </button>
+    </div>
+</aside>

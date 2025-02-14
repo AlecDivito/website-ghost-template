@@ -1,0 +1,78 @@
+{{!< default}}
+
+{{> "hero"}}
+
+<div class="page home gh-page">
+    <section class="home-section">
+        <h2 class="m-b section__title">Latest Blog Posts</h2>
+        <a class="section__link" href="/blog">
+            <span>Read More</span>
+            <i class="icon m-r">
+                {{> "icons/arrow-right" }}
+            </i>
+        </a>
+
+        <div class="blog-feed">
+            {{#get "posts" limit="7" include="authors,tags" order="published_at DESC"}}
+                {{#foreach posts}}
+                    {{> "card" page=../pagination.page }}
+                {{/foreach}}
+            {{/get}}
+        </div>
+    </section>
+
+    <section class="home-section gh-projectfeed">
+        <h2 class="m-b section__title">Latest work</h2>
+        <a class="section__link" href="/projects">
+            <span>View All</span>
+            <i class="icon m-r">
+                {{> "icons/arrow-right" }}
+            </i>
+        </a>
+
+        <div class="project-feed">
+            {{#get "posts" filter="primary_tag:project" limit="4" }}
+                {{#foreach posts}}
+                    {{> "float-card" page=../pagination.page }}
+                {{/foreach}}
+            {{/get}}
+        </div>
+    </section>
+
+    <section class="home-section">
+        <h2 class="m-b section__title">I Have Worked At</h2>
+        <a class="section__link" href="/about">
+            <span>and I have done...</span>
+            <i class="icon m-r">
+                {{> "icons/arrow-right" }}
+            </i>
+        </a>
+
+        <div class="home-companies">
+            <img class="logos" src="{{asset 'images/amazon.png'}}" alt="Software Developer at Amazon">
+            <img class="logos" src="{{asset 'images/rbc.png'}}" alt="Staff Cloud Developer at Royal Bank of Canada">
+            <img class="logos" src="{{asset 'images/ownr.png'}}" alt="Full Stack Developer at Ownr">
+            <img class="logos" src="{{asset 'images/sheridan.png'}}" alt="Researcher at Sheridan College">
+            <img class="logos" src="{{asset 'images/mapleleaf.png'}}" alt="Co-op Software Developer at Maple Leaf Foods">
+            <img class="logos" src="{{asset 'images/ontario.png'}}" alt="Co-op Software Developer at Ontario Government">
+        </div>
+    </section>
+
+    <section class="home-section gh-tags">
+        <h2 class="m-b section__title">Popular Categories</h2>
+        <a class="section__link" href="/tags">
+            <span>View All</span>
+            <i class="icon m-r">
+                {{> "icons/arrow-right" }}
+            </i>
+        </a>
+
+        <div class="tag-grid">
+            {{#get "tags" limit="11" include="count.posts" order="count.posts DESC"}}
+                {{#foreach tags}}
+                    {{> "tag-section-card" }}
+                {{/foreach}}
+            {{/get}}
+        </div>
+    </section>
+</div>

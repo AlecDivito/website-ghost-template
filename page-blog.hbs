@@ -1,0 +1,22 @@
+{{!< default}}
+
+<div class="page blog">
+
+    {{#page}}
+    {{> "hero" }}
+    {{/page}}
+
+    <section class="home-section gh-container">
+        {{#get "posts" include="authors,tags" order="published_at DESC"}}
+            <div class="grid gh-postfeed">
+                {{#foreach posts}}
+                    {{> "card" page=../pagination.page }}
+                {{/foreach}}
+            </div>
+            <div class="gh-pagination">
+                {{pagination}}
+            </div>
+        {{/get}}
+    </section>
+
+</div>

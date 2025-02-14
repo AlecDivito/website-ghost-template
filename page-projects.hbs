@@ -1,0 +1,18 @@
+{{!< default}}
+
+<div class="page project">
+    {{#post}}
+        {{> "hero" }}
+    {{/post}}
+
+
+    <section class="gh-projectfeed">
+        <div class="project-feed">
+            {{#get "posts" filter="primary_tag:project" }}
+                {{#foreach posts}}
+                    {{> "float-card" page=../pagination.page }}
+                {{/foreach}}
+            {{/get}}
+        </div>
+    </section>
+</div>

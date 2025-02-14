@@ -1,0 +1,13 @@
+.page {
+  z-index: 100;
+}
+
+.page .hero--content {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.page .hero__body {
+  padding-left: 3rem;
+}

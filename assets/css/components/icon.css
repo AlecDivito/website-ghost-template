@@ -1,0 +1,17 @@
+.icon {
+  stroke-width: 2px;
+  fill: none;
+  display: flex;
+  height: 20px;
+  width: 20px;
+}
+
+.icon--sm {
+  stroke-width: 2.5px;
+  height: 16px;
+  width: 16px;
+}
+
+.filled svg {
+  fill: inherit;
+}

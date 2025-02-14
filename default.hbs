@@ -3,6 +3,9 @@
 
         <meta charset="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <link rel="preconnect" href="https://fonts.bunny.net">
+        <link href="https://fonts.bunny.net/css?family=jetbrains-mono:400" rel="stylesheet" />
+
         <link rel="stylesheet" href="{{asset 'built/index.css'}}" />
         <script src="{{asset 'built/index.js'}}" defer></script>
 
@@ -16,7 +19,7 @@
         <div class="gh-viewport">
 
             <header id="gh-head" class="gh-head">
-                <nav class="gh-head-inner gh-container">
+                <nav class="gh-head-inner">
 
                     <div class="gh-head-brand">
                         <a class="gh-head-logo" href="{{@site.url}}">
@@ -35,27 +38,7 @@
                             </div>
                         </a>
                     </div>
-                    <div class="gh-head-menu">
-                        {{navigation}}
-                    </div>
-                    <div class="gh-head-actions">
-                        <div class="gh-head-actions-list">
-                            {{search}}
-                            {{#if @site.members_enabled}}
-                                {{#if @member}}
-                                    <a
-                                        class="gh-button"
-                                        href="#/portal/account"
-                                    >Account</a>
-                                {{else}}
-                                    <a
-                                        class="gh-button"
-                                        href="{{@site.signup_url}}"
-                                    >Subscribe</a>
-                                {{/if}}
-                            {{/if}}
-                        </div>
-                    </div>
+                    {{navigation}}
                 </nav>
             </header>
 
@@ -68,9 +51,6 @@
 
             {{> "footer" }}
 
-            {{!-- <footer class="gh-foot">
-                
-            </footer> --}}
 
         </div>
 
@@ -86,6 +66,40 @@
                 var ratio = width / height;
                 container.style.flex = ratio + ' 1 0%';
             })
+
+            document.addEventListener("DOMContentLoaded", function () {
+                const portal = document.getElementById("ghost-portal-root");
+                const newContainer = document.getElementById("nav-menu"); // Change this to your target container
+
+                if (portal && newContainer) {
+                    newContainer.appendChild(portal);
+                }
+            });
+
+
+
+            document.addEventListener("DOMContentLoaded", function () {
+                const baseURL = "https://alecdivito.com"; // Replace with your real Ghost URL
+
+                document.querySelectorAll("img").forEach((img) => {
+                    // Fix the `src` attribute
+                    if (img?.data?.dev !== "no") {
+                        if (img.hasAttribute("src")) {
+                        let updatedSrcset = img.getAttribute("src")
+                            .replace(/\/content\/images\//g, `${baseURL}/content/images/`);
+                            img.setAttribute("src", updatedSrcset);
+                        }
+
+                        // Fix the `srcset` attribute
+                        if (img.hasAttribute("srcset")) {
+                            let updatedSrcset = img.getAttribute("srcset")
+                                .replace(/\/content\/images\//g, `${baseURL}/content/images/`);
+                            img.setAttribute("srcset", updatedSrcset);
+                        }
+                    }
+                });
+            });
+
         </script>
     </body>
 </html>

@@ -1,0 +1,226 @@
+/* General CSS for home page */
+
+.page.home {
+  max-width: var(--xlarge);
+  margin: auto;
+  padding: 0px;
+  padding: 0rem 2rem;
+  box-sizing: border-box;
+}
+
+@media (max-width: 1280px) {
+  .page.home {
+    margin: unset;
+  }
+}
+
+.home-section .section__title {
+  color: #4d4d4d;
+  color: var(--color-text-acc);
+  font-size: calc(0.6vw + 1.4rem);
+  font-weight: 700;
+  font-weight: var(--font-weight-bold);
+  line-height: 1.2;
+  margin-right: 1rem;
+  opacity: 0.25;
+  display: inline-block;
+}
+
+.home-section .section__link {
+  display: inline-flex;
+  align-items: center;
+}
+
+.home-section .section__link a:hover {
+  display: inline-flex;
+  align-items: center;
+}
+
+/* Blog Feed */
+
+.blog-feed {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr); /* 2 equal columns */
+  /* grid-template-rows: repeat(2, 1fr); /* 2 equal rows */
+  grid-template-rows: minmax(100px, 1fr) minmax(100px, 1fr) minmax(0px, 0);
+  gap: 20px;
+  overflow: hidden;
+}
+
+.blog-feed .widget.widget--1 {
+  grid-column: span 2;
+  grid-row: span 2;
+}
+
+.blog-feed .widget.widget--2 {
+  grid-column: span 2;
+  grid-row: span 1;
+}
+
+.blog-feed .widget.widget--3 {
+  grid-column-start: 3;
+  grid-row-start: 2;
+  grid-column-end: 5;
+}
+
+.blog-feed .widget.widget--1 .widget__image {
+  max-height: 325px;
+}
+
+.blog-feed .widget.widget--1 .widget__title {
+  font-size: 1.8em;
+}
+
+.blog-feed .widget .widget__image {
+  max-height: 125px;
+}
+
+.blog-feed .widget .widget__title {
+  font-size: 1em;
+}
+
+@media (max-width: 1280px) {
+  .blog-feed {
+    grid-template-columns: repeat(4, 1fr);
+    grid-template-rows: minmax(100px, 1fr) minmax(100px, 1fr) minmax(100px, 1fr);
+  }
+}
+
+@media (max-width: 980px) {
+  .blog-feed {
+    grid-template-rows: minmax(100px, 1fr) minmax(100px, 1fr) minmax(0px, 0);
+  }
+}
+
+@media (max-width: 740px) {
+  .blog-feed {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .home .blog-feed .widget {
+    display: none;
+  }
+
+  .home .blog-feed .widget--1,
+  .home .blog-feed .widget--2,
+  .home .blog-feed .widget--3,
+  .home .blog-feed .widget--4 {
+    display: block;
+  }
+
+  .home .blog-feed .widget--1 .widget__image {
+    max-height: 200px;
+  }
+
+  .home .blog-feed .widget .widget__image {
+    max-height: 200px;
+  }
+
+  .home .blog-feed .widget--1 .widget__title,
+  .home .blog-feed .widget .widget__title {
+    font-size: 1.2em;
+  }
+
+  .blog-feed .widget .widget__description {
+    display: none;
+  }
+}
+
+/* Project Feed Section */
+
+.project-feed {
+  padding: 0rem;
+  display: grid;
+  gap: var(--gap-xl);
+  grid-template-columns: repeat(2, 1fr);
+  grid-template-rows: repeat(11, 60px);
+}
+
+.project-feed .widget {
+  display: grid;
+  grid-row: span 5;
+  border-radius: 10px;
+  text-align: center;
+}
+
+/* Odd children (1st, 3rd, etc.) should NOT occupy row 6 */
+.project-feed .widget:nth-child(1) {
+  grid-row-start: 1;
+  grid-row-end: 6;
+}
+
+/* Even children (2nd, 4th, etc.) should NOT occupy row 1 */
+.project-feed .widget:nth-child(2) {
+  grid-row-start: 2;
+  grid-row-end: 7;
+}
+
+@media (max-width: 800px) {
+  .project-feed {
+    display: flex;
+    flex-direction: column;
+  }
+}
+
+/* Home Company section */
+
+.home-companies {
+  display: flex;
+  justify-items: center;
+  justify-content: space-around;
+  padding: 2rem;
+  border-top: 1px solid gray;
+  border-bottom: 1px solid gray;
+}
+
+.home-companies .logos {
+  height: 75px;
+  max-width: 150px;
+  object-fit: contain;
+}
+
+@media (max-width: 800px) {
+  .home-companies {
+    overflow-x: scroll;
+  }
+
+  .home-companies .logos {
+    margin: 0rem 3rem;
+  }
+}
+
+/* Tag grid section */
+
+.tag-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(268px, 1fr));
+  gap: 15px;
+  padding: 20px 0px;
+}
+
+@media (max-width: 768px) {
+  .tag-grid {
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  }
+}
+
+@media (max-width: 476px) {
+  .home .tag-grid {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .home .tag-grid .tag-card {
+    display: none;
+  }
+
+  .home .tag-grid .tag-card.tag-card--1,
+  .home .tag-grid .tag-card.tag-card--2,
+  .home .tag-grid .tag-card.tag-card--3,
+  .home .tag-grid .tag-card.tag-card--4,
+  .home .tag-grid .tag-card.tag-card--5,
+  .home .tag-grid .tag-card.tag-card--6 {
+    display: flex;
+  }
+}

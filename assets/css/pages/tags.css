@@ -1,0 +1,16 @@
+.page.tags .gh-tags {
+  width: 75%;
+  margin: auto;
+}
+
+.page.tags .gh-tags .tag__image--color {
+  background-color: var(--color-accent, inherit);
+  filter: brightness(30%);
+}
+
+@media (max-width: 768px) {
+  .page.tags .gh-tags {
+    width: unset;
+    margin: 0rem 2rem;
+  }
+}

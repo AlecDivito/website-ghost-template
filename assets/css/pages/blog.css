@@ -1,0 +1,7 @@
+.blog .hero__image--container .hero__image {
+  grid-row: span 2;
+}
+
+.blog .widget.widget--1 .widget__image {
+  max-height: 360px;
+}

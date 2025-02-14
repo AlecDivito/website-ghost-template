@@ -1,0 +1,57 @@
+<article class="widget widget--float {{post_class}}">
+    <a href="{{url}}">
+    {{#if feature_image}}
+        {{!-- This is a responsive image, it loads different sizes depending on device
+        https://medium.freecodecamp.org/a-guide-to-responsive-images-with-ready-to-use-templates-c400bd65c433 --}}
+        <img class="widget__image widget__image--float"
+            srcset="{{img_url feature_image size="s"}} 300w,
+                    {{img_url feature_image size="m"}} 600w,
+                    {{img_url feature_image size="l"}} 900w"
+            src="{{img_url feature_image size="l"}}"
+            alt="{{#if feature_image_alt}}{{feature_image_alt}}{{else}}{{title}}{{/if}}"
+            loading="lazy"
+        />
+
+        {{#unless access}}
+        {{^has visibility="public"}}
+            <div class="widget__access">
+                <i class="icon icon-lock icon--sm">
+                    {{> "icons/lock"}}
+                </i>
+                {{#has visibility="members"}}
+                    Members only
+                {{else}}
+                    Paid-members only
+                {{/has}}
+            </div>
+        {{/has}}
+        {{/unless}}
+
+        {{#if featured}}
+            <div class="widget__featured">
+                <i class="icon icon-star filled">
+                    {{> "icons/star" }}
+                </i>
+            </div>
+        {{/if}}
+    {{/if}}
+    </a>
+
+    <div class="widget__content">
+        <a href="{{url}}">
+            <h2 class="widget__title">
+                {{title}}
+            </h2>
+        </a>
+
+        <p class="widget__description">{{excerpt}}</p>
+
+        <a class="widget__link--float" href="{{url}}">
+            <span class="m-r">Read More</span>
+            <i class="icon">
+                {{> "icons/arrow-right" }}
+            </i>
+        </a>
+    </div>
+</article>
+

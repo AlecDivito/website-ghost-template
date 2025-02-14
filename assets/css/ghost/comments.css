@@ -1,3 +1,25 @@
 .gh-post-comments {
-    margin-block: 8vmin 4vmin;
+  margin-block: 8vmin 4vmin;
+}
+
+.page-comments--container {
+  margin-top: 5rem;
+}
+
+.page-comments {
+  padding: 7rem 3rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  border-radius: 12px;
+  border: 1px solid black;
+}
+
+.page-comments .gh-button {
+  margin-top: 3rem;
+}
+
+.page-comments a {
+  color: var(--color-primary);
 }

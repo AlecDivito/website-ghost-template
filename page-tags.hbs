@@ -1,0 +1,19 @@
+{{!< default}}
+
+<div class="page tags">
+    {{#post}}
+        {{> "hero" }}
+    {{/post}}
+
+
+    <section class="home-section gh-tags">
+
+        <div class="grid tag-grid">
+            {{#get "tags" include="count.posts" order="count.posts DESC"}}
+                {{#foreach tags}}
+                    {{> "tag-section-card" }}
+                {{/foreach}}
+            {{/get}}
+        </div>
+    </section>
+</div>
