@@ -3,17 +3,57 @@
 
 :root {
   /* Colors that are imported from past project */
-  --primary-color: #475de6;
+  --primary-color: #27445d;
+  --secondary-color: #497d74;
+  --third-color: #71bbb2;
+  --forth-color: #efe9d5;
 
-  --secondary-color: #0af541;
-  --third-color: #f50a1e;
-  --forth-color: #f5be0a;
-  --fifth-color: #a03c44;
-
+  --text-color-link: var(--third-color);
+  --text-color-header: #eeeeee;
+  --text-color-description: #ccc;
+  --text-color-figcaption: #aaa;
   --text-color-base: #464646;
-  --text-color-header: #fdfffd;
 
-  --background-color-base: #fff;
+  --background-color-base: #1d3448;
+  --border-color: var(--secondary-color);
+
+  /* Home page specific styles */
+  --text-color-section-title: var(--text-color-header);
+
+  /* Card widget */
+  --color-card-title: var(--text-color-header);
+  --color-card-title-underline: var(--forth-color);
+  --background-color-card: #355b7d;
+  --background-color-access-block: #40709a;
+  --box-shadow-color-card: #373737;
+
+  /* Social Share */
+  --border-color-social-share: var(--background-color-card);
+  --background-color-social-share: var(--background-color-base);
+  --background-color-hover-social-share: var(--background-color-card);
+
+  /* Blog page specific styles */
+  --background-color-blog-card: var(--primary-color);
+  --background-color-blog-card-hover: #1f364a;
+  --background-color-blog-highlight: var(--background-color-card);
+  --background-color-blog-signup-card: var(--background-color-card);
+  --background-color-code: #101e29;
+  --color-blog-highlight: #b0fe5e;
+  --color-blog-link: #ffdb62;
+
+  /*  */
+  --border-radis-card: 16px;
+  --border-radis-pagination: 32px;
+
+  /* Border colors */
+  --border-color-pagination: var(--third-color);
+
+  /* Background image color */
+  --background-color-image: var(--background-color-card);
+
+  /* Font Sizes */
+
+  --font-size-paragraph: 1.5em;
 
   /* Colours */
   --color-primary: var(--ghost-accent-color, #3eb0ef);

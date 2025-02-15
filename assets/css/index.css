@@ -69,7 +69,8 @@ html,
   display: flex;
   flex-direction: column;
   min-height: 100vh;
-  background: #ffffff;
+  background: var(--background-color-base);
+  color: var(--text-color-header);
 }
 
 .gh-main {
@@ -198,9 +199,10 @@ html,
 .gh-feature-image img {
   margin-inline: auto;
   width: 100%;
-  border-radius: 12px;
-  box-shadow: 0 4px 8px rgba(71, 93, 230, 1);
-  border: 1px solid rgba(0, 0, 0, 0.7);
+  border-radius: var(--border-radis-card);
+  box-shadow: 0 4px 8px var(--background-color-image);
+  /* border: 1px solid rgba(0, 0, 0, 0.7); */
+  background-color: var(--background-color-image);
 }
 
 .gh-post-footer {

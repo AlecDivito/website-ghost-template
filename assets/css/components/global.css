@@ -39,12 +39,10 @@
   --color-bg-base: 0 0% 100%;
   --color-bg-base-reverse: 0 0% 0%;
   --color-neutral: var(--color-grey);
-  --color-border: #ebebeb;
 
   --color-transparent: transparent;
   --color-focus-hsl: 217 99% 65%;
   --color-focus: hsl(var(--color-focus-hsl));
-  --border-color: var(--color-border);
   --border-width: 1px;
   --font-system: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif,
     'Apple Color Emoji', 'Segoe UI Emoji';
@@ -211,7 +209,7 @@ ul:not([class]) li + li {
 }
 
 a:not([class]) {
-  color: var(--color-primary);
+  color: var(--color-blog-link);
   text-decoration-skip-ink: auto;
 }
 

@@ -9,6 +9,7 @@
   --full: minmax(var(--gap), 1fr);
 
   display: grid;
+  z-index: 2;
   grid-template-columns:
     [full-start] var(--full)
     [wide-start] var(--wide)
@@ -51,6 +52,10 @@
 
 .gh-content > [id] + * {
   margin-top: 1.5rem;
+}
+
+.gh-content .kg-callout-card {
+  border-radius: var(--border-radis-card);
 }
 
 .gh-content [id] + .kg-card,
@@ -115,8 +120,26 @@
 /* Cards
 /* ---------------------------------------------------------- */
 
+.gh-content .kg-card .kg-bookmark-container {
+  background-color: var(--background-color-blog-card);
+  color: var(--text-color-description);
+}
+
+.gh-content .kg-card a.kg-bookmark-container:hover {
+  background-color: var(--background-color-blog-card-hover);
+  color: var(--text-color-description);
+}
+
+.kg-bookmark-title {
+  color: var(--text-color-header);
+}
+
+.kg-bookmark-metadata {
+  color: var(--text-color-figcaption);
+}
+
 .gh-content .kg-card.kg-signup-card {
-  border-radius: 12px;
+  border-radius: var(--border-radis-card);
 }
 
 .gh-content :not(.kg-card):not([id]) + .kg-card {
@@ -130,7 +153,7 @@
 figcaption {
   padding: 1.5rem 1.5rem 0;
   text-align: center;
-  color: rgba(0, 0, 0, 0.5);
+  color: var(--text-color-figcaption);
   font-weight: 600;
   font-size: 1.3rem;
   line-height: 1.4em;
@@ -140,15 +163,18 @@ figcaption strong {
   color: rgba(0, 0, 0, 0.8);
 }
 
+.gh-canvas pre[class*='language-'] {
+  background-color: var(--background-color-code);
+}
+
 .gh-canvas :not(pre) code {
   vertical-align: middle;
   padding: 0.15em 0.4em 0.15em;
-  border: #e1eaef 1px solid;
   font-weight: 400 !important;
   font-size: 0.9em;
   line-height: 1em;
-  color: #dc0050;
-  background: #f0f6f9;
+  color: var(--color-blog-highlight);
+  background: var(--background-color-blog-highlight);
   border-radius: 0.25em;
   font-family: monospace;
 }
@@ -226,4 +252,9 @@ figcaption strong {
 
 .gh-content tbody tr:last-child {
   border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+/* Custom Content that seems to be installed...somehow */
+.kg-toggle-card .kg-toggle-content ol {
+  margin-left: 2rem;
 }

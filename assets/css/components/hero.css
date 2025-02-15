@@ -5,7 +5,13 @@
 }
 
 .hero--curve {
+  z-index: 0;
   margin-top: -1px;
+  background: var(--background-color-base);
+}
+
+.hero--curve path {
+  fill: var(--primary-color);
 }
 
 .gh-canvas .hero--post {
@@ -121,14 +127,14 @@
 }
 .hero__description {
   font-size: 1.5em;
-  color: var(--text-color-header);
+  color: var(--text-color-description);
   margin-bottom: 1rem;
   margin-top: 1rem;
 }
 .hero__date {
   margin: 0px;
   padding: 0px;
-  color: var(--text-color-header);
+  color: var(--text-color-description);
   position: absolute;
   right: 30px;
 }
@@ -209,28 +215,26 @@
 }
 
 /** These are all the edits need to make the home page work **/
-.hero.is-home .hero__body {
+.hero.is-not-post .hero__body {
   display: flex;
   flex-direction: column;
   align-content: center;
   align-items: center;
   text-align: center;
-  max-width: var(--small);
   margin: auto;
   margin-bottom: 2rem;
 }
 
-.hero.is-home .hero__description {
-  font-size: 1em;
-  padding-left: 1rem;
-  padding-right: 1rem;
-  color: #4d4d4d;
-  margin: unset;
+.hero.is-not-post .hero__title {
+  margin-bottom: 3rem;
+  font-size: 4em;
 }
 
-.hero.is-home .hero__image--ghost {
-  width: 290px;
-  height: 200px;
+.hero.is-not-post .hero__description {
+  font-size: var(--font-size-paragraph);
+  padding-left: 1rem;
+  padding-right: 1rem;
+  margin: unset;
 }
 
 .is-not-post {

@@ -44,32 +44,32 @@ Re-usable card for linking to posts
             </div>
     {{/if}}
 
-    <div class="widget__body">
+    <div class="widget__body {{^if feature_image}}widget__body--no-image{{/if}}">
         {{#unless feature_image}}
-        <div class="widget__notifications m-b">
-            {{#unless access}}
-            {{^has visibility="public"}}
-                <div class="widget__access">
-                    <i class="icon icon-lock icon--sm">
-                        {{> "icons/lock"}}
-                    </i>
-                    {{#has visibility="members"}}
-                        Members only
-                    {{else}}
-                        Paid-members only
+            <div class="widget__notifications">
+                {{#unless access}}
+                    {{^has visibility="public"}}
+                        <div class="m-b widget__access">
+                            <i class="icon icon-lock icon--sm">
+                                {{> "icons/lock"}}
+                            </i>
+                            {{#has visibility="members"}}
+                                Members only
+                            {{else}}
+                                Paid-members only
+                            {{/has}}
+                        </div>
                     {{/has}}
-                </div>
-            {{/has}}
-            {{/unless}}
+                {{/unless}}
 
-            {{#if featured}}
-                <div class="widget__access--relative widget__featured">
-                    <i class="icon icon-star filled">
-                        {{> "icons/star" }}
-                    </i>
-                </div>
-            {{/if}}
-        </div>
+                {{#if featured}}
+                    <div class="m-b widget__access--relative widget__featured">
+                        <i class="icon icon-star filled">
+                            {{> "icons/star" }}
+                        </i>
+                    </div>
+                {{/if}}
+            </div>
         {{/unless}}
 
         {{> "tag" }}

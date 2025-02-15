@@ -10,13 +10,13 @@
   display: flex;
   justify-content: space-between;
 
-  border: 1px solid black;
-  border-radius: 36px;
+  border: 1px solid var(--border-color-pagination);
+  border-radius: var(--border-radis-pagination);
   padding: 2rem;
   font-weight: 700;
 }
 
 .pagination .page-number {
   margin: 0 2rem;
-  color: var(--color-text-acc);
+  color: var(--text-color-section-title);
 }

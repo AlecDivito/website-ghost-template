@@ -1,6 +1,7 @@
 .widget--float {
   border: none;
   margin-bottom: 0;
+  background: none;
   box-shadow: unset;
 }
 
@@ -8,11 +9,12 @@
   width: 100%;
   height: 100%;
   object-fit: cover;
-  border-radius: 15px; /* Rounded corners */
+  border-radius: var(--border-radis-card); /* Rounded corners */
   grid-row: span 1;
   max-height: 360px;
   max-width: unset;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.25);
+  background-color: var(--background-color-card);
 }
 
 .widget--float .widget__content {
@@ -33,7 +35,11 @@
 }
 
 .widget--float .widget__link--float {
-  display: flex;
   flex-direction: row;
   justify-items: center;
+
+  display: inline-flex;
+  border-right: 2px solid transparent;
+  border-left: 0;
+  padding-left: 0px;
 }

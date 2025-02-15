@@ -12,7 +12,7 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  border-radius: 12px;
+  border-radius: var(--border-radis-card);
   border: 1px solid black;
 }
 

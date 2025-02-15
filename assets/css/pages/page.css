@@ -11,3 +11,7 @@
 .page .hero__body {
   padding-left: 3rem;
 }
+
+.page .widget.widget--1 .widget__image {
+  max-height: 360px;
+}

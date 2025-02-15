@@ -70,15 +70,20 @@
   margin: 0 0.3vmin;
 }
 
+.section__link,
+.tag--text,
+.widget--float .widget__link--float,
 .nav a {
   position: relative;
   overflow: hidden;
   display: inline-block;
   padding: 5px 0.3rem;
   border: 2px solid transparent;
-  transition: border-bottom 0.3s ease-in-out;
 }
 
+.section__link::before,
+.tag--text::before,
+.widget--float .widget__link--float::before,
 .nav a::before {
   content: '';
   position: absolute;
@@ -90,6 +95,9 @@
   transition: width 0.3s ease-in-out;
 }
 
+.section__link:hover::before,
+.tag--text:hover::before,
+.widget--float .widget__link--float:hover::before,
 .nav a:hover::before {
   width: 100%; /* Expands from left to right */
 }

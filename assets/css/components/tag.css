@@ -1,10 +1,8 @@
 .article_tags {
   display: flex;
   flex-direction: row;
-}
-
-.article_tags a:hover {
-  border-bottom: 1px solid black;
+  line-height: 1em;
+  /* margin-bottom: 1rem; */
 }
 
 .article_tags .tag {

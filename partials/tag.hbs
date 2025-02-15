@@ -1,8 +1,9 @@
 <div class="article_tags">
     {{#foreach tags limit="1"}}
         <a href={{url}}>
-            <span style="--color-accent: {{accent_color}}" class="tag">{{name}}</span>
+            <span style="--color-accent: {{accent_color}}" class="tag">
+                <span class="tag--text">{{name}}</span>
+            </span>
         </a>
     {{/foreach}}
-
 </div>
