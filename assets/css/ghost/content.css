@@ -37,6 +37,10 @@
 /* Content & Typography
 /* ---------------------------------------------------------- */
 
+.gh-content--filler {
+  padding: 4rem;
+}
+
 .gh-content > * + * {
   margin-top: 4vmin;
 }

@@ -23,6 +23,10 @@
   margin: auto;
 }
 
+.gh-head-inner.is-post {
+  max-width: 1200px;
+}
+
 /* Brand
 /* ---------------------------------------------------------- */
 
@@ -268,6 +272,7 @@ body:not(.gh-head-open) .gh-burger:hover .gh-burger-inner::after {
   #gh-head .gh-head-inner {
     height: 100%;
     grid-template-columns: 1fr;
+    grid-gap: unset;
   }
   #gh-head .gh-head-brand {
     position: relative;
@@ -352,6 +357,12 @@ body:not(.gh-head-open) .gh-burger:hover .gh-burger-inner::after {
   .gh-head-open #gh-head .gh-head-actions,
   .gh-head-open #gh-head .gh-head-menu {
     display: flex;
+  }
+}
+
+@media (max-width: 720px) {
+  .gh-head-inner {
+    grid-gap: 0px;
   }
 }
 

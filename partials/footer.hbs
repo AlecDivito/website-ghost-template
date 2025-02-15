@@ -3,7 +3,7 @@
 </svg>
 
 <footer class="footer {{#is "home"}}home{{/is}}">
-    <div class="footer--container">
+    <div class="footer--container {{#is "post"}}is-post{{/is}}">
         <div class="footer--row">
             <h3 class="m-b">{{@site.title}}</h3>
             <div class="footer__form">
@@ -39,6 +39,10 @@
                 </li>
             </ul>
         </div>
+    </div>
+
+    <div class="footer--alec">
+        <img src="{{asset "alec-head.png"}}"/>
     </div>
 </footer>
             {{!--

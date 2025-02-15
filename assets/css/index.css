@@ -35,6 +35,7 @@ production stylesheet in assets/built/screen.css using: npm run dev
 @import 'components/float-card.css';
 @import 'components/tag-section-card.css';
 @import 'components/social-share.css';
+@import 'components/author.css';
 
 /* Pages */
 @import 'pages/home.css';

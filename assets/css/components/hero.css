@@ -1,10 +1,3 @@
-/*
-$header-block-height: 200px;
-$header-curve-height: 100px;
-$height: $header-block-height + $header-curve-height;
-
-$offset-height: 60px; */
-
 .hero .gh-container {
   margin: 0 auto;
   max-width: 1000px;
@@ -19,16 +12,24 @@ $offset-height: 60px; */
   grid-column: wide-start / wide-end;
 }
 
+.hero--post .hero__description {
+  font-size: 1em;
+  margin: 0.5rem 0rem 0.75rem 0rem;
+}
+
 #hero-word-rotation {
   display: inline-grid;
   position: relative;
+  width: 80px;
+  height: 24px;
+  white-space: nowrap;
 }
 
 #hero-word-rotation > * {
   grid-column: 1;
   grid-row: 1;
   text-align: left;
-  min-width: 250px;
+  /* min-width: 250px; */
   animation-duration: 500ms;
   animation-fill-mode: both;
   -webkit-animation-duration: 500ms;
@@ -70,7 +71,6 @@ $offset-height: 60px; */
 }
 
 .hero {
-  min-height: 200px;
   display: flex;
   align-items: center;
   position: relative;
@@ -111,11 +111,12 @@ $offset-height: 60px; */
 .hero__title {
   font-size: 3em;
   color: var(--text-color-header);
+  hyphens: auto;
+  overflow: hidden;
 }
 .hero__title--content {
 }
 .hero__title--emoji {
-  font-size: 2em;
   vertical-align: middle;
 }
 .hero__description {
@@ -153,10 +154,6 @@ $offset-height: 60px; */
 @media (max-width: 900px) {
   .hero {
     min-height: 200px;
-    text-align: center;
-  }
-  .hero__title {
-    text-align: center;
   }
   .hero__title--emoji {
     font-size: 1.5em;
@@ -188,6 +185,10 @@ $offset-height: 60px; */
   .hero--p0 {
     padding-left: 2rem;
   }
+
+  .is-not-post .hero__image {
+    display: none;
+  }
 }
 @media (max-width: 480px) {
   #hero-word-rotation {
@@ -196,7 +197,42 @@ $offset-height: 60px; */
   .hero--p0 {
     padding: unset;
   }
-  .hero--content {
-    padding: 0rem 1rem;
+
+  .hero__body,
+  .hero__title {
+    margin-bottom: 1rem;
   }
+
+  .hero--post .hero__description {
+    display: none;
+  }
+}
+
+/** These are all the edits need to make the home page work **/
+.hero.is-home .hero__body {
+  display: flex;
+  flex-direction: column;
+  align-content: center;
+  align-items: center;
+  text-align: center;
+  max-width: var(--small);
+  margin: auto;
+  margin-bottom: 2rem;
+}
+
+.hero.is-home .hero__description {
+  font-size: 1em;
+  padding-left: 1rem;
+  padding-right: 1rem;
+  color: #4d4d4d;
+  margin: unset;
+}
+
+.hero.is-home .hero__image--ghost {
+  width: 290px;
+  height: 200px;
+}
+
+.is-not-post {
+  padding: 5rem 0rem;
 }

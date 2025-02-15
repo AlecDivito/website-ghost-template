@@ -1,0 +1,19 @@
+<div class="author">
+    <div class="author__avatars">
+        {{#foreach authors limit="1" visibility="all"}}
+            <img class="author__avatars--image" data-sizes="auto" data-dev="no" data-src="{{profile_image}}" src="{{profile_image}}" alt="{{name}}" />
+        {{/foreach}}
+    </div>
+    <div class="author__detail">
+        <span>
+            {{#foreach authors limit="1" visibility="all"}}
+                {{name}}
+            {{/foreach}}
+        </span>
+
+        <span class="author__detail--small">
+            <time datetime="{{date format="YYYY-MM-DD"}}">{{date format="MMM D, YYYY"}}</time>
+            <span class="author__detail--reading">{{reading_time}}</span>
+        </span>
+    </div>
+</div>

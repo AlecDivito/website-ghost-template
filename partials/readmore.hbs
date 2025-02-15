@@ -7,7 +7,7 @@
         {{/next_post}}
     </div>
 
-    <div>
+    <div class="gh-readmore-recommended">
         {{#get "posts" include="authors,tags" filter="primary_tag:{{primary_tag.slug}}+posts.id:-{{id}}" limit="1"}}
             {{#foreach posts}}
                 <h4>If you liked this one</h4>

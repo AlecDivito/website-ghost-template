@@ -5,10 +5,30 @@
   transform: rotate(180deg) translate(0px, -2px);
 }
 
+.footer--alec {
+  position: absolute;
+  bottom: 0;
+  width: 500px;
+  left: 35px;
+  overflow: hidden;
+  height: 133px;
+  transition: padding-top 100ms ease-in-out;
+}
+
+.footer--alec img {
+  width: 200px;
+}
+
+.footer--alec:hover {
+  padding-top: 65px;
+}
+
 .footer {
   width: 100%;
   background-color: #475de6;
   color: #fafafa;
+  position: relative;
+  overflow: hidden;
 }
 
 .footer--container {
@@ -20,6 +40,10 @@
 .footer .footer--container {
   max-width: 1668px;
   margin: auto;
+}
+
+.footer .footer--container.is-post {
+  max-width: 1200px;
 }
 
 .footer--row {
@@ -68,6 +92,12 @@
 }
 
 @media (max-width: 768px) {
+  .footer--alec {
+    left: unset;
+    right: 0px;
+    width: unset;
+  }
+
   .footer--container {
     margin-top: 0rem;
     grid-template-columns: 1fr 1fr;

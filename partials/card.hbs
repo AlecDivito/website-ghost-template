@@ -41,11 +41,8 @@ Re-usable card for linking to posts
                     </i>
                 </div>
             {{/if}}
-    </div>
-
+            </div>
     {{/if}}
-
-
 
     <div class="widget__body">
         {{#unless feature_image}}
@@ -75,13 +72,7 @@ Re-usable card for linking to posts
         </div>
         {{/unless}}
 
-        <div class="widget__tags">
-            {{#foreach tags limit="1" visibility="all"}}
-                <a href={{url}}>
-                    <span style="--color-accent: {{accent_color}}" class="tag">{{name}}</span>
-                </a>
-            {{/foreach}}
-        </div>
+        {{> "tag" }}
 
         <div class="widget__content">
             <a href="{{url}}">
@@ -111,27 +102,8 @@ Re-usable card for linking to posts
             {{/is}}
         </div>
 
-
-
         <div class="widget__author">
-            <div class="widget__author__avatars">
-                {{#foreach authors limit="1" visibility="all"}}
-                    <img class="widget__author__avatars--image" data-sizes="auto" data-dev="no" data-src="{{profile_image}}" src="{{profile_image}}" alt="{{name}}" />
-                {{/foreach}}
-            </div>
-            <div class="widget__author__detail">
-                <span>
-                    {{#foreach authors limit="1" visibility="all"}}
-                        {{name}}
-                    {{/foreach}}
-                </span>
-
-                <span class="widget__author__detail--small">
-                    <time datetime="{{date format="YYYY-MM-DD"}}">{{date format="MMM D, YYYY"}}</time>
-                    <span class="widget__author__detail--reading">{{reading_time}}</span>
-                </span>
-
-            </div>
+            {{> "author" }}
         </div>
     </div>
 </article>

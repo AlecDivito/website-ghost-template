@@ -1,7 +1,11 @@
 <!-- Hero -->
-<section class='hero'>
+<section class='hero {{#is 'home'}}is-home{{/is}} {{^is 'post'}}is-not-post{{/is}}'>
     <div class='hero--container common--max-width {{#is "post"}}grid gh-canvas{{/is}}'>
         <div class='hero--z-index hero--content {{#is "post"}}hero--post{{/is}}'>
+            {{#is "post"}}
+                {{> "tag" }}
+            {{/is}}
+
             {{#is 'page,tag'}}
                 {{#if feature_image}}
                     <div class="hero__image--container">
@@ -9,16 +13,19 @@
                     </div>
                 {{/if}}
             {{/is}}
+            {{#is 'home'}}
+                {{!--
+                <div class="hero__image--container">
+                    <img class="hero--alec-img" src="{{ asset "alec.png" }}" alt="A avatar that looks nothing like alec" />
+                </div>
+                --}}
+            {{/is}}
 
             <div class='hero__body'>
                 <h1 class='hero__title'>
                     {{#is 'home'}}
-                        <span class='hero__title--emoji'>👋</span>
-                        <span class='hero__title--content'>Hi there, let's talk about</span>
-                        <div id='hero-word-rotation'>
-                            <div>Kubernetes👌</div>
-                            <div></div>
-                        </div>
+                        {{!-- <span class='hero__title--emoji'>👋</span> --}}
+                        <span class='hero__title--content'>I'm Alec Di Vito</span>
                     {{/is}}
 
                     {{#is 'page'}}
@@ -36,7 +43,8 @@
 
                 <p class='hero__description'>
                     {{#is 'home'}}
-                        {{description}}
+                        and this is a personal development blog about
+                        <span id='hero-word-rotation'><span>Kubernetes👌.</span><span></span></span>
                     {{/is}}
                     {{#is 'tag'}}
                         {{description}}
@@ -47,20 +55,27 @@
                         {{#has slug="private-cloud"}} {{content}} {{/has}}
                     {{/is}}
                     {{#is 'post'}}
-                        <span class='gh-post-meta'>
-                            <time datetime='{{date format='YYYY-MM-DD'}}'>{{date format='D MMM YYYY'}}</time>
-                            <span class='bull'>&bull;</span>
-                            {{reading_time}}
-                        </span>
+                        {{ excerpt }}
                     {{/is}}
                 </p>
+
+                {{#is 'home'}}
+                    <p class="hero__description">
+                        I'm trying to build a private cloud and documenting the process into insanity. <a href="#/portal">Join me!</a>
+                    </p>
+                {{/is}}
+
+                {{#is 'post'}}
+                    {{> "author" }}
+                {{/is}}
+
             {{!--
             {{#is "tag"}}
             <p class="hero__description">
             A collection of {{plural ../pagination.total empty='posts' singular='% post' plural='% posts'}}
             </p>
             {{/is}}
-            --}}
+
                 <div class='hero--flex'>
                     <ul class='hero__list'>
                         {{#foreach tags visibility='all'}}
@@ -71,7 +86,7 @@
                         </li>
                         {{/foreach}}
                     </ul>
-                </div>
+                </div> --}}
             </div>
         </div>
     </div>
