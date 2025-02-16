@@ -47,7 +47,7 @@
   display: grid;
   grid-template-columns: repeat(5, 1fr); /* 2 equal columns */
   /* grid-template-rows: repeat(2, 1fr); /* 2 equal rows */
-  grid-template-rows: minmax(100px, 1fr) minmax(100px, 1fr) minmax(0px, 0);
+  grid-template-rows: minmax(100px, 1fr) minmax(100px, 1fr) minmax(100px, 1fr);
   gap: 20px;
   overflow: hidden;
 }
@@ -87,13 +87,13 @@
 @media (max-width: 1280px) {
   .blog-feed {
     grid-template-columns: repeat(4, 1fr);
-    grid-template-rows: minmax(100px, 1fr) minmax(100px, 1fr) minmax(100px, 1fr);
+    /* grid-template-rows: minmax(100px, 1fr) minmax(100px, 1fr) minmax(100px, 1fr); */
   }
 }
 
 @media (max-width: 980px) {
   .blog-feed {
-    grid-template-rows: minmax(100px, 1fr) minmax(100px, 1fr) minmax(0px, 0);
+    /* grid-template-rows: minmax(100px, 1fr) minmax(100px, 1fr) minmax(0px, 0); */
   }
 }
 
