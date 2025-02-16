@@ -1,6 +1,10 @@
 /* Content grid
 /* ---------------------------------------------------------- */
 
+.gh-content .kg-gallery-image img {
+  height: unset;
+}
+
 .gh-canvas,
 .kg-width-full.kg-content-wide {
   --gap: 4vw;
