@@ -2,7 +2,7 @@
 /* ---------------------------------------------------------- */
 
 .gh-readmore {
-  padding: 0rem 2rem 2rem 0rem;
+  padding: 0rem 2rem 2rem 2rem;
   display: grid;
   grid-gap: 4vmin;
   grid-template-columns: 1fr 1fr 1fr;

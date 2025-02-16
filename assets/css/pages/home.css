@@ -25,6 +25,12 @@
   display: inline-block;
 }
 
+.section__title {
+  max-width: 1200px;
+  margin: auto;
+  padding-left: 1rem;
+}
+
 .home-section .section__link {
   display: inline-flex;
   align-items: center;
@@ -196,12 +202,19 @@
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(268px, 1fr));
   gap: 15px;
-  padding: 20px 0px;
+  padding: 20px 1rem;
+  max-width: 1200px;
+  margin: auto;
 }
 
 @media (max-width: 768px) {
   .tag-grid {
     grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    padding: 0rem 1rem;
+  }
+
+  .home-section {
+    padding: 0rem 1rem;
   }
 }
 
