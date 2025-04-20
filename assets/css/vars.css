@@ -25,7 +25,7 @@
   --color-card-title-underline: var(--forth-color);
   --background-color-card: #355b7d;
   --background-color-access-block: #40709a;
-  --box-shadow-color-card: #373737;
+  --box-shadow-color-card: var(--background-color-base);
 
   /* Social Share */
   --border-color-social-share: var(--background-color-card);
@@ -49,7 +49,7 @@
   --border-color-pagination: var(--third-color);
 
   /* Background image color */
-  --background-color-image: var(--background-color-card);
+  --background-color-image: var(--background-color-base);
 
   /* Font Sizes */
 
