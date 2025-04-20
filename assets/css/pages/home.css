@@ -172,6 +172,7 @@
 
 .home-companies {
   display: flex;
+  align-items: center;
   justify-items: center;
   justify-content: space-around;
   padding: 2rem;
@@ -180,7 +181,7 @@
 }
 
 .home-companies .logos {
-  height: 75px;
+  max-height: 75px;
   max-width: 150px;
   object-fit: contain;
   filter: grayscale(1) invert(1);
