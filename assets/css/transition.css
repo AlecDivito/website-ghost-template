@@ -18,11 +18,11 @@
 
 /* Page */
 ::view-transition-old(root) {
-  animation: 0.5s cubic-bezier(0.4, 0, 0.2, 1) both fade-out;
+  animation: 0.2s cubic-bezier(0.4, 0, 0.2, 1) both fade-out;
 }
 
 ::view-transition-new(root) {
-  animation: 0.5s cubic-bezier(0.4, 0, 0.2, 1) both fade-in;
+  animation: 0.2s cubic-bezier(0.4, 0, 0.2, 1) both fade-in;
 }
 
 @keyframes fade-in {
@@ -61,12 +61,12 @@
 }
 
 ::view-transition-old(hero-image) {
-  animation: 300ms cubic-bezier(0.4, 0, 0.2, 1) both fade-out,
-             300ms cubic-bezier(0.4, 0, 0.2, 1) both slide-to-left;
+  animation: 200ms cubic-bezier(0.4, 0, 0.2, 1) both fade-out,
+             200ms cubic-bezier(0.4, 0, 0.2, 1) both slide-to-left;
 }
 
 ::view-transition-new(hero-image) {
-  animation: 300ms cubic-bezier(0.4, 0, 0.2, 1) both fade-in,
-             300ms cubic-bezier(0.4, 0, 0.2, 1) both slide-from-right;
+  animation: 200ms cubic-bezier(0.4, 0, 0.2, 1) both fade-in,
+             200ms cubic-bezier(0.4, 0, 0.2, 1) both slide-from-right;
 }
 
