@@ -74,10 +74,65 @@
                 if (portal && newContainer) {
                     newContainer.appendChild(portal);
                 }
+
+                // Logic for doing translations
+                document.querySelectorAll("article").forEach((article) => {
+                    const img = article.querySelector(".widget--img-container img");
+                    const link = article.querySelector("a").href;
+
+                    article.addEventListener("click", (e) => {
+                        // If browser doesn't support View Transitions API, navigate normally
+                        if (!document.startViewTransition) {
+                            return;
+                        }
+
+                        e.preventDefault();
+
+                        // Set a unique view-transition-name for this specific image
+                        if (img) {
+                            // Using data attributes to store the destination URL
+                            img.dataset.href = link;
+                            img.style.viewTransitionName = "hero-image";
+                        }
+
+                        // Start the transition
+                        const transition = document.startViewTransition(async () => {
+                            try {
+                                // Fetch the new page content
+                                const response = await fetch(link);
+                                const html = await response.text();
+
+                                // Create a temporary document to parse the HTML
+                                const parser = new DOMParser();
+                                const newDocument = parser.parseFromString(html, "text/html");
+
+                                // Update the current document with the new content
+                                document.body.innerHTML = newDocument.body.innerHTML;
+                                document.title = newDocument.title;
+
+                                // Update the URL
+                                window.history.pushState({}, "", link);
+                            } catch (error) {
+                                console.error("Transition failed:", error);
+                                window.location.href = link; // Fallback to normal navigation
+                            }
+                        });
+
+                        // Clean up after the transition is complete
+                        transition.finished.then(() => {
+                        // Remove the view-transition-name from any elements that might still have it
+                        document
+                            .querySelectorAll('[style*="view-transition-name"]')
+                            .forEach((el) => {
+                                el.style.viewTransitionName = "";
+                            });
+                        });
+                    });
+                });
             });
 
 
-            {{!--
+            
             document.addEventListener("DOMContentLoaded", function () {
                 const baseURL = "https://alecdivito.com"; // Replace with your real Ghost URL
 
@@ -99,7 +154,7 @@
                     }
                 });
             });
-            --}}
+            
 
         </script>
     </body>
