@@ -2,89 +2,93 @@
 /* ---------------------------------------------------------- */
 
 :root {
-  /* Colors that are imported from past project */
-  --primary-color: #27445d;
-  --secondary-color: #497d74;
-  --third-color: #71bbb2;
-  --forth-color: #efe9d5;
+    /* Colors that are imported from past project */
+    --primary-color: #27445d;
+    --secondary-color: #497d74;
+    --third-color: #71bbb2;
+    --forth-color: #efe9d5;
 
-  --text-color-link: var(--third-color);
-  --text-color-header: #eeeeee;
-  --text-color-description: #ccc;
-  --text-color-figcaption: #aaa;
-  --text-color-base: #464646;
+    --text-color-link: var(--third-color);
+    --text-color-header: #eeeeee;
+    --text-color-description: #ccc;
+    --text-color-figcaption: #aaa;
+    --text-color-base: #464646;
 
-  --background-color-base: #1d3448;
-  --border-color: var(--secondary-color);
+    --background-color-base: #1d3448;
+    --border-color: var(--secondary-color);
 
-  /* Home page specific styles */
-  --text-color-section-title: var(--text-color-header);
+    /* Home page specific styles */
+    --text-color-section-title: var(--text-color-header);
 
-  /* Card widget */
-  --color-card-title: var(--text-color-header);
-  --color-card-title-underline: var(--forth-color);
-  --background-color-card: #355b7d;
-  --background-color-access-block: #40709a;
-  --box-shadow-color-card: var(--background-color-base);
+    /* Card widget */
+    --color-card-title: var(--text-color-header);
+    --color-card-title-underline: var(--forth-color);
+    --background-color-card: #355b7d;
+    --background-color-access-block: #40709a;
+    --box-shadow-color-card: var(--background-color-base);
 
-  /* Social Share */
-  --border-color-social-share: var(--background-color-card);
-  --background-color-social-share: var(--background-color-base);
-  --background-color-hover-social-share: var(--background-color-card);
+    /* Social Share */
+    --border-color-social-share: var(--background-color-card);
+    --background-color-social-share: var(--background-color-base);
+    --background-color-hover-social-share: var(--background-color-card);
 
-  /* Blog page specific styles */
-  --background-color-blog-card: var(--primary-color);
-  --background-color-blog-card-hover: #1f364a;
-  --background-color-blog-highlight: var(--background-color-card);
-  --background-color-blog-signup-card: var(--background-color-card);
-  --background-color-code: #101e29;
-  --color-blog-highlight: #b0fe5e;
-  --color-blog-link: #ffdb62;
+    /* Blog page specific styles */
+    --background-color-blog-card: var(--primary-color);
+    --background-color-blog-card-hover: #1f364a;
+    --background-color-blog-highlight: var(--background-color-card);
+    --background-color-blog-signup-card: var(--background-color-card);
+    --background-color-code: #101e29;
+    --color-blog-highlight: #b0fe5e;
+    --color-blog-link: #ffdb62;
 
-  /*  */
-  --border-radis-card: 16px;
-  --border-radis-pagination: 32px;
+    /*  */
+    --border-radis-card: 16px;
+    --border-radis-pagination: 32px;
 
-  /* Border colors */
-  --border-color-pagination: var(--third-color);
+    /* Border colors */
+    --border-color-pagination: var(--third-color);
 
-  /* Background image color */
-  --background-color-image: var(--background-color-base);
+    /* Background image color */
+    --background-color-image: var(--background-color-base);
 
-  /* Font Sizes */
+    /* Font Sizes */
 
-  --font-size-paragraph: 1.5em;
+    --font-size-paragraph: 1.5em;
 
-  /* Colours */
-  --color-primary: var(--ghost-accent-color, #3eb0ef);
-  --color-base: #dfdfdf;
-  --color-border: #ddd;
-  --color-bg: #f5f5f5;
-  --color-success: #80b912;
-  --color-error: #f05230;
+    /* Colours */
+    --color-primary: var(--ghost-accent-color, #3eb0ef);
+    --color-base: #dfdfdf;
+    --color-border: #ddd;
+    --color-bg: #f5f5f5;
+    --color-success: #80b912;
+    --color-error: #f05230;
 
-  /* Fonts */
-  --font-sans-serif: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu',
-    'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
-  --font-serif: Georgia, Times, serif;
-  --font-mono: Menlo, Courier, monospace;
-  --font-light: 100;
-  --font-normal: 400;
-  --font-bold: 700;
-  --font-heavy: 800;
+    /* Fonts */
+    --font-sans-serif:
+        -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell',
+        'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
+    --font-serif: Georgia, Times, serif;
+    --font-mono: Menlo, Courier, monospace;
+    --font-light: 100;
+    --font-normal: 400;
+    --font-bold: 700;
+    --font-heavy: 800;
 
-  /* Breakpoints */
-  --xlarge: 1680px;
-  --large: 1280px;
-  --medium: 980px;
-  --small: 740px;
-  --xsmall: 480px;
+    /* Breakpoints */
+    --xlarge: 1680px;
+    --large: 1280px;
+    --medium: 980px;
+    --small: 740px;
+    --xsmall: 480px;
 
-  /* Sizes */
-  --height: 4rem;
-  --margin: 2rem;
-  --radius: 0.5rem;
+    /* Sizes */
+    --height: 4rem;
+    --margin: 2rem;
+    --radius: 0.5rem;
 
-  /* Other stuff */
-  --content-width: 680px;
+    /* Other stuff */
+    --content-width: 680px;
+
+    --gh-font-body: var(--font-serif);
+    --gh-font-heading: var(--font-serif);
 }
