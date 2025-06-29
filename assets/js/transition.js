@@ -17,29 +17,29 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 })
 
-document.addEventListener('DOMContentLoaded', function () {
-    const baseURL = 'https://alecdivito.com' // Replace with your real Ghost URL
+// document.addEventListener('DOMContentLoaded', function () {
+//     const baseURL = 'https://alecdivito.com' // Replace with your real Ghost URL
 
-    document.querySelectorAll('img').forEach((img) => {
-        // Fix the `src` attribute
-        if (img?.data?.dev !== 'no') {
-            if (img.hasAttribute('src')) {
-                let updatedSrcset = img
-                    .getAttribute('src')
-                    .replace(/\/content\/images\//g, `${baseURL}/content/images/`)
-                img.setAttribute('src', updatedSrcset)
-            }
+//     document.querySelectorAll('img').forEach((img) => {
+//         // Fix the `src` attribute
+//         if (img?.data?.dev !== 'no') {
+//             if (img.hasAttribute('src')) {
+//                 let updatedSrcset = img
+//                     .getAttribute('src')
+//                     .replace(/\/content\/images\//g, `${baseURL}/content/images/`)
+//                 img.setAttribute('src', updatedSrcset)
+//             }
 
-            // Fix the `srcset` attribute
-            if (img.hasAttribute('srcset')) {
-                let updatedSrcset = img
-                    .getAttribute('srcset')
-                    .replace(/\/content\/images\//g, `${baseURL}/content/images/`)
-                img.setAttribute('srcset', updatedSrcset)
-            }
-        }
-    })
-})
+//             // Fix the `srcset` attribute
+//             if (img.hasAttribute('srcset')) {
+//                 let updatedSrcset = img
+//                     .getAttribute('srcset')
+//                     .replace(/\/content\/images\//g, `${baseURL}/content/images/`)
+//                 img.setAttribute('srcset', updatedSrcset)
+//             }
+//         }
+//     })
+// })
 
 // Common navigation function to use across the site
 function navigateWithTransition(url, currentImageElement = null) {
