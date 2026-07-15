@@ -40,35 +40,35 @@
     </section>
 
     {{#if @custom.show_worked_at}}
+        {{!-- Posts tagged worked-at; feature image = logo (PNG or SVG). --}}
         {{#get "posts" filter="tag:worked-at" limit="12" order="published_at DESC"}}
             {{#foreach posts}}
                 {{#if @first}}
-                <section class="home-section">
-                    <h2 class="m-b section__title">I Have Worked At</h2>
-                    <a class="section__link" href="{{@site.url}}/about/">
-                        <span>and I have done...</span>
-                        <i class="icon m-r">
-                            {{> "icons/arrow-right" }}
-                        </i>
-                    </a>
-
-                    <div class="home-companies">
-                {{/if}}
-                        <a class="home-companies__item" href="{{url}}" title="{{title}}">
-                            {{#if feature_image}}
-                                <img
-                                    class="logos"
-                                    src="{{img_url feature_image size="s"}}"
-                                    alt="{{title}}"
-                                    loading="lazy"
-                                />
-                            {{else}}
-                                <span class="home-companies__label">{{title}}</span>
-                            {{/if}}
+                    <section class="home-section">
+                        <h2 class="m-b section__title">I Have Worked At</h2>
+                        <a class="section__link" href="{{@site.url}}/about/">
+                            <span>and I have done...</span>
+                            <i class="icon m-r">
+                                {{> "icons/arrow-right" }}
+                            </i>
                         </a>
+                        <div class="home-companies">
+                {{/if}}
+                            <a class="home-companies__item" href="{{url}}" title="{{title}}">
+                                {{#if feature_image}}
+                                    <img
+                                        class="logos"
+                                        src="{{img_url feature_image size="s"}}"
+                                        alt="{{title}}"
+                                        loading="lazy"
+                                    />
+                                {{else}}
+                                    <span class="home-companies__label">{{title}}</span>
+                                {{/if}}
+                            </a>
                 {{#if @last}}
-                    </div>
-                </section>
+                        </div>
+                    </section>
                 {{/if}}
             {{/foreach}}
         {{/get}}

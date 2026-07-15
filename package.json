@@ -112,7 +112,7 @@
       "show_worked_at": {
         "type": "boolean",
         "default": true,
-        "description": "Show employers from posts tagged worked-at (feature image = logo)",
+        "description": "Show “I Have Worked At” from Ghost posts tagged worked-at (feature image = logo, PNG or SVG)",
         "group": "homepage"
       },
       "projects_tag": {

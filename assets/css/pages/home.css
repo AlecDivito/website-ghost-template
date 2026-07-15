@@ -235,8 +235,11 @@
 }
 
 .home-companies .logos {
+  display: block;
   max-height: 75px;
   max-width: 150px;
+  width: auto;
+  height: auto;
   object-fit: contain;
   filter: grayscale(1) invert(1);
 }

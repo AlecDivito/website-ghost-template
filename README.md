@@ -58,7 +58,22 @@ One neat trick is that you can also create custom one-off templates just by addi
 
 `page-chat.hbs` is an opt-in chat UI. Create a Ghost Page with slug `chat`, set theme setting `chat_agent_url` to your agent origin, and deploy the sibling backend at [`../ghost-chat-agent`](../ghost-chat-agent).
 
+### Homepage employers (“I Have Worked At”)
+
+The home page can show an employer logo strip driven by Ghost content.
+
+1. Create a tag with slug `worked-at`.
+2. Create one post per employer (they only need the tag — keep them out of the main blog if you like).
+3. Set each post’s **feature image** to the logo (PNG or SVG both work).
+4. The logo links to that post’s URL.
+5. Keep **Design → Theme settings → Show employers…** (`show_worked_at`) enabled.
+
+Posts tagged `worked-at` are excluded from the homepage blog feed and from the popular tags grid so they don’t clutter those sections.
+
+If there are no `worked-at` posts, the section is hidden.
+
 &nbsp;
+
 
 ## Setting up environment
 
