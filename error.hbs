@@ -1,17 +1,16 @@
 <!DOCTYPE html>
-<html lang="{{@site.locale}}" data-color-scheme="{{@custom.color_scheme}}">
+<html lang="{{@site.locale}}">
 <head>
 
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="color-scheme" content="light dark" />
-    <link rel="preconnect" href="https://fonts.bunny.net" crossorigin />
-    <link href="https://fonts.bunny.net/css?family=fraunces:400,600,700&display=swap" rel="stylesheet" />
-    <link href="https://fonts.bunny.net/css?family=ibm-plex-sans:400,500,600&display=swap" rel="stylesheet" />
-    <title>{{meta_title}}</title>
-    {{ghost_head}}
     <link rel="stylesheet" href="{{asset "built/index.css"}}" />
     <script src="{{asset "built/index.js"}}" defer></script>
+
+    <title>{{meta_title}}</title>
+
+    {{ghost_head}}
+    {{!-- Outputs important meta data and settings, should always be in <head> --}}
 
 </head>
 
@@ -101,7 +100,9 @@
 
 </div>
 
+{{!-- <foot> --}}
 {{ghost_foot}}
+{{!-- Outputs important scripts - should always be included before closing body tag --}}
 
 </body>
 </html>

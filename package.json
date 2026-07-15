@@ -115,12 +115,6 @@
         "description": "Show employers from posts tagged worked-at (feature image = logo)",
         "group": "homepage"
       },
-      "color_scheme": {
-        "type": "select",
-        "options": ["Dark", "Light", "Auto"],
-        "default": "Dark",
-        "description": "Site color scheme (Dark matches the live dark/darkish look)"
-      },
       "projects_tag": {
         "type": "text",
         "default": "project",

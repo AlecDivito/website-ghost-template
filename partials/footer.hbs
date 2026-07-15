@@ -34,15 +34,7 @@
             </ul>
         </div>
 
-        {{#if @custom.github_url}}
-            {{> "footer-socials"}}
-        {{else if @custom.linkedin_url}}
-            {{> "footer-socials"}}
-        {{else if @site.twitter}}
-            {{> "footer-socials"}}
-        {{else if @site.facebook}}
-            {{> "footer-socials"}}
-        {{/if}}
+        {{> "footer-socials"}}
     </div>
 
     <div class="footer--alec" aria-hidden="true">

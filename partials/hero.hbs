@@ -1,109 +1,100 @@
-<!-- Hero -->
-<section class='hero {{#is 'home'}}is-home{{/is}} {{^is 'post'}}is-not-post{{/is}}'>
+{{!-- Context-aware page hero --}}
+<section class='hero {{#is "home"}}is-home{{/is}} {{^is "post"}}is-not-post{{/is}}'>
     <div class='hero--container common--max-width {{#is "post"}}grid gh-canvas{{/is}}'>
         <div class='hero--z-index hero--content {{#is "post"}}hero--post{{/is}}'>
             {{#is "post"}}
                 {{> "tag" }}
             {{/is}}
 
-            {{!--
-            {{#is 'page,tag'}}
-                {{#if feature_image}}
-                    <div class="hero__image--container">
-                        <img class="hero__image" src="{{feature_image}}" alt="{{#if feature_image_alt}}{{feature_image_alt}}{{else}}{{title}}{{/if}}" />
-                    </div>
-                {{/if}}
-            {{/is}}
-            --}}
-            {{#is 'home'}}
-                {{!--
-                <div class="hero__image--container">
-                    <img class="hero--alec-img" src="{{ asset "alec.png" }}" alt="A avatar that looks nothing like alec" />
-                </div>
-                --}}
-            {{/is}}
-
             <div class='hero__body'>
                 <h1 class='hero__title'>
-                    {{#is 'home'}}
-                        {{!-- <span class='hero__title--emoji'>👋</span> --}}
-                        <span class='hero__title--content'>I'm Alec Di Vito</span>
+                    {{#is "home"}}
+                        <span class='hero__title--content'>
+                            {{#if @custom.hero_title}}{{@custom.hero_title}}{{else}}{{@site.title}}{{/if}}
+                        </span>
                     {{/is}}
 
-                    {{#is 'page'}}
+                    {{#is "page"}}
                         {{title}}
                     {{/is}}
 
-                    {{#is 'post'}}
+                    {{#is "post"}}
                         {{title}}
                     {{/is}}
 
-                    {{#is 'tag'}}
+                    {{#is "tag"}}
+                        {{name}}
+                    {{/is}}
+
+                    {{#is "author"}}
                         {{name}}
                     {{/is}}
                 </h1>
 
                 <p class='hero__description'>
-                    {{#is 'home'}}
-                        and this is a personal development blog about
-                        <span id='hero-word-rotation'><span>Kubernetes👌.</span><span></span></span>
+                    {{#is "home"}}
+                        {{#if @custom.hero_intro}}{{@custom.hero_intro}}{{else}}{{@site.description}}{{/if}}
+                        {{#if @custom.hero_topics}}
+                            <span
+                                id='hero-word-rotation'
+                                data-topics='{{@custom.hero_topics}}'
+                            ><span></span><span></span></span>
+                        {{/if}}
                     {{/is}}
-                    {{#is 'tag'}}
+                    {{#is "tag"}}
                         {{description}}
                     {{/is}}
-                    {{#is 'page'}}
-                        {{#has slug="blog"}} {{content}} {{/has}}
-                        {{#has slug="projects"}} {{content}} {{/has}}
-                        {{#has slug="private-cloud"}} {{content}} {{/has}}
+                    {{#is "author"}}
+                        {{bio}}
                     {{/is}}
-                    {{#is 'post'}}
-                        {{ excerpt }}
+                    {{#is "page"}}
+                        {{#has slug="blog"}}{{content}}{{/has}}
+                        {{#has slug="projects"}}{{content}}{{/has}}
+                        {{#has slug="private-cloud"}}{{content}}{{/has}}
+                        {{#has slug="tags"}}{{content}}{{/has}}
+                        {{#has slug="chat"}}
+                            {{#if custom_excerpt}}
+                                {{custom_excerpt}}
+                            {{else}}
+                                Ask about blog posts, projects, or experience. Answers come from published content on this site.
+                            {{/if}}
+                        {{/has}}
+                    {{/is}}
+                    {{#is "post"}}
+                        {{excerpt}}
                     {{/is}}
                 </p>
 
-                {{#is 'home'}}
-                    <p class="hero__description">
-                        I'm trying to build a private cloud and documenting the process into insanity. <a href="#/portal">Join me!</a>
-                    </p>
+                {{#is "home"}}
+                    {{#if @custom.hero_supporting_text}}
+                        <p class='hero__description hero__description--secondary'>
+                            {{@custom.hero_supporting_text}}
+                            {{#if @site.members_enabled}}
+                                {{#unless @member}}
+                                    <a href='#/portal'>{{#if @custom.hero_cta_text}}{{@custom.hero_cta_text}}{{else}}Join me!{{/if}}</a>
+                                {{/unless}}
+                            {{/if}}
+                        </p>
+                    {{else if @site.description}}
+                        <p class='hero__description hero__description--secondary'>{{@site.description}}</p>
+                    {{/if}}
                 {{/is}}
 
-                {{#is 'post'}}
+                {{#is "post"}}
                     {{> "author" }}
                 {{/is}}
-
-            {{!--
-            {{#is "tag"}}
-            <p class="hero__description">
-            A collection of {{plural ../pagination.total empty='posts' singular='% post' plural='% posts'}}
-            </p>
-            {{/is}}
-
-                <div class='hero--flex'>
-                    <ul class='hero__list'>
-                        {{#foreach tags visibility='all'}}
-                        <li class='hero__list__item'>
-                            <div class='gh-tag gh-tag--invert'>
-                                {{name}}
-                            </div>
-                        </li>
-                        {{/foreach}}
-                    </ul>
-                </div> --}}
             </div>
         </div>
     </div>
 </section>
-<div style="position: relative">
+<div class='hero-curve-wrap'>
     <svg
-    style="position: absolute"
-    class='hero--curve'
-    xmlns='http://www.w3.org/2000/svg'
-    preserveAspectRatio='none'
-    viewBox='0 0 1200 120'
+        class='hero--curve'
+        xmlns='http://www.w3.org/2000/svg'
+        preserveAspectRatio='none'
+        viewBox='0 0 1200 120'
+        aria-hidden='true'
     >
-    <path
-        d='M321.39,56.44c58-10.79,114.16-30.13,172-41.86,82.39-16.72,168.19-17.73,250.45-.39C823.78,31,906.67,72,985.66,92.83c70.05,18.48,146.53,26.09,214.34,3V0H0V27.35A600.21,600.21,0,0,0,321.39,56.44Z'
-        fill='#475de6'
-    />
+        <path d='M321.39,56.44c58-10.79,114.16-30.13,172-41.86,82.39-16.72,168.19-17.73,250.45-.39C823.78,31,906.67,72,985.66,92.83c70.05,18.48,146.53,26.09,214.34,3V0H0V27.35A600.21,600.21,0,0,0,321.39,56.44Z' />
     </svg>
 </div>

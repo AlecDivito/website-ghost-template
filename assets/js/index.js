@@ -7,8 +7,12 @@ import '../css/index.css'
 import menuOpen from './menuOpen'
 import infiniteScroll from './infiniteScroll'
 import prism from './prism'
+import heroTopics from './heroTopics'
+import initChat from './chat'
 import * as _ from './transition'
 
 // Call the menu and infinite scroll functions
 menuOpen()
 infiniteScroll()
+heroTopics()
+initChat()
