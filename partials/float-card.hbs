@@ -19,9 +19,9 @@
                     {{> "icons/lock"}}
                 </i>
                 {{#has visibility="members"}}
-                    Members only
+                    {{t "Members only"}}
                 {{else}}
-                    Paid-members only
+                    {{t "Paid-members only"}}
                 {{/has}}
             </div>
         {{/has}}
@@ -47,7 +47,7 @@
         <p class="widget__description">{{excerpt}}</p>
 
         <a class="widget__link--float" href="{{url}}">
-            <span class="m-r">Read More</span>
+            <span class="m-r">{{t "Read More"}}</span>
             <i class="icon">
                 {{> "icons/arrow-right" }}
             </i>

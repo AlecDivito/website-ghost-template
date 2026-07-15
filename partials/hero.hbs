@@ -56,7 +56,7 @@
                             {{#if custom_excerpt}}
                                 {{custom_excerpt}}
                             {{else}}
-                                Ask about blog posts, projects, or experience. Answers come from published content on this site.
+                                {{t "Ask about blog posts, projects, or experience. Answers come from published content on this site."}}
                             {{/if}}
                         {{/has}}
                     {{/is}}
@@ -71,7 +71,7 @@
                             {{@custom.hero_supporting_text}}
                             {{#if @site.members_enabled}}
                                 {{#unless @member}}
-                                    <a href='#/portal'>{{#if @custom.hero_cta_text}}{{@custom.hero_cta_text}}{{else}}Join me!{{/if}}</a>
+                                    <a href='#/portal'>{{#if @custom.hero_cta_text}}{{@custom.hero_cta_text}}{{else}}{{t "Join me!"}}{{/if}}</a>
                                 {{/unless}}
                             {{/if}}
                         </p>

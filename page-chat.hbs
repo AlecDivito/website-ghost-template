@@ -16,22 +16,22 @@
         <section class="chat-shell gh-container">
             {{#unless @custom.chat_agent_url}}
                 <p class="chat-status chat-status--warn" role="status">
-                    Chat isn’t configured yet. Set the theme setting <code>chat_agent_url</code> to your agent origin.
+                    {{t "Chat isn’t configured yet. Set the theme setting"}} <code>chat_agent_url</code> {{t "to your agent origin."}}
                 </p>
             {{else}}
-                <p class="chat-status" data-chat-status role="status">Connecting…</p>
+                <p class="chat-status" data-chat-status role="status">{{t "Connecting…"}}</p>
 
                 <div class="chat-transcript" data-chat-messages aria-live="polite" hidden></div>
 
                 <form class="chat-composer" data-chat-form>
-                    <label class="sr-only" for="chat-input">Message</label>
+                    <label class="sr-only" for="chat-input">{{t "Message"}}</label>
                     <div class="chat-composer__field">
                         <textarea
                             id="chat-input"
                             class="chat-composer__input"
                             data-chat-input
                             rows="1"
-                            placeholder="Ask about a post, project, or experience…"
+                            placeholder="{{t "Ask about a post, project, or experience…"}}"
                             required
                             autofocus
                         ></textarea>
@@ -39,7 +39,7 @@
                             type="submit"
                             class="chat-composer__send"
                             data-chat-send
-                            aria-label="Send message"
+                            aria-label="{{t "Send message"}}"
                         >
                             <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false">
                                 <path

@@ -16,19 +16,19 @@
                 {{/if}}
                 {{#if @site.members_enabled}}
                     {{#unless @member}}
-                        <a class="gh-button footer__signup" href="{{@site.signup_url}}">Subscribe</a>
+                        <a class="gh-button footer__signup" href="{{@site.signup_url}}">{{t "Subscribe"}}</a>
                     {{/unless}}
                 {{/if}}
             </div>
         </div>
 
         <div class="footer__links__items">
-            <h4 class="m-b">Navigation</h4>
+            <h4 class="m-b">{{t "Navigation"}}</h4>
             <ul class="nav footer__list footer--row">
                 {{navigation type="secondary"}}
                 {{#if @custom.chat_agent_url}}
                     <li class="nav-chat footer__list__item">
-                        <a href="{{@site.url}}/chat/" class="internal-link">Chat</a>
+                        <a href="{{@site.url}}/chat/" class="internal-link">{{t "Chat"}}</a>
                     </li>
                 {{/if}}
             </ul>

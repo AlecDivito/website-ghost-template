@@ -72,6 +72,12 @@ Posts tagged `worked-at` are excluded from the homepage blog feed and from the p
 
 If there are no `worked-at` posts, the section is hidden.
 
+### Translations (i18n)
+
+Theme chrome is wired for Ghost’s `{{t}}` helper. English lives in [`locales/en.json`](locales/en.json). To add another language, copy that file to e.g. `locales/es.json`, translate the values, and set **Settings → General → Publication language** to the matching code.
+
+CMS content (posts, nav labels, `@custom.*` theme-setting defaults) is not translated by this — edit those in Ghost Admin. Chat JS status strings in `assets/js/chat` are still English-only.
+
 &nbsp;
 
 

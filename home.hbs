@@ -4,9 +4,9 @@
 
 <div class="page home gh-page">
     <section class="home-section">
-        <h2 class="m-b section__title">Latest Blog Posts</h2>
+        <h2 class="m-b section__title">{{t "Latest Blog Posts"}}</h2>
         <a class="section__link" href="{{@site.url}}/blog/">
-            <span>Read More</span>
+            <span>{{t "Read More"}}</span>
             <i class="icon m-r">
                 {{> "icons/arrow-right" }}
             </i>
@@ -22,9 +22,9 @@
     </section>
 
     <section class="home-section gh-projectfeed">
-        <h2 class="m-b section__title">Latest work</h2>
+        <h2 class="m-b section__title">{{t "Latest work"}}</h2>
         <a class="section__link" href="{{@site.url}}/projects/">
-            <span>View All</span>
+            <span>{{t "View All"}}</span>
             <i class="icon m-r">
                 {{> "icons/arrow-right" }}
             </i>
@@ -45,9 +45,9 @@
             {{#foreach posts}}
                 {{#if @first}}
                     <section class="home-section">
-                        <h2 class="m-b section__title">I Have Worked At</h2>
+                        <h2 class="m-b section__title">{{t "I Have Worked At"}}</h2>
                         <a class="section__link" href="{{@site.url}}/about/">
-                            <span>and I have done...</span>
+                            <span>{{t "and I have done..."}}</span>
                             <i class="icon m-r">
                                 {{> "icons/arrow-right" }}
                             </i>
@@ -75,9 +75,9 @@
     {{/if}}
 
     <section class="home-section gh-tags">
-        <h2 class="m-b section__title">Popular Categories</h2>
+        <h2 class="m-b section__title">{{t "Popular Categories"}}</h2>
         <a class="section__link" href="{{@site.url}}/tags/">
-            <span>Check them all out</span>
+            <span>{{t "Check them all out"}}</span>
             <i class="icon m-r">
                 {{> "icons/arrow-right" }}
             </i>
