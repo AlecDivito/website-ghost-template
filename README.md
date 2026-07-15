@@ -1,186 +1,128 @@
-# Ghost Starter Theme
+# alecdivito-website-ghost-theme
 
-A starter framework for Ghost themes! Click **Use this template** to create a copy of this repo for everything you need to get started developing a custom Ghost theme.
+Personal Ghost theme for [alecdivito.com](https://alecdivito.com) — a development and self-hosting blog. Built for Ghost 5+.
 
-&nbsp;
+If you’re forking this: treat it as a working site theme, not a blank Ghost starter. Content depends on specific pages, tags, and theme settings described below.
 
-## First time using a Ghost theme?
+## Install the theme
 
-Ghost uses a simple templating language called [Handlebars](http://handlebarsjs.com/) for its themes.
+**Option A — zip (production / any Ghost host)**
 
-We've documented this starter theme pretty heavily so that it should be possible to work out what's going on just by reading the code and the comments. We also have a robust set of resources to help you build awesome custom themes:
+```bash
+npm install
+npm run zip
+```
 
-- The official [theme documentation](https://ghost.org/docs/themes) is the complete resource for everything you need to know about Ghost theme development
-- [Tutorials](https://ghost.org/tutorials/) offer a step-by-step guide to building the most common features in Ghost themes
-- The [Ghost VS Code extension](https://marketplace.visualstudio.com/items?itemName=TryGhost.ghost) speeds up theme development and provides quick access to helpful info
-- All of Ghost's official themes are [open source](https://github.com/tryghost) and are a great reference for learning how to create a theme
+Upload `alecdivito-website-ghost-theme.zip` in Ghost Admin → **Settings → Design → Change theme → Upload**.
 
-&nbsp;
+**Option B — local symlink (development)**
 
-## Starter theme features
+```bash
+nvm install          # uses this repo’s Node version if present
+npm install -g ghost-cli@latest
 
-🔁&nbsp;Livereload by default. See changes instantly in the browser whenever you save a file.
+GHOST_THEME_LOCATION=$(pwd)
+cd ../ghost          # or wherever you keep the Ghost install
+ghost install local
+GHOST_LOCATION=$(pwd)
 
-🔎&nbsp;Optimized for VS Code. Find the files you're looking for more easily.
+ln -s "$GHOST_THEME_LOCATION" "$GHOST_LOCATION/content/themes/alecdivito-website-ghost-theme"
+ghost stop
+ghost start --no-setup-linux-user
+# Context: https://github.com/TryGhost/Ghost-CLI/issues/711
+```
 
-🗃️&nbsp;Write modern JavaScript. Use ESM out of the box to write more manageable Javascript.
+Then in Ghost Admin (`http://localhost:2368/ghost`):
 
-🗜️&nbsp;Assets optimized automatically. JavaScript and CSS are minified and transpiled by default.
+1. **Settings → Design → Change theme → Installed**
+2. Activate `alecdivito-website-ghost-theme`
 
-👟&nbsp;Fast compile times, powered by [Rollup](https://rollupjs.org).
+If gallery / image cards look wrong locally, see [this Ghost forum thread](https://forum.ghost.org/t/error-ghost-gallery/5909/4).
 
-🦋&nbsp;Write next-gen CSS for today's browsers with [PostCSS](https://postcss.org/). Add the CSS tools you love via [`rollup.config.js`](rollup.config.js).
+## Content the theme expects
 
-🚢&nbsp;Ghost's [GH Deploy Action](.github/workflows/deploy-theme.yml) included by default. [Learn more how to deploy your theme automatically](https://github.com/TryGhost/action-deploy-theme)
+### Pages (create these in Ghost with matching slugs)
 
-➕&nbsp;Extensible by design. Rollup's configuration structure makes it easy to add [any number of plugins easily](https://github.com/rollup/plugins). 
+| Slug | Template | Purpose |
+| --- | --- | --- |
+| *(home)* | `home.hbs` | Homepage — hero, blog, projects, employers, tags |
+| `blog` | `page-blog.hbs` | Full blog listing |
+| `projects` | `page-projects.hbs` | Project posts |
+| `tags` | `page-tags.hbs` | Tag index |
+| `chat` | `page-chat.hbs` | Optional chat UI (needs agent URL) |
+| `about` | `page.hbs` (or custom) | Linked from the “I Have Worked At” section |
 
-&nbsp;
+### Tags
 
-## Theme structure
+| Tag slug | Used for |
+| --- | --- |
+| `project` (or value of **Projects tag** setting) | Project cards on home + `/projects` |
+| `worked-at` | Employer logo strip on the homepage |
 
-The main files are:
+Blog feed posts should **not** use the projects or `worked-at` tags — those are filtered out of the main feed and popular tags.
 
-- [`default.hbs`](default.hbs) - The main template file
-- [`index.hbs`](index.hbs) - Used for the home page
-- [`post.hbs`](post.hbs) - Used for individual posts
-- [`page.hbs`](page.hbs) - Used for individual pages
-- [`tag.hbs`](tag.hbs) - Used for tag archives
-- [`author.hbs`](author.hbs) - Used for author archives
+### Theme settings (Design → Theme)
 
-One neat trick is that you can also create custom one-off templates just by adding the slug of a page to a template file. For example:
-
-- `page-about.hbs` - Custom template for the `/about/` page
-- `tag-news.hbs` - Custom template for `/tag/news/` archive
-- `author-jamie.hbs` - Custom template for `/author/jamie/` archive
-
-### Optional chat page
-
-`page-chat.hbs` is an opt-in chat UI. Create a Ghost Page with slug `chat`, set theme setting `chat_agent_url` to your agent origin, and deploy the sibling backend at [`../ghost-chat-agent`](../ghost-chat-agent).
+| Setting | Notes |
+| --- | --- |
+| Hero title / intro / topics / supporting text / CTA | Homepage hero; topics are comma-separated and rotate |
+| Show worked at | Toggle the employer logo strip |
+| Projects tag | Tag slug for project posts on home + `/projects` |
+| Footer CTA | Signup blurb in the footer |
+| GitHub / LinkedIn URL | Footer social links |
+| Chat agent URL | Origin of `ghost-chat-agent` (e.g. `https://chat.alecdivito.com`). Empty disables chat |
 
 ### Homepage employers (“I Have Worked At”)
 
-The home page can show an employer logo strip driven by Ghost content.
+1. Create tag slug `worked-at`.
+2. One post per employer; set the **feature image** to the logo (PNG or SVG).
+3. The logo links to that post’s URL.
+4. Keep **Show worked at** enabled.
 
-1. Create a tag with slug `worked-at`.
-2. Create one post per employer (they only need the tag — keep them out of the main blog if you like).
-3. Set each post’s **feature image** to the logo (PNG or SVG both work).
-4. The logo links to that post’s URL.
-5. Keep **Design → Theme settings → Show employers…** (`show_worked_at`) enabled.
+No `worked-at` posts → section stays hidden. Those posts are excluded from the homepage blog feed and popular tags grid.
 
-Posts tagged `worked-at` are excluded from the homepage blog feed and from the popular tags grid so they don’t clutter those sections.
+### Optional chat page
 
-If there are no `worked-at` posts, the section is hidden.
+1. Create a Ghost page with slug `chat`.
+2. Set **Chat agent URL** to your agent origin.
+3. Run the sibling backend [`ghost-chat-agent`](https://github.com/alecdivito/ghost-chat-agent) (or your local `../ghost-chat-agent`).
 
 ### Translations (i18n)
 
-Theme chrome is wired for Ghost’s `{{t}}` helper. English lives in [`locales/en.json`](locales/en.json). To add another language, copy that file to e.g. `locales/es.json`, translate the values, and set **Settings → General → Publication language** to the matching code.
+UI chrome uses Ghost’s `{{t}}` helper. English strings live in [`locales/en.json`](locales/en.json). Copy to e.g. `locales/es.json`, translate, and set **Settings → General → Publication language**.
 
-CMS content (posts, nav labels, `@custom.*` theme-setting defaults) is not translated by this — edit those in Ghost Admin. Chat JS status strings in `assets/js/chat` are still English-only.
-
-&nbsp;
-
-
-## Setting up environment
-
-```bash
-nvm install
-npm install -g ghost-cli@latest
-GHOST_THEME_LOCATION=$(pwd)
-# cd to directory
-cd ../ghost # This is an example
-ghost install local
-GHOST_LOCATION=$(pwd)
-# Link the directory
-ln -s $GHOST_THEME_LOCATION $GHOST_LOCATION/content/themes/starter
-# After linking, restart ghost
-ghost stop
-ghost start --no-setup-linux-user
-# May need to do ghost start --no-setup-linux-user
-# Context https://github.com/TryGhost/Ghost-CLI/issues/711
-# Open ghost http://localhost:2368/ghost/
-# Visit: http://localhost:2368/ghost/#/settings/design/change-theme
-# Select: alecdivito-website-ghost-theme
-```
-
-After setting up, create the site with example values. Then
-
-0. Visit the site thats now been started http://localhost:2368/ghost
-1. Go to settings
-2. Click the gear icon next to your user icon
-3. Go to `site` > `theme`
-4. Change theme
-5. Go to `installed theme` tab
-6. Select `alec-*` theme
-
-
-Images don't render correctly. Use the following to fix the issue
-- https://forum.ghost.org/t/error-ghost-gallery/5909/4
+CMS content (posts, nav labels, theme-setting defaults) is edited in Ghost Admin, not via locale files. Chat JS status strings in `assets/js/chat` are still English-only.
 
 ## Development guide
 
-The Starter theme provides a first-class development experience out of the box. 
-
-&nbsp;
+Assets are built with [Rollup](https://rollupjs.org) + PostCSS. Source: `assets/js`, `assets/css` → output: `assets/built`.
 
 ### Setup
 
-To see realtime changes during development, symlink the Starter theme folder to the `content/themes` folder in your local Ghost install. 
-
-```bash
-ln -s /path/to/starter /ghost/content/themes/starter
-```
-
-Restart Ghost and select the Starter theme from **Settings**.
-
-From the theme's root directory, install the dependencies:
+Symlink this repo into your Ghost `content/themes` folder (see **Install → Option B**), activate the theme, then from the theme root:
 
 ```bash
 npm install
 ```
 
-If Node isn't installed, follow the [official Node installation guide](https://nodejs.org/).
-
-&nbsp;
+Requires a current Node (bestzip 3 needs Node ≥ 22).
 
 ### Start development mode
-
-From the Starter theme folder, start development mode:
 
 ```bash
 npm run dev
 ```
 
-Changes you make to your styles, scripts, and Handlebars files will show up automatically in the browser. CSS and Javascript will be compiled and output to the `built` folder.
+Rollup watches JS/CSS; livereload also picks up `.hbs` changes. Stop with `ctrl + c`.
 
-Press `ctrl + c` in the terminal to exit development mode.
-
-&nbsp;
-
-### Build, zip, and test your theme
-
-Compile your CSS and JavaScript assets for production with the following command:
+### Build, zip, and test
 
 ```bash
-npm run build
+npm run build   # production assets → assets/built
+npm run zip     # theme zip for upload
+npm run test    # gscan compatibility check (runs build first)
 ```
 
-Create a zip archive:
+## License
 
-```bash
-npm run zip
-```
-
-Use `gscan` to test your theme for compatibility with Ghost:
-
-```bash
-npm run test
-```
-
-&nbsp;
-
-
-
-## Copyright & License
-
-Copyright (c) 2013-2023 Ghost Foundation - Released under the [MIT license](LICENSE).
+MIT — see [LICENSE](LICENSE). Originally descended from Ghost’s starter theme; this repo is Alec Di Vito’s personal theme.

@@ -1,6 +1,6 @@
 {
   "name": "alecdivito-website-ghost-theme",
-  "description": "Personal Ghost theme for Alec Di Vito — development, self-hosting, and private cloud notes",
+  "description": "Personal Ghost theme for Alec Di Vito — development and self-hosting notes",
   "demo": "https://alecdivito.com",
   "version": "2.0.0",
   "engines": {
@@ -119,12 +119,6 @@
         "type": "text",
         "default": "project",
         "description": "Tag slug used for project posts on home and /projects",
-        "group": "homepage"
-      },
-      "private_cloud_tag": {
-        "type": "text",
-        "default": "private-cloud",
-        "description": "Tag slug used on the private-cloud page",
         "group": "homepage"
       },
       "footer_cta": {
