@@ -15,3 +15,8 @@
 .page .widget.widget--1 .widget__image {
   max-height: 360px;
 }
+
+/* About — a bit wider than default post measure */
+body.page-about .gh-canvas {
+  --content-width: var(--content-width-wide);
+}

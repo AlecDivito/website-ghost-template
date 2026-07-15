@@ -12,6 +12,13 @@
                 <a href="{{url absolute="true"}}" class="internal-link {{#if current}}nav-current{{/if}}">{{label}}</a>
             </li>
             {{/foreach}}
+            {{#get "pages" filter="slug:chat" limit="1" as |chat_pages|}}
+                {{#foreach chat_pages}}
+                    <li class="nav-chat{{#match @root.slug "=" "chat"}} nav-current{{/match}}">
+                        <a href="{{url absolute="true"}}" class="internal-link{{#match @root.slug "=" "chat"}} nav-current{{/match}}">{{t "Chat"}}</a>
+                    </li>
+                {{/foreach}}
+            {{/get}}
         </ul>
 
         <div class="gh-head-actions">
@@ -22,12 +29,12 @@
                         <a
                             class="gh-button"
                             href="#/portal/account"
-                        >Account</a>
+                        >{{t "Account"}}</a>
                     {{else}}
                         <a
                             class="gh-button"
                             href="{{@site.signup_url}}"
-                        >Subscribe</a>
+                        >{{t "Subscribe"}}</a>
                     {{/if}}
                 {{/if}}
             </div>

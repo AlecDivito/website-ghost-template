@@ -1,0 +1,45 @@
+<div class="footer__links__items">
+    <h4 class="m-b">{{t "Socials"}}</h4>
+    <ul class="nav footer__list footer--row">
+        {{#if @custom.github_url}}
+            <li class="footer__list__item footer__list__item--social">
+                <a href="{{@custom.github_url}}" target="_blank" rel="noopener noreferrer" class="link">
+                    <i class="icon icon--sm">
+                        {{> "icons/github" }}
+                    </i>
+                    {{t "GitHub"}}
+                </a>
+            </li>
+        {{/if}}
+        {{#if @custom.linkedin_url}}
+            <li class="footer__list__item footer__list__item--social">
+                <a href="{{@custom.linkedin_url}}" target="_blank" rel="noopener noreferrer" class="link">
+                    <i class="icon icon--sm">
+                        {{> "icons/linkedin" }}
+                    </i>
+                    {{t "LinkedIn"}}
+                </a>
+            </li>
+        {{/if}}
+        {{#if @site.twitter}}
+            <li class="footer__list__item footer__list__item--social">
+                <a href="{{twitter_url @site.twitter}}" target="_blank" rel="noopener noreferrer" class="link">
+                    <i class="icon icon--sm">
+                        {{> "icons/twitter" }}
+                    </i>
+                    {{t "X"}}
+                </a>
+            </li>
+        {{/if}}
+        {{#if @site.facebook}}
+            <li class="footer__list__item footer__list__item--social">
+                <a href="{{facebook_url @site.facebook}}" target="_blank" rel="noopener noreferrer" class="link">
+                    <i class="icon icon--sm">
+                        {{> "icons/facebook" }}
+                    </i>
+                    {{t "Facebook"}}
+                </a>
+            </li>
+        {{/if}}
+    </ul>
+</div>

@@ -181,6 +181,9 @@ function setupPageAfterNavigation() {
 
     // Setup all links for transition navigation
     setupAllLinks()
+
+    // Body was swapped — re-run syntax highlighting on the new markup
+    setupPrism()
 }
 
 // Setup the detail page
@@ -306,16 +309,23 @@ function setupAllLinks() {
 }
 
 function setupPrism() {
+    const run = () => {
+        const Prism = window.Prism
+        if (!Prism || typeof Prism.highlightAll !== 'function') return false
+        Prism.highlightAll()
+        return true
+    }
+
+    if (run()) return
+
+    let tries = 0
     const id = setInterval(() => {
-        if (!!window.Prism && typeof window.Prism.highlightAll === 'function') {
-            window.Prism.highlightAll()
-            clearInterval(id)
-        }
-    }, 200)
+        tries += 1
+        if (run() || tries > 40) clearInterval(id)
+    }, 50)
 }
 
 // Initialize when the page loads
 document.addEventListener('DOMContentLoaded', () => {
     setupPageAfterNavigation()
-    setupPrism()
 })

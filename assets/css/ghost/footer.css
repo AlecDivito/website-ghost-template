@@ -1,9 +1,17 @@
 /* Global Footer
 /* ---------------------------------------------------------- */
 
+.footer--svg-wrap {
+  width: 100%;
+  line-height: 0;
+}
+
 .footer--svg {
   z-index: 0;
-  transform: rotate(180deg) translate(0px, -2px);
+  display: block;
+  width: 100%;
+  height: var(--curve-height);
+  transform: rotate(180deg) translate(0, -2px);
   background: var(--background-color-base);
 }
 

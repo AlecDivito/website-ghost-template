@@ -6,9 +6,16 @@ import '../css/index.css'
 // Import JS
 import menuOpen from './menuOpen'
 import infiniteScroll from './infiniteScroll'
-import prism from './prism'
+import Prism from './prism'
+import heroTopics from './heroTopics'
+import initChat from './chat'
 import * as _ from './transition'
+
+// Expose for view-transition re-highlight (transition.js)
+window.Prism = Prism
 
 // Call the menu and infinite scroll functions
 menuOpen()
 infiniteScroll()
+heroTopics()
+initChat()
