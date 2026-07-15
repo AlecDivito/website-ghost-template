@@ -1,14 +1,13 @@
 {{!< default}}
 
-<div class="page private-cloud">
+<div class="page private-cloud" data-tag="{{@custom.private_cloud_tag}}">
     {{#post}}
         {{> "hero" }}
     {{/post}}
 
-
     <section class="gh-projectfeed">
         <div class="grid project-feed">
-            {{#get "posts" filter="primary_tag:project" }}
+            {{#get "posts" filter="tag:{{@custom.private_cloud_tag}}" include="tags,authors"}}
                 {{#foreach posts}}
                     {{> "float-card" page=../pagination.page }}
                 {{/foreach}}

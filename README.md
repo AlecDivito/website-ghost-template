@@ -54,6 +54,10 @@ One neat trick is that you can also create custom one-off templates just by addi
 - `tag-news.hbs` - Custom template for `/tag/news/` archive
 - `author-jamie.hbs` - Custom template for `/author/jamie/` archive
 
+### Optional chat page
+
+`page-chat.hbs` is an opt-in chat UI. Create a Ghost Page with slug `chat`, set theme setting `chat_agent_url` to your agent origin, and deploy the sibling backend at [`../ghost-chat-agent`](../ghost-chat-agent).
+
 &nbsp;
 
 ## Setting up environment

@@ -1,14 +1,13 @@
 {{!< default}}
 
-<div class="page project">
+<div class="page project" data-tag="{{@custom.projects_tag}}">
     {{#post}}
         {{> "hero" }}
     {{/post}}
 
-
     <section style="margin-top: 3rem" class="gh-projectfeed">
         <div class="project-feed">
-            {{#get "posts" filter="primary_tag:project" }}
+            {{#get "posts" filter="tag:{{@custom.projects_tag}}" include="tags"}}
                 {{#foreach posts}}
                     {{> "float-card" page=../pagination.page }}
                 {{/foreach}}

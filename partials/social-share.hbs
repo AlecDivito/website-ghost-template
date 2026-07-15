@@ -1,28 +1,32 @@
 <aside class="social-share--container">
     <h5>SHARE</h5>
     <div class="social-share">
-        <a
-            class="social-share__item twitter js-share"
-            target="_blank"
-            href="https://twitter.com/share?text={{encode title}}&amp;url={{url absolute='true'}}"
-            title="Share on Twitter"
-            aria-label="Share on Twitter"
-        >
-            <i class="icon icon-twitter-x">
-                {{> "icons/twitter" }}
-            </i>
-        </a>
-        <a
-            class="social-share__item facebook js-share"
-            target="_blank"
-            href="https://www.facebook.com/sharer.php?u={{url absolute='true'}}"
-            title="Share on Facebook"
-            aria-label="Share on Facebook"
-        >
-            <i class="icon icon-facebook">
-                {{> "icons/facebook" }}
-            </i>
-        </a>
+        {{#if @site.twitter}}
+            <a
+                class="social-share__item twitter js-share"
+                target="_blank"
+                href="https://twitter.com/share?text={{encode title}}&amp;url={{url absolute='true'}}"
+                title="Share on Twitter"
+                aria-label="Share on Twitter"
+            >
+                <i class="icon icon-twitter-x">
+                    {{> "icons/twitter" }}
+                </i>
+            </a>
+        {{/if}}
+        {{#if @site.facebook}}
+            <a
+                class="social-share__item facebook js-share"
+                target="_blank"
+                href="https://www.facebook.com/sharer.php?u={{url absolute='true'}}"
+                title="Share on Facebook"
+                aria-label="Share on Facebook"
+            >
+                <i class="icon icon-facebook">
+                    {{> "icons/facebook" }}
+                </i>
+            </a>
+        {{/if}}
         <a
             class="social-share__item linkedin js-share"
             target="_blank"

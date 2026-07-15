@@ -1,8 +1,8 @@
 {
   "name": "alecdivito-website-ghost-theme",
-  "description": "A custom theme for Alec Di Vito",
-  "demo": "https://starter.ghost.io",
-  "version": "1.0.0",
+  "description": "Personal Ghost theme for Alec Di Vito — development, self-hosting, and private cloud notes",
+  "demo": "https://alecdivito.com",
+  "version": "2.0.0",
   "engines": {
     "ghost": ">=5.0.0"
   },
@@ -18,7 +18,7 @@
     "pretest": "npm run build"
   },
   "author": {
-    "name": "Ghost Foundation",
+    "name": "Alec Di Vito",
     "email": "divito.alec@gmail.com",
     "url": "https://alecdivito.com"
   },
@@ -26,20 +26,21 @@
     "type": "theme",
     "categories": [
       "Minimal",
-      "Magazine"
+      "Personal"
     ]
   },
   "keywords": [
     "ghost",
     "theme",
-    "ghost-theme"
+    "ghost-theme",
+    "personal",
+    "blog"
   ],
   "repository": {
     "type": "git",
     "url": "https://github.com/alecdivito/website-ghost-template.git"
   },
-  "bugs": "https://github.com/TryGhost/Starter/issues",
-  "contributors": "https://github.com/TryGhost/Starter/graphs/contributors",
+  "bugs": "https://github.com/alecdivito/website-ghost-template/issues",
   "devDependencies": {
     "@babel/core": "^7.21.0",
     "@babel/preset-env": "^7.20.2",
@@ -79,6 +80,75 @@
       },
       "xl": {
         "width": 2000
+      }
+    },
+    "custom": {
+      "hero_title": {
+        "type": "text",
+        "default": "I'm Alec Di Vito",
+        "group": "homepage"
+      },
+      "hero_intro": {
+        "type": "text",
+        "default": "and this is a personal development blog about",
+        "group": "homepage"
+      },
+      "hero_topics": {
+        "type": "text",
+        "default": "Kubernetes, networks, Azure, DevOps, Git, VLANs, Rust, JavaScript, Python",
+        "description": "Comma-separated words that rotate in the homepage hero",
+        "group": "homepage"
+      },
+      "hero_supporting_text": {
+        "type": "text",
+        "default": "I'm trying to build a private cloud and documenting the process into insanity.",
+        "group": "homepage"
+      },
+      "hero_cta_text": {
+        "type": "text",
+        "default": "Join me!",
+        "group": "homepage"
+      },
+      "show_worked_at": {
+        "type": "boolean",
+        "default": true,
+        "description": "Show employers from posts tagged worked-at (feature image = logo)",
+        "group": "homepage"
+      },
+      "color_scheme": {
+        "type": "select",
+        "options": ["Dark", "Light", "Auto"],
+        "default": "Dark",
+        "description": "Site color scheme (Dark matches the live dark/darkish look)"
+      },
+      "projects_tag": {
+        "type": "text",
+        "default": "project",
+        "description": "Tag slug used for project posts on home and /projects",
+        "group": "homepage"
+      },
+      "private_cloud_tag": {
+        "type": "text",
+        "default": "private-cloud",
+        "description": "Tag slug used on the private-cloud page",
+        "group": "homepage"
+      },
+      "footer_cta": {
+        "type": "text",
+        "default": "Learn more about programming and self-hosting — sign up!"
+      },
+      "github_url": {
+        "type": "text",
+        "default": "https://github.com/alecdivito"
+      },
+      "linkedin_url": {
+        "type": "text",
+        "default": "https://www.linkedin.com/in/alec-divito/"
+      },
+      "chat_agent_url": {
+        "type": "text",
+        "default": "",
+        "description": "Origin of ghost-chat-agent (e.g. https://chat.alecdivito.com). Empty disables chat UI."
       }
     }
   },

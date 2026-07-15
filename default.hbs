@@ -1,18 +1,20 @@
-<html lang="{{@site.locale}}">
+<html lang="{{@site.locale}}" data-color-scheme="{{@custom.color_scheme}}">
     <head>
 
         <meta charset="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <link rel="preconnect" href="https://fonts.bunny.net">
-        <link href="https://fonts.bunny.net/css?family=jetbrains-mono:400" rel="stylesheet" />
+        <meta name="color-scheme" content="light dark" />
 
-        <link rel="stylesheet" href="{{asset 'built/index.css'}}" />
-        <script src="{{asset 'built/index.js'}}" defer></script>
+        <link rel="preconnect" href="https://fonts.bunny.net" crossorigin />
+        <link href="https://fonts.bunny.net/css?family=fraunces:400,600,700&display=swap" rel="stylesheet" />
+        <link href="https://fonts.bunny.net/css?family=ibm-plex-sans:400,500,600&display=swap" rel="stylesheet" />
 
         <title>{{meta_title}}</title>
 
         {{ghost_head}}
-        {{! Outputs important meta data and settings, should always be in <head> }}
+
+        <link rel="stylesheet" href="{{asset "built/index.css"}}" />
+        <script src="{{asset "built/index.js"}}" defer></script>
 
     </head>
     <body id="root" class="{{body_class}}">
@@ -45,7 +47,6 @@
             <main class="gh-main">
 
                 {{{body}}}
-                {{! All content gets inserted here, index.hbs, post.hbs, etc }}
 
             </main>
 
@@ -54,7 +55,6 @@
 
         </div>
 
-        {{! <foot> }}
         {{ghost_foot}}
     </body>
 </html>

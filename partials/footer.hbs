@@ -1,50 +1,51 @@
+<div class="footer--svg-wrap" aria-hidden="true">
 <svg class="footer--svg" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none" viewBox="0 0 1200 120">
-    <path d="M321.39,56.44c58-10.79,114.16-30.13,172-41.86,82.39-16.72,168.19-17.73,250.45-.39C823.78,31,906.67,72,985.66,92.83c70.05,18.48,146.53,26.09,214.34,3V0H0V27.35A600.21,600.21,0,0,0,321.39,56.44Z" fill="#475de6" />
+    <path d="M321.39,56.44c58-10.79,114.16-30.13,172-41.86,82.39-16.72,168.19-17.73,250.45-.39C823.78,31,906.67,72,985.66,92.83c70.05,18.48,146.53,26.09,214.34,3V0H0V27.35A600.21,600.21,0,0,0,321.39,56.44Z" />
 </svg>
+</div>
 
 <footer class="footer {{#is "home"}}home{{/is}}">
     <div class="footer--container {{#is "post"}}is-post{{/is}}">
         <div class="footer--row">
-            <h3 class="m-b">{{@site.title}}</h3>
+            <h3 class="m-b footer__site-title">{{@site.title}}</h3>
             <div class="footer__form">
-                <p class="m-b">Learn more about programming and self hosting software locally, sign up!</p>
+                {{#if @custom.footer_cta}}
+                    <p class="m-b">{{@custom.footer_cta}}</p>
+                {{else if @site.description}}
+                    <p class="m-b">{{@site.description}}</p>
+                {{/if}}
+                {{#if @site.members_enabled}}
+                    {{#unless @member}}
+                        <a class="gh-button footer__signup" href="{{@site.signup_url}}">Subscribe</a>
+                    {{/unless}}
+                {{/if}}
             </div>
         </div>
 
         <div class="footer__links__items">
             <h4 class="m-b">Navigation</h4>
             <ul class="nav footer__list footer--row">
-                {{ navigation type='secondary' }}
+                {{navigation type="secondary"}}
+                {{#if @custom.chat_agent_url}}
+                    <li class="nav-chat footer__list__item">
+                        <a href="{{@site.url}}/chat/" class="internal-link">Chat</a>
+                    </li>
+                {{/if}}
             </ul>
         </div>
 
-        <div class="footer__links__items">
-            <h4 class="m-b">Socials</h4>
-            <ul class="nav footer__list footer--row">
-                <li class="nav-home footer__list__item footer__list__item--social">
-                    <a href="https://github.com/alecdivito" target="_blank" class="link">
-                        <i class="icon icon--sm">
-                            {{> "icons/github" }}
-                        </i>
-                        GitHub
-                    </a>
-                </li>
-                <li class="nav-home footer__list__item footer__list__item--social">
-                    <a href="https://www.linkedin.com/in/alec-divito/" target="_blank" class="link">
-                        <i class="icon icon--sm">
-                            {{> "icons/linkedin" }}
-                        </i>
-                        Linkedin
-                    </a>
-                </li>
-            </ul>
-        </div>
+        {{#if @custom.github_url}}
+            {{> "footer-socials"}}
+        {{else if @custom.linkedin_url}}
+            {{> "footer-socials"}}
+        {{else if @site.twitter}}
+            {{> "footer-socials"}}
+        {{else if @site.facebook}}
+            {{> "footer-socials"}}
+        {{/if}}
     </div>
 
-    <div class="footer--alec">
-        <img src="{{asset "alec-head.png"}}"/>
+    <div class="footer--alec" aria-hidden="true">
+        <img src="{{asset "alec-head.png"}}" alt="" />
     </div>
 </footer>
-            {{!--
-            <p style={{ zIndex: 300 }}>Made with <span role="img" aria-label="love">❤️</span> by <a class="link--plain" href="https://val-z.com">Valeriia Zub</a> and <a class="link--plain" href="https://alecdivito.github.io">Alec Di Vito</a></p>
-            </div> --}}
