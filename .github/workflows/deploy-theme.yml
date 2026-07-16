@@ -8,27 +8,32 @@ on:
 jobs:
   deploy:
     runs-on: ubuntu-latest
-    timeout-minutes: 15
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
 
-      - name: Setup Node.js
-        uses: actions/setup-node@v4
+      - uses: actions/setup-node@v4
         with:
           node-version-file: .nvmrc
           cache: npm
 
-      - run: npm ci
-
-      - name: Build theme
-        env:
-          NODE_ENV: production
-        run: npm run zip
+      # Theme assets need a Rollup build before zip/upload
+      - run: npm ci && npm run build
 
       - name: Deploy Ghost Theme
         uses: TryGhost/action-deploy-theme@v2
         with:
           api-url: ${{ secrets.GHOST_ADMIN_API_URL }}
           api-key: ${{ secrets.GHOST_ADMIN_API_KEY }}
-          file: alecdivito-website-ghost-theme.zip
-          version: v6.0
+          exclude: >-
+            assets/css/*
+            assets/js/*
+            *.md
+            LICENSE
+            renovate.json
+            .nvmrc
+            .babelrc.json
+            .editorconfig
+            .prettierrc
+            .vscode*
+            rollup.config.js
+            package-lock.json
