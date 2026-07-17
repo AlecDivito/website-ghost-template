@@ -1,4 +1,3 @@
-# Learn more → https://github.com/TryGhost/action-deploy-theme#getting-started
 name: Deploy Theme
 on:
   push:
@@ -8,6 +7,7 @@ on:
 jobs:
   deploy:
     runs-on: ubuntu-latest
+    timeout-minutes: 15
     steps:
       - uses: actions/checkout@v7
 
@@ -16,24 +16,10 @@ jobs:
           node-version-file: .nvmrc
           cache: npm
 
-      # Theme assets need a Rollup build before zip/upload
-      - run: npm ci && npm run build
+      - run: npm ci
 
       - name: Deploy Ghost Theme
-        uses: TryGhost/action-deploy-theme@v2
-        with:
-          api-url: ${{ secrets.GHOST_ADMIN_API_URL }}
-          api-key: ${{ secrets.GHOST_ADMIN_API_KEY }}
-          exclude: >-
-            assets/css/*
-            assets/js/*
-            *.md
-            LICENSE
-            renovate.json
-            .nvmrc
-            .babelrc.json
-            .editorconfig
-            .prettierrc
-            .vscode*
-            rollup.config.js
-            package-lock.json
+        run: >
+          .github/deploy-theme.sh
+          --url "${{ secrets.GHOST_ADMIN_API_URL }}"
+          --key "${{ secrets.GHOST_ADMIN_API_KEY }}"

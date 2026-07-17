@@ -48,7 +48,8 @@
 .blog-feed {
   display: grid;
   grid-template-columns: repeat(5, minmax(0, 1fr));
-  grid-template-rows: minmax(100px, 1fr) minmax(100px, 1fr) minmax(100px, 1fr);
+  /* Bottom row sizes to its own content so tall wrapped titles don't stretch the whole grid */
+  grid-template-rows: minmax(0, 1fr) minmax(0, 1fr) auto;
   gap: var(--home-blog-gap);
   overflow: hidden;
   width: 100%;
@@ -96,6 +97,40 @@
 .blog-feed .widget.widget--9 {
   grid-column: 5;
   grid-row: 3;
+}
+
+/* Narrow bottom cards: keep content readable and avatars circular */
+.blog-feed .widget.widget--6 .widget__image {
+  max-height: 100px;
+}
+
+.blog-feed .widget.widget--7 .widget__body,
+.blog-feed .widget.widget--8 .widget__body,
+.blog-feed .widget.widget--9 .widget__body {
+  padding: 1.2rem;
+}
+
+.blog-feed .widget.widget--7 .widget__title,
+.blog-feed .widget.widget--8 .widget__title,
+.blog-feed .widget.widget--9 .widget__title {
+  font-size: 0.95em;
+  display: -webkit-box;
+  -webkit-line-clamp: 4;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.blog-feed .widget.widget--7 .author__detail--small,
+.blog-feed .widget.widget--8 .author__detail--small,
+.blog-feed .widget.widget--9 .author__detail--small {
+  flex-wrap: wrap;
+  row-gap: 0.25em;
+}
+
+.blog-feed .widget.widget--7 .author__detail--reading::before,
+.blog-feed .widget.widget--8 .author__detail--reading::before,
+.blog-feed .widget.widget--9 .author__detail--reading::before {
+  display: none;
 }
 
 .blog-feed .widget.widget--1 .widget__image {

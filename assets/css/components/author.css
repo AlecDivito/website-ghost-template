@@ -1,10 +1,13 @@
 .author {
   display: flex;
   width: 100%;
+  min-width: 0;
+  align-items: center;
 }
 
 .author__avatars {
   display: flex;
+  flex-shrink: 0;
   list-style: none;
   margin: 0 0.5em 0 0;
   margin-right: var(--gap-sm);
@@ -15,12 +18,18 @@
   border-radius: 100%;
   width: 36px;
   height: 36px;
+  min-width: 36px;
+  min-height: 36px;
+  aspect-ratio: 1 / 1;
+  object-fit: cover;
   border: 1px solid #ebebeb;
   border-color: var(--color-border);
-  box-sizing: inherit;
+  box-sizing: border-box;
+  flex-shrink: 0;
 }
 
 .author__detail {
+  min-width: 0;
   font-size: 0.9em;
   font-weight: 600;
   font-weight: var(--font-weight-semi-bold);

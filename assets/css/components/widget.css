@@ -108,10 +108,12 @@
   position: absolute;
   bottom: 0;
   left: 0;
+  right: 0;
+  box-sizing: border-box;
   padding: inherit;
   display: flex;
   margin-top: var(--gap);
-  width: 100%;
+  width: auto;
   border-bottom-left-radius: var(--border-radis-card);
   border-bottom-right-radius: var(--border-radis-card);
 }
