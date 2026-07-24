@@ -98,21 +98,43 @@ function toolDetail(data) {
 }
 
 function createAssistantMessage(container) {
-    const bubble = el('div', 'chat-msg chat-msg--assistant');
+    const bubble = el('div', 'chat-msg chat-msg--assistant chat-msg--pending');
     const label = el('span', 'chat-msg__role', 'Assistant');
+    const pending = el('p', 'chat-msg__pending');
+    pending.setAttribute('aria-hidden', 'true');
+    const pendingText = el('span', 'chat-msg__pending-text', 'Thinking');
+    pending.appendChild(pendingText);
     const tools = el('div', 'chat-msg__tools');
     tools.hidden = true;
     const body = el('div', 'chat-msg__body chat-msg__body--md');
     body.hidden = true;
     const cites = el('ul', 'chat-citations');
     cites.hidden = true;
-    bubble.append(label, tools, body, cites);
+    bubble.append(label, pending, tools, body, cites);
     container.appendChild(bubble);
     container.scrollTop = container.scrollHeight;
 
     let raw = '';
     let raf = 0;
+    let settled = false;
     const toolRows = new Map();
+
+    function clearPending() {
+        if (settled) {
+            return;
+        }
+        settled = true;
+        bubble.classList.remove('chat-msg--pending');
+        pending.remove();
+    }
+
+    function setPendingLabel(text) {
+        if (settled) {
+            return;
+        }
+        const next = String(text || 'Thinking').replace(/…\s*$/, '').trim() || 'Thinking';
+        pendingText.textContent = next;
+    }
 
     function paintBody() {
         body.hidden = !raw;
@@ -135,7 +157,9 @@ function createAssistantMessage(container) {
         get raw() {
             return raw;
         },
+        setPendingLabel,
         appendToken(text) {
+            clearPending();
             raw += text;
             schedulePaint();
         },
@@ -145,8 +169,16 @@ function createAssistantMessage(container) {
                 raf = 0;
             }
             paintBody();
+            if (raw || !tools.hidden) {
+                clearPending();
+            }
         },
         upsertTool(data) {
+            if (data.status === 'done') {
+                setPendingLabel('Thinking');
+            } else {
+                setPendingLabel(toolLabel(data.name));
+            }
             const key = `${data.name || 'tool'}:${JSON.stringify(data.args || {})}`;
             let row = toolRows.get(key);
             if (!row) {
