@@ -120,6 +120,9 @@ function createAssistantMessage(container) {
         settled = true;
         bubble.classList.remove('chat-msg--pending');
         pending.remove();
+        if (toolRows.size) {
+            tools.hidden = false;
+        }
     }
 
     function setPendingLabel(text) {
@@ -131,8 +134,12 @@ function createAssistantMessage(container) {
     }
 
     function paintBody() {
-        body.hidden = !raw;
-        body.innerHTML = raw ? renderMarkdown(raw) : '';
+        const visible = Boolean(raw.trim());
+        body.hidden = !visible;
+        body.innerHTML = visible ? renderMarkdown(raw) : '';
+        if (visible && toolRows.size) {
+            tools.hidden = false;
+        }
         container.scrollTop = container.scrollHeight;
     }
 
@@ -153,8 +160,14 @@ function createAssistantMessage(container) {
         },
         setPendingLabel,
         appendToken(text) {
-            clearPending();
-            raw += text;
+            raw += String(text ?? '');
+            // Ignore whitespace-only chunks (models often emit "\n\n" before tool calls)
+            if (!raw.trim()) {
+                return;
+            }
+            if (!settled) {
+                clearPending();
+            }
             schedulePaint();
         },
         flush() {
@@ -162,12 +175,20 @@ function createAssistantMessage(container) {
                 cancelAnimationFrame(raf);
                 raf = 0;
             }
+            // Drop leading whitespace-only buffers that never became real text
+            if (!raw.trim()) {
+                raw = '';
+            }
             paintBody();
-            if (raw || !tools.hidden) {
+            if (raw.trim()) {
                 clearPending();
             }
         },
         upsertTool(data) {
+            // Any tool activity means prior whitespace/prose wasn't the reply — stay on Thinking
+            if (!settled) {
+                raw = '';
+            }
             if (data.status === 'done') {
                 setPendingLabel('Thinking');
             } else {
@@ -183,7 +204,6 @@ function createAssistantMessage(container) {
                     el('span', 'chat-tool__state')
                 );
                 tools.appendChild(row);
-                tools.hidden = false;
                 toolRows.set(key, row);
             }
             row.classList.toggle('chat-tool--running', data.status !== 'done');
@@ -192,7 +212,10 @@ function createAssistantMessage(container) {
             row.querySelector('.chat-tool__detail').textContent = toolDetail(data);
             row.querySelector('.chat-tool__state').textContent =
                 data.status === 'done' ? 'Done' : 'Running…';
-            container.scrollTop = container.scrollHeight;
+            if (settled) {
+                tools.hidden = false;
+                container.scrollTop = container.scrollHeight;
+            }
         },
         setCitations(citations) {
             cites.replaceChildren();

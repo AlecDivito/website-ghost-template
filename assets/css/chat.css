@@ -248,9 +248,10 @@ body.chat-active .footer {
     }
 }
 
-.chat-msg--pending .chat-msg__tools {
-    margin-top: 0.55rem;
-    opacity: 0.85;
+.chat-msg--pending .chat-msg__tools,
+.chat-msg--pending .chat-msg__body,
+.chat-msg--pending .chat-citations {
+    display: none !important;
 }
 
 .chat-msg__body {
