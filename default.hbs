@@ -23,18 +23,15 @@
 
                     <div class="gh-head-brand">
                         <a class="gh-head-logo" href="{{@site.url}}">
-                            {{#if @site.logo}}
-                                <img
-                                    src="{{@site.logo}}"
-                                    alt="{{#unless @custom.show_publication_name}}{{@site.title}}{{/unless}}"
-                                />
-                            {{/if}}
                             {{#if @custom.show_publication_name}}
                                 <span class="gh-head-logo__name">{{@site.title}}</span>
+                            {{else if @site.logo}}
+                                <img
+                                    src="{{@site.logo}}"
+                                    alt="{{@site.title}}"
+                                />
                             {{else}}
-                                {{#unless @site.logo}}
-                                    {{@site.title}}
-                                {{/unless}}
+                                {{@site.title}}
                             {{/if}}
                         </a>
                         <a class="gh-burger" role="button" aria-label="{{t "menu"}}">

@@ -46,6 +46,7 @@
     "% min read": "% min read",
 
     "Join me!": "Join me!",
+    "Continue the conversation": "Continue the conversation",
     "Ask about blog posts, projects, or experience. Answers come from published content on this site.": "Ask about blog posts, projects, or experience. Answers come from published content on this site.",
 
     "Chat isn’t configured yet. Set the theme setting": "Chat isn’t configured yet. Set the theme setting",
@@ -56,6 +57,11 @@
     "Send message": "Send message",
 
     "Go to the front page →": "Go to the front page →",
+    "Page not found": "Page not found",
+    "That page doesn’t exist — or it moved.": "That page doesn’t exist — or it moved.",
+    "Something went wrong": "Something went wrong",
+    "Please try again in a moment.": "Please try again in a moment.",
+    "Back to home": "Back to home",
     "Theme errors:": "Theme errors:",
     "Ref:": "Ref:",
     "Message:": "Message:",

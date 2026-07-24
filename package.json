@@ -124,7 +124,7 @@
       "show_publication_name": {
         "type": "boolean",
         "default": false,
-        "description": "Always show the publication name in the header, even when a publication logo is set"
+        "description": "Show the publication name in the header instead of the publication logo"
       },
       "footer_cta": {
         "type": "text",
@@ -141,7 +141,7 @@
       "chat_agent_url": {
         "type": "text",
         "default": "",
-        "description": "Origin of ghost-chat-agent (e.g. https://chat.alecdivito.com). Empty disables chat UI and the Chat nav link."
+        "description": "Origin of ghost-chat-agent (e.g. https://chat.alecdivito.com). Enables the Chat nav link and chat page. Empty disables both."
       }
     }
   },

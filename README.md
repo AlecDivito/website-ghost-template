@@ -68,7 +68,7 @@ Blog feed posts should **not** use the projects or `worked-at` tags — those ar
 | Hero title / intro / topics / supporting text / CTA | Homepage hero; topics are comma-separated and rotate |
 | Show worked at | Toggle the employer logo strip |
 | Projects tag | Tag slug for project posts on home + `/projects` |
-| Show publication name | Keep the site title visible in the header even with a publication logo |
+| Show publication name | Show the site title in the header instead of the publication logo |
 | Footer CTA | Signup blurb in the footer |
 | GitHub / LinkedIn URL | Footer social links |
 | Chat agent URL | Origin of `ghost-chat-agent` (e.g. `https://chat.alecdivito.com`). Empty disables chat and the Chat nav link |
@@ -84,9 +84,11 @@ No `worked-at` posts → section stays hidden. Those posts are excluded from the
 
 ### Optional chat page
 
-1. Create a Ghost page with slug `chat`.
+1. Create a **published** Ghost page with slug exactly `chat` (uses `page-chat.hbs`).
 2. Set **Chat agent URL** to your agent origin.
 3. Run the sibling backend [`ghost-chat-agent`](https://github.com/alecdivito/ghost-chat-agent) (or your local `../ghost-chat-agent`).
+
+The theme sends `chat_id` + `session_id` on every `/v1/chat` request (and keeps the id from the SSE `done` event) so the agent can forward `X-Chat-Id` / `X-Session-Id` to [`llm-proxy`](https://github.com/alecdivito/llm-proxy).
 
 ### Translations (i18n)
 

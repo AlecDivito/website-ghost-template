@@ -1,0 +1,71 @@
+{{!-- Shared chat UI. Used by chat.hbs (routes.yaml) and page-chat.hbs (CMS page slug "chat"). --}}
+<div
+    class="page chat"
+    data-chat-root
+    data-agent-url="{{@custom.chat_agent_url}}"
+>
+    <section class="hero is-not-post">
+        <div class="hero--container common--max-width">
+            <div class="hero--z-index hero--content">
+                <div class="hero__body">
+                    <h1 class="hero__title">{{t "Chat"}}</h1>
+                    <p class="hero__description">
+                        {{t "Ask about blog posts, projects, or experience. Answers come from published content on this site."}}
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+    <div class="hero-curve-wrap">
+        <svg
+            class="hero--curve"
+            xmlns="http://www.w3.org/2000/svg"
+            preserveAspectRatio="none"
+            viewBox="0 0 1200 120"
+            aria-hidden="true"
+        >
+            <path d="M321.39,56.44c58-10.79,114.16-30.13,172-41.86,82.39-16.72,168.19-17.73,250.45-.39C823.78,31,906.67,72,985.66,92.83c70.05,18.48,146.53,26.09,214.34,3V0H0V27.35A600.21,600.21,0,0,0,321.39,56.44Z" />
+        </svg>
+    </div>
+
+    <section class="chat-shell gh-container">
+        {{#unless @custom.chat_agent_url}}
+            <p class="chat-status chat-status--warn" role="status">
+                {{t "Chat isn’t configured yet. Set the theme setting"}} <code>chat_agent_url</code> {{t "to your agent origin."}}
+            </p>
+        {{else}}
+            <p class="chat-status" data-chat-status role="status">{{t "Connecting…"}}</p>
+
+            <div class="chat-transcript" data-chat-messages aria-live="polite" hidden></div>
+
+            <form class="chat-composer" data-chat-form>
+                <label class="sr-only" for="chat-input">{{t "Message"}}</label>
+                <div class="chat-composer__field">
+                    <textarea
+                        id="chat-input"
+                        class="chat-composer__input"
+                        data-chat-input
+                        rows="1"
+                        placeholder="{{t "Ask about a post, project, or experience…"}}"
+                        required
+                        autofocus
+                    ></textarea>
+                    <button
+                        type="submit"
+                        class="chat-composer__send"
+                        data-chat-send
+                        aria-label="{{t "Send message"}}"
+                    >
+                        <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false">
+                            <path
+                                fill="currentColor"
+                                d="M12 4.5a1 1 0 0 1 1 1v10.59l3.3-3.3a1 1 0 1 1 1.4 1.42l-5 5a1 1 0 0 1-1.4 0l-5-5a1 1 0 1 1 1.4-1.42l3.3 3.3V5.5a1 1 0 0 1 1-1z"
+                                transform="rotate(180 12 12)"
+                            />
+                        </svg>
+                    </button>
+                </div>
+            </form>
+        {{/unless}}
+    </section>
+</div>

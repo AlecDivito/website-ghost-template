@@ -31,52 +31,88 @@
                     {{/is}}
                 </h1>
 
-                <p class='hero__description'>
-                    {{#is "home"}}
-                        {{#if @custom.hero_intro}}{{@custom.hero_intro}}{{else}}{{@site.description}}{{/if}}
-                        {{#if @custom.hero_topics}}
-                            <span
-                                id='hero-word-rotation'
-                                data-topics='{{@custom.hero_topics}}'
-                            ><span></span><span></span></span>
-                        {{/if}}
-                    {{/is}}
-                    {{#is "tag"}}
-                        {{description}}
-                    {{/is}}
-                    {{#is "author"}}
-                        {{bio}}
-                    {{/is}}
-                    {{#is "page"}}
-                        {{#has slug="blog"}}{{content}}{{/has}}
-                        {{#has slug="projects"}}{{content}}{{/has}}
-                        {{#has slug="tags"}}{{content}}{{/has}}
-                        {{#has slug="chat"}}
-                            {{#if custom_excerpt}}
-                                {{custom_excerpt}}
-                            {{else}}
-                                {{t "Ask about blog posts, projects, or experience. Answers come from published content on this site."}}
-                            {{/if}}
-                        {{/has}}
-                    {{/is}}
-                    {{#is "post"}}
-                        {{excerpt}}
-                    {{/is}}
-                </p>
-
                 {{#is "home"}}
-                    {{#if @custom.hero_supporting_text}}
-                        <p class='hero__description hero__description--secondary'>
-                            {{@custom.hero_supporting_text}}
-                            {{#if @site.members_enabled}}
-                                {{#unless @member}}
-                                    <a href='#/portal'>{{#if @custom.hero_cta_text}}{{@custom.hero_cta_text}}{{else}}{{t "Join me!"}}{{/if}}</a>
-                                {{/unless}}
+                    {{!-- Homepage hero streaming (ghost-chat-agent) — re-enable with initHeroStream() in assets/js/index.js
+                    {{#if @custom.chat_agent_url}}
+                        <div
+                            class='hero__stream'
+                            data-hero-stream
+                            data-agent-url='{{@custom.chat_agent_url}}'
+                            data-chat-url='{{@site.url}}/chat/'
+                        >
+                            <div
+                                class='hero__stream-body'
+                                data-hero-stream-body
+                                aria-live='polite'
+                            >
+                                <div class='hero__stream-fallback' data-hero-fallback>
+                                    <p class='hero__description'>
+                                        {{#if @custom.hero_intro}}{{@custom.hero_intro}}{{else}}and this is a personal development blog about{{/if}}
+                                    </p>
+                                    <p class='hero__description hero__stream-topics'>
+                                        <span class='hero__stream-topic'>networks.</span>
+                                        <span class='hero__stream-topic'>Azure.</span>
+                                    </p>
+                                    <p class='hero__description hero__description--secondary'>
+                                        {{#if @custom.hero_supporting_text}}{{@custom.hero_supporting_text}}{{else}}I'm trying to build a private cloud and documenting the process into insanity.{{/if}}
+                                        {{#if @site.members_enabled}}
+                                            {{#unless @member}}
+                                                <a href='#/portal'>{{#if @custom.hero_cta_text}}{{@custom.hero_cta_text}}{{else}}{{t "Join me!"}}{{/if}}</a>
+                                            {{/unless}}
+                                        {{/if}}
+                                    </p>
+                                </div>
+                            </div>
+                            <a
+                                class='hero__stream-continue'
+                                data-hero-continue
+                                href='{{@site.url}}/chat/'
+                                hidden
+                            >{{t "Continue the conversation"}}</a>
+                        </div>
+                    {{else}}
+                    --}}
+                        <p class='hero__description'>
+                            {{#if @custom.hero_intro}}{{@custom.hero_intro}}{{else}}{{@site.description}}{{/if}}
+                            {{#if @custom.hero_topics}}
+                                <span
+                                    id='hero-word-rotation'
+                                    data-topics='{{@custom.hero_topics}}'
+                                ><span></span><span></span></span>
                             {{/if}}
                         </p>
-                    {{else if @site.description}}
-                        <p class='hero__description hero__description--secondary'>{{@site.description}}</p>
-                    {{/if}}
+                        {{#if @custom.hero_supporting_text}}
+                            <p class='hero__description hero__description--secondary'>
+                                {{@custom.hero_supporting_text}}
+                                {{#if @site.members_enabled}}
+                                    {{#unless @member}}
+                                        <a href='#/portal'>{{#if @custom.hero_cta_text}}{{@custom.hero_cta_text}}{{else}}{{t "Join me!"}}{{/if}}</a>
+                                    {{/unless}}
+                                {{/if}}
+                            </p>
+                        {{else if @site.description}}
+                            <p class='hero__description hero__description--secondary'>{{@site.description}}</p>
+                        {{/if}}
+                    {{!-- {{/if}} --}}
+                {{/is}}
+
+                {{^is "home"}}
+                    <p class='hero__description'>
+                        {{#is "tag"}}
+                            {{description}}
+                        {{/is}}
+                        {{#is "author"}}
+                            {{bio}}
+                        {{/is}}
+                        {{#is "page"}}
+                            {{#has slug="blog"}}{{content}}{{/has}}
+                            {{#has slug="projects"}}{{content}}{{/has}}
+                            {{#has slug="tags"}}{{content}}{{/has}}
+                        {{/is}}
+                        {{#is "post"}}
+                            {{excerpt}}
+                        {{/is}}
+                    </p>
                 {{/is}}
 
                 {{#is "post"}}

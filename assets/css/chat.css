@@ -1,7 +1,8 @@
 /* Chat page — follows site hero + paper layout
 /* ---------------------------------------------------------- */
 
-body.page-chat .gh-main {
+/* Works for theme-routed /chat/ (chat.hbs) — no CMS page required */
+body:has(.page.chat) .gh-main {
     flex: 1 1 auto;
     min-height: 0;
     display: flex;
@@ -9,24 +10,24 @@ body.page-chat .gh-main {
 }
 
 /* Idle: fill the viewport so the composer can sit mid-page */
-body.page-chat:not(.chat-active) .gh-viewport {
+body:has(.page.chat):not(.chat-active) .gh-viewport {
     min-height: 100dvh;
 }
 
-body.page-chat:not(.chat-active) .page.chat {
+body:has(.page.chat):not(.chat-active) .page.chat {
     flex: 1 1 auto;
 }
 
-body.page-chat:not(.chat-active) .page.chat .hero.is-not-post {
+body:has(.page.chat):not(.chat-active) .page.chat .hero.is-not-post {
     padding: 2.75rem 1.5rem 1.25rem;
 }
 
-body.page-chat:not(.chat-active) .page.chat .hero.is-not-post .hero__title {
+body:has(.page.chat):not(.chat-active) .page.chat .hero.is-not-post .hero__title {
     font-size: clamp(2.4rem, 4vw, 3.25rem);
     margin-bottom: 1rem;
 }
 
-body.page-chat:not(.chat-active) .page.chat .hero.is-not-post .hero__body {
+body:has(.page.chat):not(.chat-active) .page.chat .hero.is-not-post .hero__body {
     margin-bottom: 0.75rem;
 }
 

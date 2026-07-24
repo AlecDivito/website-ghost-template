@@ -13,8 +13,8 @@
             </li>
             {{/foreach}}
             {{#if @custom.chat_agent_url}}
-                <li class="nav-chat{{#match @root.slug "=" "chat"}} nav-current{{/match}}">
-                    <a href="{{@site.url}}/chat/" class="internal-link{{#match @root.slug "=" "chat"}} nav-current{{/match}}">{{t "Chat"}}</a>
+                <li class="nav-chat {{link_class for="/chat/" activeClass="nav-current"}}">
+                    <a href="{{@site.url}}/chat/" class="internal-link {{link_class for="/chat/" activeClass="nav-current"}}">{{t "Chat"}}</a>
                 </li>
             {{/if}}
         </ul>
