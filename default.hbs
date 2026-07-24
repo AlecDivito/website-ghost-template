@@ -26,10 +26,15 @@
                             {{#if @site.logo}}
                                 <img
                                     src="{{@site.logo}}"
-                                    alt="{{@site.title}}"
+                                    alt="{{#unless @custom.show_publication_name}}{{@site.title}}{{/unless}}"
                                 />
+                            {{/if}}
+                            {{#if @custom.show_publication_name}}
+                                <span class="gh-head-logo__name">{{@site.title}}</span>
                             {{else}}
-                                {{@site.title}}
+                                {{#unless @site.logo}}
+                                    {{@site.title}}
+                                {{/unless}}
                             {{/if}}
                         </a>
                         <a class="gh-burger" role="button" aria-label="{{t "menu"}}">

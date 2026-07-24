@@ -68,9 +68,10 @@ Blog feed posts should **not** use the projects or `worked-at` tags — those ar
 | Hero title / intro / topics / supporting text / CTA | Homepage hero; topics are comma-separated and rotate |
 | Show worked at | Toggle the employer logo strip |
 | Projects tag | Tag slug for project posts on home + `/projects` |
+| Show publication name | Keep the site title visible in the header even with a publication logo |
 | Footer CTA | Signup blurb in the footer |
 | GitHub / LinkedIn URL | Footer social links |
-| Chat agent URL | Origin of `ghost-chat-agent` (e.g. `https://chat.alecdivito.com`). Empty disables chat |
+| Chat agent URL | Origin of `ghost-chat-agent` (e.g. `https://chat.alecdivito.com`). Empty disables chat and the Chat nav link |
 
 ### Homepage employers (“I Have Worked At”)
 

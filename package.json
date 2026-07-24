@@ -121,6 +121,11 @@
         "description": "Tag slug used for project posts on home and /projects",
         "group": "homepage"
       },
+      "show_publication_name": {
+        "type": "boolean",
+        "default": false,
+        "description": "Always show the publication name in the header, even when a publication logo is set"
+      },
       "footer_cta": {
         "type": "text",
         "default": "Learn more about programming and self-hosting — sign up!"
@@ -136,7 +141,7 @@
       "chat_agent_url": {
         "type": "text",
         "default": "",
-        "description": "Origin of ghost-chat-agent (e.g. https://chat.alecdivito.com). Empty disables chat UI."
+        "description": "Origin of ghost-chat-agent (e.g. https://chat.alecdivito.com). Empty disables chat UI and the Chat nav link."
       }
     }
   },

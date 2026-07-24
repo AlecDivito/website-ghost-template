@@ -40,7 +40,9 @@
 }
 
 .gh-head-logo {
-  display: block;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.75rem;
   padding: 10px 0;
   font-weight: 600;
   font-size: 2.2rem;
@@ -49,6 +51,10 @@
 
 .gh-head-logo img {
   max-height: 40px;
+}
+
+.gh-head-logo__name {
+  display: inline-block;
 }
 
 /* Primary Navigation

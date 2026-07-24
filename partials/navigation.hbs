@@ -12,13 +12,11 @@
                 <a href="{{url absolute="true"}}" class="internal-link {{#if current}}nav-current{{/if}}">{{label}}</a>
             </li>
             {{/foreach}}
-            {{#get "pages" filter="slug:chat" limit="1" as |chat_pages|}}
-                {{#foreach chat_pages}}
-                    <li class="nav-chat{{#match @root.slug "=" "chat"}} nav-current{{/match}}">
-                        <a href="{{url absolute="true"}}" class="internal-link{{#match @root.slug "=" "chat"}} nav-current{{/match}}">{{t "Chat"}}</a>
-                    </li>
-                {{/foreach}}
-            {{/get}}
+            {{#if @custom.chat_agent_url}}
+                <li class="nav-chat{{#match @root.slug "=" "chat"}} nav-current{{/match}}">
+                    <a href="{{@site.url}}/chat/" class="internal-link{{#match @root.slug "=" "chat"}} nav-current{{/match}}">{{t "Chat"}}</a>
+                </li>
+            {{/if}}
         </ul>
 
         <div class="gh-head-actions">
