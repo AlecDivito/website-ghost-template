@@ -2,18 +2,12 @@
  * Thin chat client for [data-chat-root]. Talks to ghost-chat-agent SSE API
  * (which forwards X-Chat-Id / X-Session-Id to llm-proxy).
  * Expects window.marked (loaded on chat.hbs) for assistant markdown.
+ *
+ * Conversation UI is ephemeral: refresh clears the transcript and starts a new chat_id.
+ * Ids are still sent upstream for server-side logging; nothing is restored in the UI.
  */
 
-import {
-    consumeContinueSeed,
-    createChatId,
-    getChatId,
-    getOrCreateSessionId,
-    loadHistory,
-    rememberChatId,
-    saveHistory,
-    setChatId,
-} from './ids';
+import { clearStoredConversation, getOrCreateSessionId, newChatId } from './ids';
 import { streamChat } from './stream';
 
 function el(tag, className, text) {
@@ -267,9 +261,11 @@ export default function initChat() {
         return;
     }
 
+    clearStoredConversation();
+
     const sessionId = getOrCreateSessionId();
     const history = [];
-    let chatId = null;
+    let chatId = newChatId();
     let busy = false;
     let active = false;
 
@@ -283,76 +279,13 @@ export default function initChat() {
         messagesEl.hidden = false;
     }
 
-    function persist() {
-        saveHistory(history);
-    }
-
-    function renderSeedMessages(seedMessages) {
-        for (const msg of seedMessages) {
-            if (!msg?.role || msg.content == null) {
-                continue;
-            }
-            history.push({ role: msg.role, content: String(msg.content) });
-            if (msg.role === 'user') {
-                if (!msg.hide) {
-                    appendUserMessage(messagesEl, String(msg.content));
-                }
-            } else if (msg.role === 'assistant') {
-                const assistant = createAssistantMessage(messagesEl);
-                assistant.appendToken(String(msg.content));
-                assistant.flush();
-            }
+    function adoptChatId(nextId) {
+        if (typeof nextId === 'string' && nextId.trim()) {
+            chatId = nextId.trim();
         }
-    }
-
-    function restoreContinueSeed() {
-        const seed = consumeContinueSeed();
-        if (!seed.messages.length && !seed.chat_id) {
-            return false;
-        }
-        if (seed.chat_id) {
-            chatId = rememberChatId(seed.chat_id);
-        }
-        if (seed.messages.length) {
-            enterActiveLayout();
-            renderSeedMessages(seed.messages);
-            persist();
-            statusEl.textContent = 'Ready — continue the conversation.';
-        }
-        return Boolean(seed.chat_id || seed.messages.length);
-    }
-
-    function restorePersistedHistory() {
-        const saved = loadHistory();
-        if (!saved.length) {
-            return false;
-        }
-        chatId = getChatId() || createChatId();
-        enterActiveLayout();
-        for (const msg of saved) {
-            history.push(msg);
-            if (msg.role === 'user') {
-                appendUserMessage(messagesEl, msg.content);
-            } else if (msg.role === 'assistant') {
-                const assistant = createAssistantMessage(messagesEl);
-                assistant.appendToken(msg.content);
-                assistant.flush();
-            }
-        }
-        statusEl.textContent = 'Ready — continue the conversation.';
-        return true;
     }
 
     checkReady(agentUrl, statusEl);
-    if (!restoreContinueSeed()) {
-        restorePersistedHistory();
-    }
-    // Fresh /chat/ visit (no handoff, no saved history): new conversation branch
-    if (!chatId) {
-        chatId = createChatId();
-    } else {
-        setChatId(chatId);
-    }
     input.focus();
 
     form.addEventListener('submit', async (event) => {
@@ -376,7 +309,6 @@ export default function initChat() {
 
         enterActiveLayout();
         history.push({ role: 'user', content: text });
-        persist();
         appendUserMessage(messagesEl, text);
         const assistant = createAssistantMessage(messagesEl);
 
@@ -402,12 +334,10 @@ export default function initChat() {
                         assistant.setCitations(data.citations);
                     }
                     if (eventName === 'done' && data.chat_id) {
-                        chatId = rememberChatId(data.chat_id) || chatId;
+                        adoptChatId(data.chat_id);
                     }
                     if (eventName === 'error') {
-                        if (data.chat_id) {
-                            chatId = rememberChatId(data.chat_id) || chatId;
-                        }
+                        adoptChatId(data.chat_id);
                         throw new Error(data.message || 'Chat error');
                     }
                 },
@@ -416,7 +346,6 @@ export default function initChat() {
 
             assistant.flush();
             history.push({ role: 'assistant', content: assistant.raw || '' });
-            persist();
             statusEl.textContent = 'Ready — ask another question.';
         } catch (error) {
             assistant.flush();
@@ -429,7 +358,6 @@ export default function initChat() {
             statusEl.textContent = error instanceof Error ? error.message : 'Chat failed';
             statusEl.classList.add('chat-status--warn');
             history.pop();
-            persist();
         } finally {
             busy = false;
             if (sendBtn) {

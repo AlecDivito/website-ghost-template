@@ -47,6 +47,13 @@ export function getOrCreateSessionId() {
     return id;
 }
 
+/** Drop any stored conversation UI state (refresh = fresh ephemeral chat). */
+export function clearStoredConversation() {
+    write(sessionStorage, CHAT_KEY, null);
+    write(sessionStorage, HISTORY_KEY, null);
+    write(sessionStorage, CONTINUE_KEY, null);
+}
+
 export function getChatId() {
     return read(sessionStorage, CHAT_KEY);
 }
