@@ -53,20 +53,42 @@
                             </i>
                         </a>
                         <div class="home-companies">
+                            <div class="home-companies__track">
+                                <div class="home-companies__group">
                 {{/if}}
-                            <a class="home-companies__item" href="{{url}}" title="{{title}}">
-                                {{#if feature_image}}
-                                    <img
-                                        class="logos"
-                                        src="{{img_url feature_image size="s"}}"
-                                        alt="{{title}}"
-                                        loading="lazy"
-                                    />
-                                {{else}}
-                                    <span class="home-companies__label">{{title}}</span>
-                                {{/if}}
-                            </a>
+                                    <a class="home-companies__item" href="{{url}}" title="{{title}}">
+                                        {{#if feature_image}}
+                                            <img
+                                                class="logos"
+                                                src="{{img_url feature_image size="s"}}"
+                                                alt="{{title}}"
+                                                loading="lazy"
+                                            />
+                                        {{else}}
+                                            <span class="home-companies__label">{{title}}</span>
+                                        {{/if}}
+                                    </a>
                 {{#if @last}}
+                                </div>
+                                <div class="home-companies__group" aria-hidden="true">
+                {{/if}}
+            {{/foreach}}
+            {{#foreach posts}}
+                                    <a class="home-companies__item" href="{{url}}" title="{{title}}" tabindex="-1">
+                                        {{#if feature_image}}
+                                            <img
+                                                class="logos"
+                                                src="{{img_url feature_image size="s"}}"
+                                                alt=""
+                                                loading="lazy"
+                                            />
+                                        {{else}}
+                                            <span class="home-companies__label">{{title}}</span>
+                                        {{/if}}
+                                    </a>
+                {{#if @last}}
+                                </div>
+                            </div>
                         </div>
                     </section>
                 {{/if}}
