@@ -6,97 +6,101 @@
                 {{> "tag" }}
             {{/is}}
 
-            <div class='hero__body'>
-                <h1 class='hero__title'>
-                    {{#is "home"}}
-                        <span class='hero__title--content'>
-                            {{#if @custom.hero_title}}{{@custom.hero_title}}{{else}}{{@site.title}}{{/if}}
-                        </span>
-                    {{/is}}
+            {{#is "home"}}
+                <div
+                    class='hero__home'
+                    data-hero-home
+                    {{#if @custom.chat_agent_url}}data-chat-url='{{@site.url}}/chat/'{{/if}}
+                >
+                    <div class='hero__field' data-hero-field aria-hidden='true'>
+                        <canvas class='hero__field-canvas' data-hero-field-canvas width='320' height='240'></canvas>
+                    </div>
 
-                    {{#is "page"}}
-                        {{title}}
-                    {{/is}}
+                    <div class='hero__copy'>
+                        <h1 class='hero__title'>
+                            <span class='hero__title--content'>
+                                {{#if @custom.hero_title}}{{@custom.hero_title}}{{else}}{{@site.title}}{{/if}}
+                            </span>
+                        </h1>
 
-                    {{#is "post"}}
-                        {{title}}
-                    {{/is}}
-
-                    {{#is "tag"}}
-                        {{name}}
-                    {{/is}}
-
-                    {{#is "author"}}
-                        {{name}}
-                    {{/is}}
-                </h1>
-
-                {{#is "home"}}
-                    {{!-- Homepage hero streaming (ghost-chat-agent) — re-enable with initHeroStream() in assets/js/index.js
-                    {{#if @custom.chat_agent_url}}
                         <div
                             class='hero__stream'
                             data-hero-stream
-                            data-agent-url='{{@custom.chat_agent_url}}'
-                            data-chat-url='{{@site.url}}/chat/'
+                            aria-live='polite'
                         >
-                            <div
-                                class='hero__stream-body'
-                                data-hero-stream-body
-                                aria-live='polite'
-                            >
-                                <div class='hero__stream-fallback' data-hero-fallback>
-                                    <p class='hero__description'>
-                                        {{#if @custom.hero_intro}}{{@custom.hero_intro}}{{else}}and this is a personal development blog about{{/if}}
-                                    </p>
-                                    <p class='hero__description hero__stream-topics'>
-                                        <span class='hero__stream-topic'>networks.</span>
-                                        <span class='hero__stream-topic'>Azure.</span>
-                                    </p>
-                                    <p class='hero__description hero__description--secondary'>
-                                        {{#if @custom.hero_supporting_text}}{{@custom.hero_supporting_text}}{{else}}I'm trying to build a private cloud and documenting the process into insanity.{{/if}}
-                                        {{#if @site.members_enabled}}
-                                            {{#unless @member}}
-                                                <a href='#/portal'>{{#if @custom.hero_cta_text}}{{@custom.hero_cta_text}}{{else}}{{t "Join me!"}}{{/if}}</a>
-                                            {{/unless}}
-                                        {{/if}}
-                                    </p>
-                                </div>
-                            </div>
-                            <a
-                                class='hero__stream-continue'
-                                data-hero-continue
-                                href='{{@site.url}}/chat/'
-                                hidden
-                            >{{t "Continue the conversation"}}</a>
-                        </div>
-                    {{else}}
-                    --}}
-                        <p class='hero__description'>
-                            {{#if @custom.hero_intro}}{{@custom.hero_intro}}{{else}}{{@site.description}}{{/if}}
-                            {{#if @custom.hero_topics}}
-                                <span
-                                    id='hero-word-rotation'
-                                    data-topics='{{@custom.hero_topics}}'
-                                ><span></span><span></span></span>
-                            {{/if}}
-                        </p>
-                        {{#if @custom.hero_supporting_text}}
-                            <p class='hero__description hero__description--secondary'>
-                                {{@custom.hero_supporting_text}}
-                                {{#if @site.members_enabled}}
-                                    {{#unless @member}}
-                                        <a href='#/portal'>{{#if @custom.hero_cta_text}}{{@custom.hero_cta_text}}{{else}}{{t "Join me!"}}{{/if}}</a>
-                                    {{/unless}}
+                            <p class='hero__lead'>
+                                {{#if @custom.hero_intro}}{{@custom.hero_intro}}{{else}}and this is a personal development blog about{{/if}}
+                                {{#if @custom.hero_topics}}
+                                    <span
+                                        id='hero-word-rotation'
+                                        data-topics='{{@custom.hero_topics}}'
+                                    ><span></span><span></span></span>
+                                {{else}}
+                                    <span class='hero__topics'>
+                                        <span class='hero__topic'>networks.</span>
+                                    </span>
                                 {{/if}}
                             </p>
-                        {{else if @site.description}}
-                            <p class='hero__description hero__description--secondary'>{{@site.description}}</p>
-                        {{/if}}
-                    {{!-- {{/if}} --}}
-                {{/is}}
 
-                {{^is "home"}}
+                            <div class='hero__stream-body' data-hero-stream-body></div>
+
+                            <div class='hero__stream-fallback' data-hero-fallback hidden>
+                                <p class='hero__hook'>
+                                    {{#if @custom.hero_supporting_text}}{{@custom.hero_supporting_text}}{{else}}I'm trying to build a private cloud and documenting the process into insanity.{{/if}}
+                                    {{#if @site.members_enabled}}
+                                        {{#unless @member}}
+                                            <a href='#/portal'>{{#if @custom.hero_cta_text}}{{@custom.hero_cta_text}}{{else}}{{t "Join me!"}}{{/if}}</a>
+                                        {{/unless}}
+                                    {{/if}}
+                                </p>
+                            </div>
+
+                            {{!-- Post catalog for random streamed blurbs (no live LLM) --}}
+                            <div class='hero__catalog' data-hero-catalog hidden>
+                                {{#get "posts" limit="16" include="tags" filter="tag:-{{@custom.projects_tag}}+tag:-worked-at" order="published_at DESC"}}
+                                    {{#foreach posts}}
+                                        <article
+                                            data-slug='{{slug}}'
+                                            data-title='{{title}}'
+                                            data-excerpt='{{excerpt}}'
+                                            data-url='{{url}}'
+                                            data-tags='{{#foreach tags}}{{#unless @first}},{{/unless}}{{name}}{{/foreach}}'
+                                        ></article>
+                                    {{/foreach}}
+                                {{/get}}
+                            </div>
+
+                            {{#if @custom.chat_agent_url}}
+                                <a
+                                    class='gh-button hero__stream-continue'
+                                    data-hero-continue
+                                    href='{{@site.url}}/chat/'
+                                    hidden
+                                >{{t "Chat with me"}}</a>
+                            {{/if}}
+                        </div>
+                    </div>
+                </div>
+            {{else}}
+                <div class='hero__body'>
+                    <h1 class='hero__title'>
+                        {{#is "page"}}
+                            {{title}}
+                        {{/is}}
+
+                        {{#is "post"}}
+                            {{title}}
+                        {{/is}}
+
+                        {{#is "tag"}}
+                            {{name}}
+                        {{/is}}
+
+                        {{#is "author"}}
+                            {{name}}
+                        {{/is}}
+                    </h1>
+
                     <p class='hero__description'>
                         {{#is "tag"}}
                             {{description}}
@@ -113,12 +117,12 @@
                             {{excerpt}}
                         {{/is}}
                     </p>
-                {{/is}}
 
-                {{#is "post"}}
-                    {{> "author" }}
-                {{/is}}
-            </div>
+                    {{#is "post"}}
+                        {{> "author" }}
+                    {{/is}}
+                </div>
+            {{/is}}
         </div>
     </div>
 </section>

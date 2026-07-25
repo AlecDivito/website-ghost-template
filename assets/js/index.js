@@ -8,7 +8,8 @@ import menuOpen from './menuOpen'
 import infiniteScroll from './infiniteScroll'
 import Prism from './prism'
 import heroTopics from './heroTopics'
-// import initHeroStream from './heroStream' // homepage hero streaming — re-enable with call below
+import initHeroLineField from './heroLineField'
+import initHeroStream from './heroStream'
 import initChat from './chat'
 import * as _ from './transition'
 
@@ -19,5 +20,6 @@ window.Prism = Prism
 menuOpen()
 infiniteScroll()
 heroTopics()
-// initHeroStream() // commented out with homepage hero streaming markup in partials/hero.hbs
+initHeroLineField()
+initHeroStream()
 initChat()

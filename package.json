@@ -141,7 +141,7 @@
       "chat_agent_url": {
         "type": "text",
         "default": "",
-        "description": "Origin of ghost-chat-agent (e.g. https://chat.alecdivito.com). Enables the Chat nav link and chat page. Empty disables both."
+        "description": "Origin of ghost-chat-agent (e.g. https://chat.alecdivito.com). Enables Chat nav, chat page, and the homepage “Chat with me” CTA. Empty disables all three."
       }
     }
   },
