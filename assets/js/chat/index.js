@@ -1,14 +1,16 @@
 /**
- * Thin chat client for [data-chat-root]. Talks to ghost-chat-agent SSE API
- * (which forwards X-Chat-Id / X-Session-Id to llm-proxy).
- * Expects window.marked (loaded on chat.hbs) for assistant markdown.
- *
- * Conversation UI is ephemeral: refresh clears the transcript and starts a new chat_id.
- * Ids are still sent upstream for server-side logging; nothing is restored in the UI.
+ * Thin chat client for [data-chat-root]. Talks to ghost-chat-agent SSE API.
+ * ChatGPT-style full-width transcript: no bubbles, buffered word fade for assistant text.
  */
 
 import { clearStoredConversation, getOrCreateSessionId, newChatId } from './ids';
 import { streamChat } from './stream';
+
+const WORD_DELAY_MS = 28;
+
+function prefersReducedMotion() {
+    return window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+}
 
 function el(tag, className, text) {
     const node = document.createElement(tag);
@@ -29,7 +31,6 @@ function escapeHtml(text) {
         .replace(/"/g, '&quot;');
 }
 
-/** Minimal allowlist sanitizer for LLM markdown HTML. */
 function sanitizeHtml(html) {
     const template = document.createElement('template');
     template.innerHTML = html;
@@ -91,34 +92,146 @@ function toolDetail(data) {
     return '';
 }
 
+function wrapWordsIn(root) {
+    const walker = document.createTreeWalker(root, NodeFilter.SHOW_TEXT);
+    const textNodes = [];
+    while (walker.nextNode()) {
+        textNodes.push(walker.currentNode);
+    }
+    for (const textNode of textNodes) {
+        const value = textNode.nodeValue;
+        if (!value || !value.trim()) {
+            continue;
+        }
+        const frag = document.createDocumentFragment();
+        for (const part of value.split(/(\s+)/)) {
+            if (!part) {
+                continue;
+            }
+            if (/^\s+$/.test(part)) {
+                frag.appendChild(document.createTextNode(part));
+                continue;
+            }
+            const span = document.createElement('span');
+            span.className = 'chat-word';
+            span.textContent = part;
+            frag.appendChild(span);
+        }
+        textNode.parentNode.replaceChild(frag, textNode);
+    }
+}
+
+/**
+ * Reveals assistant markdown with a buffered word-fade (network can run ahead).
+ */
+function createWordReveal(bodyEl) {
+    const reduce = prefersReducedMotion();
+    let networkRaw = '';
+    let visibleCount = 0;
+    let timer = 0;
+    let finished = false;
+
+    function paint() {
+        if (timer) {
+            clearTimeout(timer);
+            timer = 0;
+        }
+        const html = renderMarkdown(networkRaw);
+        bodyEl.innerHTML = html || '';
+        if (!html) {
+            return;
+        }
+        wrapWordsIn(bodyEl);
+        const words = [...bodyEl.querySelectorAll('.chat-word')];
+        const keep = Math.min(visibleCount, words.length);
+        words.slice(0, keep).forEach((w) => w.classList.add('is-visible'));
+        if (reduce) {
+            words.forEach((w) => w.classList.add('is-visible'));
+            visibleCount = words.length;
+            return;
+        }
+        if (visibleCount < words.length) {
+            stepReveal(words);
+        }
+    }
+
+    function stepReveal(words) {
+        if (finished && visibleCount >= words.length) {
+            timer = 0;
+            return;
+        }
+        if (visibleCount >= words.length) {
+            timer = 0;
+            return;
+        }
+        words[visibleCount].classList.add('is-visible');
+        visibleCount += 1;
+        timer = setTimeout(() => {
+            const next = [...bodyEl.querySelectorAll('.chat-word')];
+            stepReveal(next);
+        }, WORD_DELAY_MS);
+    }
+
+    return {
+        get raw() {
+            return networkRaw;
+        },
+        setRaw(text) {
+            networkRaw = text;
+            bodyEl.hidden = !networkRaw.trim();
+            paint();
+        },
+        append(text) {
+            networkRaw += text;
+            bodyEl.hidden = !networkRaw.trim();
+            paint();
+        },
+        async flush() {
+            finished = true;
+            paint();
+            if (reduce) {
+                return;
+            }
+            await new Promise((resolve) => {
+                function wait() {
+                    const words = [...bodyEl.querySelectorAll('.chat-word')];
+                    if (visibleCount >= words.length) {
+                        resolve();
+                        return;
+                    }
+                    setTimeout(wait, WORD_DELAY_MS);
+                }
+                wait();
+            });
+        },
+    };
+}
+
 function createAssistantMessage(container) {
-    const bubble = el('div', 'chat-msg chat-msg--assistant chat-msg--pending');
-    const label = el('span', 'chat-msg__role', 'Assistant');
+    const row = el('div', 'chat-msg chat-msg--assistant chat-msg--pending');
     const pending = el('p', 'chat-msg__pending');
     pending.setAttribute('aria-hidden', 'true');
-    const pendingText = el('span', 'chat-msg__pending-text', 'Thinking');
-    pending.appendChild(pendingText);
+    pending.appendChild(el('span', 'chat-msg__pending-text', 'Thinking'));
     const tools = el('div', 'chat-msg__tools');
     tools.hidden = true;
     const body = el('div', 'chat-msg__body chat-msg__body--md');
     body.hidden = true;
     const cites = el('ul', 'chat-citations');
     cites.hidden = true;
-    bubble.append(label, pending, tools, body, cites);
-    container.appendChild(bubble);
+    row.append(pending, tools, body, cites);
+    container.appendChild(row);
     container.scrollTop = container.scrollHeight;
 
-    let raw = '';
-    let raf = 0;
     let settled = false;
     const toolRows = new Map();
+    const reveal = createWordReveal(body);
 
     function clearPending() {
         if (settled) {
             return;
         }
         settled = true;
-        bubble.classList.remove('chat-msg--pending');
+        row.classList.remove('chat-msg--pending');
         pending.remove();
         if (toolRows.size) {
             tools.hidden = false;
@@ -129,65 +242,48 @@ function createAssistantMessage(container) {
         if (settled) {
             return;
         }
-        const next = String(text || 'Thinking').replace(/…\s*$/, '').trim() || 'Thinking';
-        pendingText.textContent = next;
-    }
-
-    function paintBody() {
-        const visible = Boolean(raw.trim());
-        body.hidden = !visible;
-        body.innerHTML = visible ? renderMarkdown(raw) : '';
-        if (visible && toolRows.size) {
-            tools.hidden = false;
+        const label = pending.querySelector('.chat-msg__pending-text');
+        if (label) {
+            label.textContent = String(text || 'Thinking').replace(/…\s*$/, '').trim() || 'Thinking';
         }
-        container.scrollTop = container.scrollHeight;
-    }
-
-    function schedulePaint() {
-        if (raf) {
-            return;
-        }
-        raf = requestAnimationFrame(() => {
-            raf = 0;
-            paintBody();
-        });
     }
 
     return {
-        bubble,
         get raw() {
-            return raw;
+            return reveal.raw;
         },
         setPendingLabel,
         appendToken(text) {
-            raw += String(text ?? '');
-            // Ignore whitespace-only chunks (models often emit "\n\n" before tool calls)
-            if (!raw.trim()) {
+            const chunk = String(text ?? '');
+            if (!chunk) {
                 return;
             }
-            if (!settled) {
+            // Ignore whitespace-only until real content starts
+            if (!reveal.raw.trim() && !chunk.trim()) {
+                return;
+            }
+            if (!settled && chunk.trim()) {
                 clearPending();
             }
-            schedulePaint();
+            reveal.append(chunk);
+            container.scrollTop = container.scrollHeight;
         },
-        flush() {
-            if (raf) {
-                cancelAnimationFrame(raf);
-                raf = 0;
+        async flush() {
+            if (!reveal.raw.trim()) {
+                reveal.setRaw('');
             }
-            // Drop leading whitespace-only buffers that never became real text
-            if (!raw.trim()) {
-                raw = '';
-            }
-            paintBody();
-            if (raw.trim()) {
+            await reveal.flush();
+            if (reveal.raw.trim()) {
                 clearPending();
             }
+            container.scrollTop = container.scrollHeight;
         },
         upsertTool(data) {
-            // Any tool activity means prior whitespace/prose wasn't the reply — stay on Thinking
             if (!settled) {
-                raw = '';
+                // Tool activity before prose — keep thinking state
+                if (!reveal.raw.trim()) {
+                    reveal.setRaw('');
+                }
             }
             if (data.status === 'done') {
                 setPendingLabel('Thinking');
@@ -195,27 +291,28 @@ function createAssistantMessage(container) {
                 setPendingLabel(toolLabel(data.name));
             }
             const key = `${data.name || 'tool'}:${JSON.stringify(data.args || {})}`;
-            let row = toolRows.get(key);
-            if (!row) {
-                row = el('div', 'chat-tool');
-                row.append(
+            let rowEl = toolRows.get(key);
+            if (!rowEl) {
+                rowEl = el('div', 'chat-tool');
+                const badge = el('span', 'chat-tool__badge');
+                badge.append(
+                    el('span', 'chat-tool__dot'),
                     el('span', 'chat-tool__name'),
-                    el('span', 'chat-tool__detail'),
-                    el('span', 'chat-tool__state')
+                    el('span', 'chat-tool__detail')
                 );
-                tools.appendChild(row);
-                toolRows.set(key, row);
+                rowEl.append(badge);
+                tools.appendChild(rowEl);
+                toolRows.set(key, rowEl);
             }
-            row.classList.toggle('chat-tool--running', data.status !== 'done');
-            row.classList.toggle('chat-tool--done', data.status === 'done');
-            row.querySelector('.chat-tool__name').textContent = toolLabel(data.name);
-            row.querySelector('.chat-tool__detail').textContent = toolDetail(data);
-            row.querySelector('.chat-tool__state').textContent =
-                data.status === 'done' ? 'Done' : 'Running…';
-            if (settled) {
-                tools.hidden = false;
-                container.scrollTop = container.scrollHeight;
-            }
+            rowEl.classList.toggle('chat-tool--running', data.status !== 'done');
+            rowEl.classList.toggle('chat-tool--done', data.status === 'done');
+            rowEl.querySelector('.chat-tool__name').textContent = toolLabel(data.name);
+            const detail = toolDetail(data);
+            const detailEl = rowEl.querySelector('.chat-tool__detail');
+            detailEl.textContent = detail;
+            detailEl.hidden = !detail;
+            tools.hidden = false;
+            container.scrollTop = container.scrollHeight;
         },
         setCitations(citations) {
             cites.replaceChildren();
@@ -239,9 +336,9 @@ function createAssistantMessage(container) {
 }
 
 function appendUserMessage(container, text) {
-    const bubble = el('div', 'chat-msg chat-msg--user');
-    bubble.append(el('span', 'chat-msg__role', 'You'), el('div', 'chat-msg__body', text));
-    container.appendChild(bubble);
+    const row = el('div', 'chat-msg chat-msg--user');
+    row.append(el('div', 'chat-msg__body', text));
+    container.appendChild(row);
     container.scrollTop = container.scrollHeight;
 }
 
@@ -309,7 +406,19 @@ export default function initChat() {
     }
 
     checkReady(agentUrl, statusEl);
-    input.focus();
+    // Avoid popping the mobile keyboard on load
+    if (window.matchMedia('(hover: hover) and (pointer: fine)').matches) {
+        input.focus();
+    }
+
+    function autosizeInput() {
+        input.style.height = 'auto';
+        const max = Math.round(window.innerHeight * 0.3);
+        input.style.height = `${Math.min(input.scrollHeight, max)}px`;
+    }
+
+    input.addEventListener('input', autosizeInput);
+    autosizeInput();
 
     form.addEventListener('submit', async (event) => {
         event.preventDefault();
@@ -327,6 +436,7 @@ export default function initChat() {
             sendBtn.disabled = true;
         }
         input.value = '';
+        autosizeInput();
         statusEl.textContent = 'Thinking…';
         statusEl.classList.remove('chat-status--warn');
 
@@ -367,16 +477,16 @@ export default function initChat() {
                 { chatId, sessionId }
             );
 
-            assistant.flush();
+            await assistant.flush();
             history.push({ role: 'assistant', content: assistant.raw || '' });
             statusEl.textContent = 'Ready — ask another question.';
         } catch (error) {
-            assistant.flush();
+            await assistant.flush();
             if (!assistant.raw) {
                 assistant.appendToken(
                     error instanceof Error ? error.message : 'Something went wrong.'
                 );
-                assistant.flush();
+                await assistant.flush();
             }
             statusEl.textContent = error instanceof Error ? error.message : 'Chat failed';
             statusEl.classList.add('chat-status--warn');

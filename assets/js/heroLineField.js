@@ -1,10 +1,15 @@
 /**
  * Hero line field: a grid of short vertical needles with an ocean-roll wave.
  * Pointer bends nearby needles; on leave they spring back into the wave.
+ * Sized from the CSS box only (never expands to fill the hero).
+ * Survives mobile→desktop resize (field is display:none under 980px).
  */
 
 const COLS = 14;
 const ROWS = 9;
+const MAX_W = 480;
+const MAX_H = 360;
+const HIDE_MQ = '(max-width: 980px)';
 
 function prefersReducedMotion() {
     return window.matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -23,9 +28,10 @@ export default function initHeroLineField() {
     }
 
     const reduce = prefersReducedMotion();
+    const hideMq = window.matchMedia(HIDE_MQ);
 
     const WAVE_SPEED = 1.15;
-    const WAVE_AMP = 0.55; // wider tilt
+    const WAVE_AMP = 0.55;
     const WAVE_FREQ_X = 0.55;
     const WAVE_FREQ_Y = 0.35;
 
@@ -34,13 +40,19 @@ export default function initHeroLineField() {
     const PULL_IN = 0.14;
     const PULL_OUT = 0.1;
 
-    let width = 320;
-    let height = 240;
+    let width = 0;
+    let height = 0;
     let needles = [];
     let pointer = null;
     let time = 0;
     let raf = 0;
     let last = performance.now();
+    let ready = false;
+    let startAttempts = 0;
+
+    function isHidden() {
+        return hideMq.matches;
+    }
 
     function buildNeedles() {
         needles = [];
@@ -53,29 +65,89 @@ export default function initHeroLineField() {
                     v,
                     phase: u * WAVE_FREQ_X * Math.PI * 2 + v * WAVE_FREQ_Y * Math.PI * 2,
                     pull: 0,
-                    length: 0.03,
                 });
             }
         }
     }
 
     function sizeCanvas() {
-        const rect = root.getBoundingClientRect();
+        // display:none → clientWidth/Height are 0; caller must wait until visible
+        const cssW = Math.floor(root.clientWidth);
+        const cssH = Math.floor(root.clientHeight);
+        if (cssW < 80 || cssH < 60) {
+            return false;
+        }
+
+        width = Math.min(cssW, MAX_W);
+        height = Math.min(cssH, MAX_H);
+
         const dpr = Math.min(window.devicePixelRatio || 1, 2);
-        width = Math.max(180, Math.floor(rect.width || 280));
-        height = Math.max(240, Math.floor(rect.height || 360));
-        canvas.width = width * dpr;
-        canvas.height = height * dpr;
-        canvas.style.width = `${width}px`;
-        canvas.style.height = `${height}px`;
+        canvas.width = Math.floor(width * dpr);
+        canvas.height = Math.floor(height * dpr);
         ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+
         if (!needles.length) {
             buildNeedles();
         }
+        return true;
+    }
+
+    function markReady() {
+        if (ready) {
+            return;
+        }
+        ready = true;
+        root.classList.add('is-ready');
+    }
+
+    function stop() {
+        if (raf) {
+            cancelAnimationFrame(raf);
+            raf = 0;
+        }
+        pointer = null;
+        ready = false;
+        root.classList.remove('is-ready');
+        width = 0;
+        height = 0;
+    }
+
+    function start() {
+        if (isHidden()) {
+            stop();
+            return;
+        }
+
+        startAttempts = 0;
+
+        function tryStart() {
+            if (isHidden()) {
+                stop();
+                return;
+            }
+            if (sizeCanvas()) {
+                last = performance.now();
+                if (!raf) {
+                    raf = requestAnimationFrame(tick);
+                }
+                requestAnimationFrame(markReady);
+                return;
+            }
+            // Layout may not have applied yet after display flips back on
+            startAttempts += 1;
+            if (startAttempts < 12) {
+                requestAnimationFrame(tryStart);
+            }
+        }
+
+        requestAnimationFrame(() => requestAnimationFrame(tryStart));
     }
 
     function pointerFromEvent(event) {
         const rect = canvas.getBoundingClientRect();
+        if (!rect.width || !rect.height) {
+            return null;
+        }
         return {
             x: ((event.clientX - rect.left) / rect.width) * width,
             y: ((event.clientY - rect.top) / rect.height) * height,
@@ -87,8 +159,8 @@ export default function initHeroLineField() {
     }
 
     function update() {
-        if (!reduce) {
-            // dt applied in tick via time
+        if (!width || !height) {
+            return;
         }
 
         const pullR = Math.min(width, height) * PULL_RADIUS;
@@ -122,6 +194,10 @@ export default function initHeroLineField() {
     }
 
     function draw() {
+        if (!width || !height) {
+            return;
+        }
+
         const stroke =
             getComputedStyle(root).getPropertyValue('--hero-field-stroke').trim() ||
             'rgba(239, 233, 213, 0.85)';
@@ -144,14 +220,9 @@ export default function initHeroLineField() {
             const cy = padY + needle.v * usableH;
             const angle = (reduce ? 0 : waveAngle(needle, time)) + needle.pull;
 
-            const x1 = cx - Math.sin(angle) * half;
-            const y1 = cy - Math.cos(angle) * half;
-            const x2 = cx + Math.sin(angle) * half;
-            const y2 = cy + Math.cos(angle) * half;
-
             ctx.beginPath();
-            ctx.moveTo(x1, y1);
-            ctx.lineTo(x2, y2);
+            ctx.moveTo(cx - Math.sin(angle) * half, cy - Math.cos(angle) * half);
+            ctx.lineTo(cx + Math.sin(angle) * half, cy + Math.cos(angle) * half);
             ctx.stroke();
         }
 
@@ -159,6 +230,10 @@ export default function initHeroLineField() {
     }
 
     function tick(now) {
+        if (isHidden()) {
+            stop();
+            return;
+        }
         const dt = Math.min(0.05, (now - last) / 1000);
         last = now;
         if (!reduce) {
@@ -179,16 +254,32 @@ export default function initHeroLineField() {
         pointer = null;
     });
 
-    window.addEventListener('resize', () => {
-        sizeCanvas();
-    });
+    function onViewportChange() {
+        if (isHidden()) {
+            stop();
+            return;
+        }
+        if (raf) {
+            // Already running — just remeasure
+            sizeCanvas();
+            return;
+        }
+        start();
+    }
 
-    sizeCanvas();
-    raf = requestAnimationFrame(tick);
+    window.addEventListener('resize', onViewportChange);
+    if (typeof hideMq.addEventListener === 'function') {
+        hideMq.addEventListener('change', onViewportChange);
+    } else if (typeof hideMq.addListener === 'function') {
+        hideMq.addListener(onViewportChange);
+    }
+
+    start();
 
     return {
         destroy() {
-            cancelAnimationFrame(raf);
+            stop();
+            window.removeEventListener('resize', onViewportChange);
         },
     };
 }
