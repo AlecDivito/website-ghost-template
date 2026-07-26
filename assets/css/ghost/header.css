@@ -281,7 +281,7 @@ body:not(.gh-head-open) .gh-burger:hover .gh-burger-inner::after {
   }
   #gh-head {
     transition: all 0.4s ease-out;
-    overflow: hidden;
+    /* overflow: hidden; */
   }
   #gh-head .gh-head-inner {
     height: 100%;
