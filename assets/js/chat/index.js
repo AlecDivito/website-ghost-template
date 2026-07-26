@@ -360,6 +360,27 @@ async function checkReady(agentUrl, statusEl) {
     }
 }
 
+/**
+ * Keep the composer clear of iOS Safari’s bottom chrome / keyboard.
+ * Sets --vv-bottom on :root from the visualViewport overlap.
+ */
+function bindVisualViewportInset() {
+    const vv = window.visualViewport;
+    if (!vv) {
+        return;
+    }
+
+    const sync = () => {
+        const overlap = Math.max(0, window.innerHeight - vv.height - vv.offsetTop);
+        document.documentElement.style.setProperty('--vv-bottom', `${Math.round(overlap)}px`);
+    };
+
+    vv.addEventListener('resize', sync);
+    vv.addEventListener('scroll', sync);
+    window.addEventListener('orientationchange', sync);
+    sync();
+}
+
 export default function initChat() {
     const root = document.querySelector('[data-chat-root]');
     if (!root) {
@@ -382,6 +403,7 @@ export default function initChat() {
     }
 
     clearStoredConversation();
+    bindVisualViewportInset();
 
     const sessionId = getOrCreateSessionId();
     const history = [];
