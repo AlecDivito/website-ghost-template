@@ -1,22 +1,19 @@
 {{!-- Shared chat UI. Used by chat.hbs (routes.yaml) and page-chat.hbs (CMS page slug "chat"). --}}
+{{!-- Intentionally NOT using .hero.is-not-post — those page-hero rules (min-height, 4em title, 5rem padding) fight the chat takeover on mobile. --}}
 <div
     class="page chat"
     data-chat-root
     data-agent-url="{{@custom.chat_agent_url}}"
 >
-    <section class="hero is-not-post">
-        <div class="hero--container common--max-width">
-            <div class="hero--z-index hero--content">
-                <div class="hero__body">
-                    <h1 class="hero__title">{{t "Chat"}}</h1>
-                    <p class="hero__description">
-                        {{t "Ask about blog posts, projects, or experience. Answers come from published content on this site."}}
-                    </p>
-                </div>
-            </div>
+    <header class="chat-intro">
+        <div class="chat-intro__inner common--max-width">
+            <h1 class="chat-intro__title">{{t "Chat"}}</h1>
+            <p class="chat-intro__desc">
+                {{t "Ask about blog posts, projects, or experience. Answers come from published content on this site."}}
+            </p>
         </div>
-    </section>
-    <div class="hero-curve-wrap">
+    </header>
+    <div class="hero-curve-wrap chat-hero-curve">
         <svg
             class="hero--curve"
             xmlns="http://www.w3.org/2000/svg"
@@ -28,7 +25,7 @@
         </svg>
     </div>
 
-    <section class="chat-shell gh-container">
+    <section class="chat-shell">
         {{#unless @custom.chat_agent_url}}
             <p class="chat-status chat-status--warn" role="status">
                 {{t "Chat isn’t configured yet. Set the theme setting"}} <code>chat_agent_url</code> {{t "to your agent origin."}}
@@ -48,7 +45,8 @@
                         rows="1"
                         placeholder="{{t "Ask about a post, project, or experience…"}}"
                         required
-                        autofocus
+                        enterkeyhint="send"
+                        autocomplete="off"
                     ></textarea>
                     <button
                         type="submit"
