@@ -330,7 +330,10 @@ function createAssistantMessage(container) {
                 cites.appendChild(item);
             }
             cites.hidden = false;
-            container.scrollTop = container.scrollHeight;
+            // Keep the last pills above the composer, not tucked under it
+            requestAnimationFrame(() => {
+                row.scrollIntoView({ block: 'end', inline: 'nearest', behavior: 'smooth' });
+            });
         },
     };
 }

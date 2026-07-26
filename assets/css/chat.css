@@ -542,13 +542,23 @@ body.chat-active .footer {
     margin-block: 4.5rem;
 }
 
+.page.chat.chat--active .chat-shell {
+    overflow: hidden;
+}
+
+.page.chat.chat--active .chat-transcript {
+    /* Room to scroll citation pills clear of the composer */
+    padding-bottom: 1.75rem;
+    scroll-padding-bottom: 1.5rem;
+}
+
 .page.chat.chat--active .chat-composer {
-    position: sticky;
-    bottom: 0;
+    position: relative;
+    flex-shrink: 0;
     margin-block: 0;
     padding-top: 0.75rem;
     padding-bottom: calc(0.35rem + env(safe-area-inset-bottom, 0px) + var(--vv-bottom, 0px));
-    background: linear-gradient(to top, var(--background-color-base) 72%, transparent);
+    background: var(--background-color-base);
 }
 
 .chat-composer__field {
@@ -631,7 +641,7 @@ body.chat-active .footer {
 .chat-composer__send:disabled {
     opacity: 0.4;
     cursor: not-allowed;
-    transform: none;
+    /* Do not reset transform — mobile centers the button with translateY(50%) */
 }
 
 .chat-composer__send svg {
@@ -747,18 +757,24 @@ body.chat-active .footer {
         transform: translateY(50%);
     }
 
-    .chat-composer__send:hover:not(:disabled) {
+    .chat-composer__send:hover:not(:disabled),
+    .chat-composer__send:disabled {
+        /* Keep vertical centering when hovered or busy */
         transform: translateY(50%);
+    }
+
+    .chat-composer__send:hover:not(:disabled) {
         background: var(--forth-color);
+    }
+
+    .page.chat.chat--active .chat-transcript {
+        padding-bottom: 2rem;
+        scroll-padding-bottom: 2rem;
     }
 
     .page.chat.chat--active .chat-composer {
         padding: 0.45rem 0.65rem calc(0.85rem + env(safe-area-inset-bottom, 0px) + var(--vv-bottom, 0px));
-        background: linear-gradient(
-            to top,
-            var(--background-color-base) 78%,
-            color-mix(in srgb, var(--background-color-base) 70%, transparent)
-        );
+        background: var(--background-color-base);
     }
 }
 
@@ -830,6 +846,10 @@ body.chat-active .footer {
     body.chat-active .page.chat.chat--active .chat-shell {
         height: 100%;
         max-height: 100%;
+        overflow: hidden;
+        display: flex;
+        flex-direction: column;
+        min-height: 0;
     }
 
     /* Must beat body:has(.page.chat) #gh-head { position: sticky } */
