@@ -1,4 +1,4 @@
-/* Chat page — follows site hero + paper layout
+/* Chat page — compact intro + app-shell takeover (no shared .hero)
 /* ---------------------------------------------------------- */
 
 /* Works for theme-routed /chat/ (chat.hbs) — no CMS page required */
@@ -20,31 +20,44 @@ body:has(.page.chat) .gh-main {
     }
 }
 
-/* Chat hero: compact page intro (override .is-not-post page padding) */
-body:has(.page.chat):not(.chat-active) .page.chat .chat-hero.is-not-post {
+/* Compact intro — not .hero, so page-hero min-heights / 4em titles never apply */
+.chat-intro {
     flex: 0 0 auto;
-    min-height: 0;
-    padding: 2.75rem 1.5rem 1.25rem;
+    padding: 2.75rem 1.5rem 0.5rem;
+    color: var(--text-color-header);
+    background: var(--primary-color);
 }
 
-body:has(.page.chat):not(.chat-active) .page.chat .chat-hero-curve {
-    flex: 0 0 auto;
+.chat-intro__inner {
+    width: 100%;
+    text-align: center;
 }
 
-body:has(.page.chat):not(.chat-active) .page.chat .chat-hero.is-not-post .hero__title {
+.chat-intro__title {
+    margin: 0 0 1rem;
     font-size: clamp(2.4rem, 4vw, 3.25rem);
-    margin-bottom: 1rem;
+    line-height: 1.15;
+    color: var(--text-color-header);
 }
 
-body:has(.page.chat):not(.chat-active) .page.chat .chat-hero.is-not-post .hero__body {
-    margin-bottom: 0.75rem;
+.chat-intro__desc {
+    margin: 0 auto;
+    max-width: 42rem;
+    font-size: var(--font-size-paragraph, 1.5rem);
+    line-height: 1.45;
+    color: var(--text-color-description);
 }
 
 body.chat-active {
     overflow: hidden;
+    /* Override global body { min-height: 100vh } — on iOS 100vh > visible area */
+    min-height: 0;
+    height: 100%;
 }
 
 body.chat-active .gh-viewport {
+    /* min-height must not remain 100vh or it beats max-height: 100svh per CSS rules */
+    min-height: 0;
     height: 100dvh;
     max-height: 100dvh;
     overflow: hidden;
@@ -57,17 +70,21 @@ body:has(.page.chat) #gh-head {
     top: 0;
     z-index: 40;
     padding-top: max(3vmin, env(safe-area-inset-top, 0px));
+    /* Avoid height animation fighting the chat shell (header.css uses transition: all) */
+    transition: none;
 }
 
 body.chat-active .gh-main {
     flex: 1 1 auto;
     min-height: 0;
     overflow: hidden;
+    display: flex;
+    flex-direction: column;
 }
 
 body.chat-active .footer--svg-wrap,
 body.chat-active .footer {
-    display: none;
+    display: none !important;
 }
 
 .page.chat {
@@ -80,13 +97,11 @@ body.chat-active .footer {
 
 .page.chat.chat--active {
     height: 100%;
+    min-height: 0;
 }
 
-.page.chat.chat--active .hero,
-.page.chat.chat--active .hero-curve-wrap,
-.page.chat.chat--active .chat-hero,
-.page.chat.chat--active .chat-hero-curve {
-    display: none;
+.page.chat.chat--active .chat-intro {
+    display: none !important;
 }
 
 .chat-shell {
@@ -637,7 +652,7 @@ body.chat-active .footer {
 
 /* ---------- Mobile / tablet ---------- */
 @media (max-width: 900px) {
-    /* Idle: natural height — don’t stretch hero to fill the viewport */
+    /* Idle: natural height — don’t stretch to fill the viewport */
     body:has(.page.chat):not(.chat-active) .gh-viewport {
         min-height: 0;
     }
@@ -646,25 +661,18 @@ body.chat-active .footer {
         flex: 0 1 auto;
     }
 
-    body:has(.page.chat):not(.chat-active) .page.chat .chat-hero.is-not-post {
-        min-height: 0 !important;
+    .chat-intro {
         padding: 1.15rem 1rem 0.35rem;
-        align-items: flex-start;
     }
 
-    body:has(.page.chat):not(.chat-active) .page.chat .chat-hero.is-not-post .hero__title {
+    .chat-intro__title {
         font-size: clamp(1.85rem, 6.5vw, 2.35rem);
         margin-bottom: 0.35rem;
     }
 
-    body:has(.page.chat):not(.chat-active) .page.chat .chat-hero.is-not-post .hero__body {
-        margin: 0;
-        margin-bottom: 0.25rem;
-        padding-inline: 0.25rem;
-    }
-
-    body:has(.page.chat):not(.chat-active) .page.chat .chat-hero-curve {
-        display: none;
+    .chat-intro__desc {
+        font-size: 1.25rem;
+        line-height: 1.4;
     }
 
     .page.chat:not(.chat--active) .chat-shell {
@@ -755,13 +763,11 @@ body.chat-active .footer {
 }
 
 @media (max-width: 600px) {
-    body:has(.page.chat):not(.chat-active) .page.chat .chat-hero__desc {
+    .chat-intro__desc {
         display: -webkit-box;
         -webkit-line-clamp: 2;
         -webkit-box-orient: vertical;
         overflow: hidden;
-        font-size: 1.25rem;
-        line-height: 1.4;
         padding-inline: 0;
     }
 
@@ -791,27 +797,52 @@ body.chat-active .footer {
     }
 }
 
-/* Active chat: use small viewport on phones so Safari chrome doesn’t clip header/composer */
+/* Active chat: own the screen below the site header (esp. iOS Safari + keyboard) */
 @media (max-width: 900px) {
+    body.chat-active {
+        position: fixed;
+        inset: 0;
+        width: 100%;
+        height: 100%;
+        max-height: 100%;
+        overscroll-behavior: none;
+    }
+
     body.chat-active .gh-viewport {
-        height: 100svh;
-        max-height: 100svh;
+        min-height: 0;
+        height: 100%;
+        max-height: 100%;
     }
 
     body.chat-active .page.chat.chat--active {
         min-height: 0;
         height: 100%;
+        /* Fixed shell under the header so iOS can’t scroll the intro back into view */
+        position: fixed;
+        left: 0;
+        right: 0;
+        top: var(--chat-head-offset, 3.75rem);
+        bottom: 0;
+        z-index: 30;
+        background: var(--background-color-base);
     }
 
-    body:has(.page.chat) #gh-head {
-        /* Stay pinned while iOS tries to scroll the focused input into view */
-        position: sticky;
+    body.chat-active .page.chat.chat--active .chat-shell {
+        height: 100%;
+        max-height: 100%;
+    }
+
+    /* Must beat body:has(.page.chat) #gh-head { position: sticky } */
+    body.chat-active:has(.page.chat) #gh-head,
+    body.chat-active #gh-head {
+        position: fixed;
         top: 0;
+        left: 0;
+        right: 0;
         z-index: 50;
     }
 
     body.chat-active #gh-head .gh-burger {
-        /* Easier tap target above chat content */
         z-index: 51;
     }
 }

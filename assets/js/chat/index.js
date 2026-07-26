@@ -360,6 +360,10 @@ async function checkReady(agentUrl, statusEl) {
     }
 }
 
+function isFinePointer() {
+    return window.matchMedia('(hover: hover) and (pointer: fine)').matches;
+}
+
 /**
  * Keep the composer clear of iOS Safari’s bottom chrome / keyboard.
  * Sets --vv-bottom on :root from the visualViewport overlap.
@@ -379,6 +383,16 @@ function bindVisualViewportInset() {
     vv.addEventListener('scroll', sync);
     window.addEventListener('orientationchange', sync);
     sync();
+}
+
+/** Measure sticky/fixed site header so the active chat shell sits below it. */
+function syncChatHeadOffset() {
+    const head = document.querySelector('#gh-head');
+    if (!head) {
+        return;
+    }
+    const height = Math.ceil(head.getBoundingClientRect().height);
+    document.documentElement.style.setProperty('--chat-head-offset', `${height}px`);
 }
 
 export default function initChat() {
@@ -404,6 +418,9 @@ export default function initChat() {
 
     clearStoredConversation();
     bindVisualViewportInset();
+    syncChatHeadOffset();
+    window.addEventListener('resize', syncChatHeadOffset);
+    window.addEventListener('orientationchange', syncChatHeadOffset);
 
     const sessionId = getOrCreateSessionId();
     const history = [];
@@ -416,9 +433,19 @@ export default function initChat() {
             return;
         }
         active = true;
+        // Kill any iOS scroll-into-view offset before locking the shell
+        window.scrollTo(0, 0);
+        document.documentElement.scrollTop = 0;
+        document.body.scrollTop = 0;
+        syncChatHeadOffset();
         root.classList.add('chat--active');
         document.body.classList.add('chat-active');
         messagesEl.hidden = false;
+        // Re-measure after class changes (header padding / sticky → fixed)
+        requestAnimationFrame(() => {
+            syncChatHeadOffset();
+            window.scrollTo(0, 0);
+        });
     }
 
     function adoptChatId(nextId) {
@@ -429,7 +456,7 @@ export default function initChat() {
 
     checkReady(agentUrl, statusEl);
     // Avoid popping the mobile keyboard on load
-    if (window.matchMedia('(hover: hover) and (pointer: fine)').matches) {
+    if (isFinePointer()) {
         input.focus();
     }
 
@@ -518,7 +545,11 @@ export default function initChat() {
             if (sendBtn) {
                 sendBtn.disabled = false;
             }
-            input.focus();
+            // Refocusing on phones re-opens the keyboard and can scroll the
+            // locked shell off-screen (blank header-only view). Desktop only.
+            if (isFinePointer()) {
+                input.focus();
+            }
         }
     });
 
