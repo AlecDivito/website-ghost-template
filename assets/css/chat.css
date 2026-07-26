@@ -1,4 +1,4 @@
-/* Chat page — follows site hero + paper layout
+/* Chat page — compact intro + app-shell takeover (no shared .hero)
 /* ---------------------------------------------------------- */
 
 /* Works for theme-routed /chat/ (chat.hbs) — no CMS page required */
@@ -9,47 +9,82 @@ body:has(.page.chat) .gh-main {
     flex-direction: column;
 }
 
-/* Idle: fill the viewport so the composer can sit mid-page */
-body:has(.page.chat):not(.chat-active) .gh-viewport {
-    min-height: 100dvh;
+/* Idle desktop: fill the viewport so the composer can sit mid-page */
+@media (min-width: 901px) {
+    body:has(.page.chat):not(.chat-active) .gh-viewport {
+        min-height: 100dvh;
+    }
+
+    body:has(.page.chat):not(.chat-active) .page.chat {
+        flex: 1 1 auto;
+    }
 }
 
-body:has(.page.chat):not(.chat-active) .page.chat {
-    flex: 1 1 auto;
+/* Compact intro — not .hero, so page-hero min-heights / 4em titles never apply */
+.chat-intro {
+    flex: 0 0 auto;
+    padding: 2.75rem 1.5rem 0.5rem;
+    color: var(--text-color-header);
+    background: var(--primary-color);
 }
 
-body:has(.page.chat):not(.chat-active) .page.chat .chat-hero.is-not-post {
-    padding: 2.75rem 1.5rem 1.25rem;
+.chat-intro__inner {
+    width: 100%;
+    text-align: center;
 }
 
-body:has(.page.chat):not(.chat-active) .page.chat .chat-hero.is-not-post .hero__title {
+.chat-intro__title {
+    margin: 0 0 1rem;
     font-size: clamp(2.4rem, 4vw, 3.25rem);
-    margin-bottom: 1rem;
+    line-height: 1.15;
+    color: var(--text-color-header);
 }
 
-body:has(.page.chat):not(.chat-active) .page.chat .chat-hero.is-not-post .hero__body {
-    margin-bottom: 0.75rem;
+.chat-intro__desc {
+    margin: 0 auto;
+    max-width: 42rem;
+    font-size: var(--font-size-paragraph, 1.5rem);
+    line-height: 1.45;
+    color: var(--text-color-description);
 }
 
 body.chat-active {
     overflow: hidden;
+    /* Override global body { min-height: 100vh } — on iOS 100vh > visible area */
+    min-height: 0;
+    height: 100%;
 }
 
 body.chat-active .gh-viewport {
+    /* min-height must not remain 100vh or it beats max-height: 100svh per CSS rules */
+    min-height: 0;
     height: 100dvh;
     max-height: 100dvh;
     overflow: hidden;
+}
+
+/* Keep site header visible above the chat column */
+body:has(.page.chat) #gh-head {
+    flex-shrink: 0;
+    position: sticky;
+    top: 0;
+    z-index: 40;
+    padding-top: max(3vmin, env(safe-area-inset-top, 0px));
+    /* Avoid height animation fighting the chat shell (header.css uses transition: all) */
+    transition: none;
 }
 
 body.chat-active .gh-main {
     flex: 1 1 auto;
     min-height: 0;
     overflow: hidden;
+    display: flex;
+    flex-direction: column;
 }
 
 body.chat-active .footer--svg-wrap,
 body.chat-active .footer {
-    display: none;
+    display: none !important;
 }
 
 .page.chat {
@@ -62,18 +97,16 @@ body.chat-active .footer {
 
 .page.chat.chat--active {
     height: 100%;
+    min-height: 0;
 }
 
-.page.chat.chat--active .hero,
-.page.chat.chat--active .hero-curve-wrap,
-.page.chat.chat--active .chat-hero,
-.page.chat.chat--active .chat-hero-curve {
-    display: none;
+.page.chat.chat--active .chat-intro {
+    display: none !important;
 }
 
 .chat-shell {
     width: 100%;
-    max-width: min(var(--content-width-wide), 48rem);
+    max-width: min(84rem, 100%);
     margin: 0 auto;
     padding: 2.5rem 1.25rem 4rem;
     display: flex;
@@ -99,8 +132,8 @@ body.chat-active .footer {
 
 @media (min-width: 900px) {
     .page.chat:not(.chat--active) .chat-shell {
-        max-width: var(--content-width-wide);
-        min-height: 18rem;
+        max-width: min(84rem, 96vw);
+        min-height: 22rem;
     }
 
     .page.chat:not(.chat--active) .chat-status {
@@ -108,13 +141,42 @@ body.chat-active .footer {
     }
 
     .page.chat:not(.chat--active) .chat-composer {
-        --chat-composer-font-size: 1.65rem;
-        --chat-composer-send-size: 2.75rem;
-        margin-block: 6rem;
+        --chat-composer-font-size: 1.85rem;
+        --chat-composer-send-size: 3.15rem;
+        margin-block: 4rem;
+        max-width: min(84rem, 96vw);
     }
 
     .page.chat:not(.chat--active) .chat-composer__input {
-        min-height: 7rem;
+        min-height: 11rem;
+        max-height: 22rem;
+        padding: 1.5rem calc(var(--chat-composer-send-size) + 1.9rem) 1.5rem 1.75rem;
+    }
+
+    .page.chat.chat--active .chat-composer {
+        --chat-composer-font-size: 1.7rem;
+        --chat-composer-send-size: 3rem;
+        max-width: min(84rem, 96vw);
+    }
+
+    .page.chat.chat--active .chat-composer__input {
+        min-height: 7.5rem;
+        max-height: 22rem;
+        padding: 1.25rem calc(var(--chat-composer-send-size) + 1.7rem) 1.25rem 1.5rem;
+    }
+
+    .chat-composer__field {
+        border-radius: 1.35rem;
+        box-shadow: 0 12px 32px rgba(0, 0, 0, 0.2);
+    }
+
+    .chat-composer__send {
+        right: 0.85rem;
+        bottom: 0.85rem;
+    }
+
+    .chat-transcript {
+        max-width: 78rem;
     }
 }
 
@@ -154,7 +216,7 @@ body.chat-active .footer {
     overflow-y: auto;
     padding: 0.25rem 0.25rem 1.25rem;
     min-height: 0;
-    max-width: 48rem;
+    max-width: 78rem;
     width: 100%;
     margin-inline: auto;
     scrollbar-gutter: stable;
@@ -471,7 +533,7 @@ body.chat-active .footer {
 
     flex-shrink: 0;
     width: 100%;
-    max-width: 48rem;
+    max-width: 84rem;
     margin-inline: auto;
 }
 
@@ -480,13 +542,23 @@ body.chat-active .footer {
     margin-block: 4.5rem;
 }
 
+.page.chat.chat--active .chat-shell {
+    overflow: hidden;
+}
+
+.page.chat.chat--active .chat-transcript {
+    /* Room to scroll citation pills clear of the composer */
+    padding-bottom: 1.75rem;
+    scroll-padding-bottom: 1.5rem;
+}
+
 .page.chat.chat--active .chat-composer {
-    position: sticky;
-    bottom: 0;
+    position: relative;
+    flex-shrink: 0;
     margin-block: 0;
     padding-top: 0.75rem;
-    padding-bottom: env(safe-area-inset-bottom, 0);
-    background: linear-gradient(to top, var(--background-color-base) 72%, transparent);
+    padding-bottom: calc(0.35rem + env(safe-area-inset-bottom, 0px) + var(--vv-bottom, 0px));
+    background: var(--background-color-base);
 }
 
 .chat-composer__field {
@@ -549,6 +621,7 @@ body.chat-active .footer {
     color: var(--primary-color);
     background: var(--third-color);
     cursor: pointer;
+    -webkit-tap-highlight-color: transparent;
     transition:
         background-color 0.15s ease,
         opacity 0.15s ease,
@@ -568,7 +641,7 @@ body.chat-active .footer {
 .chat-composer__send:disabled {
     opacity: 0.4;
     cursor: not-allowed;
-    transform: none;
+    /* Do not reset transform — mobile centers the button with translateY(50%) */
 }
 
 .chat-composer__send svg {
@@ -589,29 +662,40 @@ body.chat-active .footer {
 
 /* ---------- Mobile / tablet ---------- */
 @media (max-width: 900px) {
-    body:has(.page.chat):not(.chat-active) .page.chat .chat-hero.is-not-post {
-        padding: 1.5rem 1rem 0.5rem;
+    /* Idle: natural height — don’t stretch to fill the viewport */
+    body:has(.page.chat):not(.chat-active) .gh-viewport {
+        min-height: 0;
     }
 
-    body:has(.page.chat):not(.chat-active) .page.chat .chat-hero.is-not-post .hero__title {
-        font-size: clamp(2rem, 7vw, 2.6rem);
-        margin-bottom: 0.5rem;
+    body:has(.page.chat):not(.chat-active) .page.chat {
+        flex: 0 1 auto;
     }
 
-    body:has(.page.chat):not(.chat-active) .page.chat .chat-hero.is-not-post .hero__body {
+    .chat-intro {
+        padding: 1.15rem 1rem 0.35rem;
+    }
+
+    .chat-intro__title {
+        font-size: clamp(1.85rem, 6.5vw, 2.35rem);
         margin-bottom: 0.35rem;
-        padding-inline: 0.25rem;
+    }
+
+    .chat-intro__desc {
+        font-size: 1.25rem;
+        line-height: 1.4;
     }
 
     .page.chat:not(.chat--active) .chat-shell {
+        flex: 0 1 auto;
         justify-content: flex-start;
-        gap: 1rem;
-        padding: 1.25rem 1rem 1.5rem;
-        padding-bottom: calc(1.5rem + env(safe-area-inset-bottom, 0px));
+        gap: 0.75rem;
+        padding: 1rem 1rem 1.25rem;
+        /* Extra space: home indicator + Safari floating URL bar (via --vv-bottom) */
+        padding-bottom: calc(1.5rem + env(safe-area-inset-bottom, 0px) + var(--vv-bottom, 0.75rem));
     }
 
     .page.chat:not(.chat--active) .chat-composer {
-        margin-block: 1.25rem 0.5rem;
+        margin-block: 0.75rem 0.5rem;
     }
 
     .page.chat:not(.chat--active) .chat-status {
@@ -620,13 +704,13 @@ body.chat-active .footer {
     }
 
     .page.chat.chat--active .chat-shell {
-        padding: 0.75rem 0.85rem 0.5rem;
+        padding: 0.75rem 0 0.5rem;
         padding-bottom: 0;
     }
 
     .chat-transcript {
         gap: 1.25rem;
-        padding: 0.5rem 0.15rem 1rem;
+        padding: 0.5rem 1rem 1rem;
         -webkit-overflow-scrolling: touch;
         overscroll-behavior: contain;
     }
@@ -647,40 +731,59 @@ body.chat-active .footer {
         max-width: 12rem;
     }
 
+    /* Compact chat-bar style on phones/tablets */
     .chat-composer {
         --chat-composer-font-size: 1.6rem; /* ≥16px — avoids iOS input zoom */
-        --chat-composer-send-size: 2.75rem;
+        --chat-composer-send-size: 2.85rem;
+        max-width: none;
+        padding-inline: 0.75rem;
     }
 
     .chat-composer__input {
-        min-height: 3.75rem;
-        max-height: min(30dvh, 10rem);
-        padding: 0.85rem calc(var(--chat-composer-send-size) + 1.1rem) 0.85rem 1rem;
+        min-height: 3.25rem;
+        max-height: min(28dvh, 9rem);
+        padding: 0.8rem calc(var(--chat-composer-send-size) + 0.95rem) 0.8rem 1rem;
+        line-height: 1.35;
     }
 
     .chat-composer__field {
-        border-radius: 1.1rem;
-        box-shadow: 0 4px 16px rgba(0, 0, 0, 0.16);
+        border-radius: 1.35rem;
+        box-shadow: 0 4px 18px rgba(0, 0, 0, 0.18);
     }
 
     .chat-composer__send {
-        right: 0.55rem;
-        bottom: 0.55rem;
+        right: 0.45rem;
+        bottom: 50%;
+        transform: translateY(50%);
+    }
+
+    .chat-composer__send:hover:not(:disabled),
+    .chat-composer__send:disabled {
+        /* Keep vertical centering when hovered or busy */
+        transform: translateY(50%);
+    }
+
+    .chat-composer__send:hover:not(:disabled) {
+        background: var(--forth-color);
+    }
+
+    .page.chat.chat--active .chat-transcript {
+        padding-bottom: 2rem;
+        scroll-padding-bottom: 2rem;
     }
 
     .page.chat.chat--active .chat-composer {
-        padding: 0.55rem 0 calc(0.55rem + env(safe-area-inset-bottom, 0px));
+        padding: 0.45rem 0.65rem calc(0.85rem + env(safe-area-inset-bottom, 0px) + var(--vv-bottom, 0px));
+        background: var(--background-color-base);
     }
 }
 
 @media (max-width: 600px) {
-    body:has(.page.chat):not(.chat-active) .page.chat .chat-hero__desc {
+    .chat-intro__desc {
         display: -webkit-box;
         -webkit-line-clamp: 2;
         -webkit-box-orient: vertical;
         overflow: hidden;
-        font-size: 1.25rem;
-        line-height: 1.4;
         padding-inline: 0;
     }
 
@@ -710,15 +813,56 @@ body.chat-active .footer {
     }
 }
 
-/* Active chat: fill mobile viewport under the site header */
+/* Active chat: own the screen below the site header (esp. iOS Safari + keyboard) */
 @media (max-width: 900px) {
+    body.chat-active {
+        position: fixed;
+        inset: 0;
+        width: 100%;
+        height: 100%;
+        max-height: 100%;
+        overscroll-behavior: none;
+    }
+
     body.chat-active .gh-viewport {
-        height: 100dvh;
-        max-height: 100dvh;
+        min-height: 0;
+        height: 100%;
+        max-height: 100%;
     }
 
     body.chat-active .page.chat.chat--active {
         min-height: 0;
         height: 100%;
+        /* Fixed shell under the header so iOS can’t scroll the intro back into view */
+        position: fixed;
+        left: 0;
+        right: 0;
+        top: var(--chat-head-offset, 3.75rem);
+        bottom: 0;
+        z-index: 30;
+        background: var(--background-color-base);
+    }
+
+    body.chat-active .page.chat.chat--active .chat-shell {
+        height: 100%;
+        max-height: 100%;
+        overflow: hidden;
+        display: flex;
+        flex-direction: column;
+        min-height: 0;
+    }
+
+    /* Must beat body:has(.page.chat) #gh-head { position: sticky } */
+    body.chat-active:has(.page.chat) #gh-head,
+    body.chat-active #gh-head {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        z-index: 50;
+    }
+
+    body.chat-active #gh-head .gh-burger {
+        z-index: 51;
     }
 }

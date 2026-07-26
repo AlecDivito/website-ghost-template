@@ -1,21 +1,18 @@
 {{!-- Shared chat UI. Used by chat.hbs (routes.yaml) and page-chat.hbs (CMS page slug "chat"). --}}
+{{!-- Intentionally NOT using .hero.is-not-post — those page-hero rules (min-height, 4em title, 5rem padding) fight the chat takeover on mobile. --}}
 <div
     class="page chat"
     data-chat-root
     data-agent-url="{{@custom.chat_agent_url}}"
 >
-    <section class="hero is-not-post chat-hero">
-        <div class="hero--container common--max-width">
-            <div class="hero--z-index hero--content">
-                <div class="hero__body">
-                    <h1 class="hero__title">{{t "Chat"}}</h1>
-                    <p class="hero__description chat-hero__desc">
-                        {{t "Ask about blog posts, projects, or experience. Answers come from published content on this site."}}
-                    </p>
-                </div>
-            </div>
+    <header class="chat-intro">
+        <div class="chat-intro__inner common--max-width">
+            <h1 class="chat-intro__title">{{t "Chat"}}</h1>
+            <p class="chat-intro__desc">
+                {{t "Ask about blog posts, projects, or experience. Answers come from published content on this site."}}
+            </p>
         </div>
-    </section>
+    </header>
     <div class="hero-curve-wrap chat-hero-curve">
         <svg
             class="hero--curve"
